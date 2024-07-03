@@ -1,0 +1,148 @@
+.LoginMain{
+    width: 100%;
+    overflow: hidden;
+}
+.LoginImageContainer{
+    background-image: url("../../Assets/images/22-26.png");
+    background-size: cover;
+    min-height: 952px;
+    flex-direction: column;
+}
+.LoginImageContainer .InfGroup{
+    color: var(--color-pink);
+    font-size: 20px;
+    font-weight: 700;
+    position: relative;
+    padding: 5px;
+    border-bottom: 4px solid var(--color-blue);
+}
+.WeDevlop{
+   color:#515151 ; 
+}
+.LoginFormContainer{
+    align-items: start;
+    flex-direction: column;
+    padding-left: 30px !important;
+}
+.Welcome{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+}
+.Welcome h3{
+    font-size: 40px;
+    color: var(--color-pink);
+}
+.Welcome span{
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--color-blue);
+    text-align: start;
+}
+.FormCol{
+    margin-top: 70px !important;
+}
+.FormInputCol{
+    margin: 20px !important;
+    margin-left: 0 !important;
+    padding-left: 60px;
+    padding-right: 60px;
+    position: relative;
+}
+.FormLabel{
+    position: absolute;
+    left: 4%;
+    top: 25%;
+    color: var(--color-pink);
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.FormInput{
+    border: 2px solid var(--color-pink);
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    transition: all 0.1s linear;
+
+    font-size: 18px;
+}
+.FormInput[type="email"]{
+    padding-left: 70px;
+}
+.FormInput[type="password"]{
+    padding-left: 100px;
+}
+.FormInput:focus{
+    border: 2px solid rgba(228, 96, 118, 0.6);
+    outline: none;
+
+}
+.ForgetPassword{
+    text-decoration: none;
+    color: black;
+    font-weight:500 ;
+}
+.RememberCol{
+    text-align: start;
+}
+.ForgetPasswordCol{
+    text-align: end;
+}
+.AfterPassword{
+    margin-top: 0 !important;
+}
+.Remember[type="checkbox"]{
+       scale: 1.5;
+       margin-right: 10px;
+       border: 1px solid var(--color-pink);
+       border-radius: 0px;
+}
+
+.RememberCol label{
+    color: var(--color-blue);
+    font-weight: 500;
+}
+.LoginBtn{
+    background-color: var(--color-pink) !important;
+    color: white !important;
+    width: 30%;
+    padding-top: 15px !important;
+    padding-bottom:15px !important;
+    border-radius: 25px !important;
+    font-size: 20px;
+    font-weight: 700;
+    font-style: italic;
+    border: none;
+    outline: none;
+}
+.LoginBtnContainer{
+    flex-direction: column;
+}
+.LoginBtnContainer span,
+.LoginBtnContainer span a{
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    font-weight: 600;
+}
+@media (max-width:768px) {
+    .InfGroup{
+        display: none;
+    }
+    .WeDevlop{
+        display: none;
+    }
+    .LoginImageContainer {
+        min-height: auto;
+        background-image: none; 
+    }
+
+}
+@media (max-width:990px) {
+    .FormLabel{
+        left: 8%;
+    }
+}
