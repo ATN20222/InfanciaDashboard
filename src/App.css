@@ -16,6 +16,7 @@
 :root {
   --color-pink: #ED6D91;
   --color-blue: #009FE3;
+  --color-green: #AED065;
 }
 *{
   box-sizing: border-box;

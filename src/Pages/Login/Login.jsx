@@ -38,8 +38,8 @@ const Login = ()=>{
                                         <div className="container">
                                             <div className="row">
                                                 <div className="col-6 RememberCol">
-                                                <input type="checkbox" className="Remember" name="" id="Remember" />
-                                                <label className="" htmlFor="Remember">Remember me </label>
+                                                    <input type="checkbox" className="Remember" name="" id="Remember" />
+                                                    <label className="" htmlFor="Remember">Remember me </label>
                                                 </div>
                                                 <div className="col-6 ForgetPasswordCol">
                                                     <Link className="ForgetPassword">Forgot password</Link>
