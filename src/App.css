@@ -15,6 +15,8 @@
   --color-pink: #ED6D91;
   --color-blue: #009FE3;
   --color-green: #AED065;
+  --color-light-blue:#F2FAFE;
+  
 }
 *{
   box-sizing: border-box;
@@ -48,4 +50,45 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+
+.App {
+  display: flex;
+}
+
+.content {
+  flex-grow: 1;
+  /* padding: 20px; */
+  padding-top: 0;
+  transition: margin-left 0.3s;
+  width: 80%;
+}
+
+.content.shifted {
+  margin-left: 250px !important;
+}
+
+.toggle-button {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .toggle-button {
+    display: inline-block;
+  }
+
+  .content.shifted {
+    margin-left: 0;
+  }
+
+  
+}
+@media (min-width: 768px) {
+  .Shift{
+    padding-left: 250px;
+  }
+
+  
 }

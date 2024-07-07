@@ -1,0 +1,42 @@
+.HeadLeftItem{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: max-content;
+    display: flex;
+    width: 150px;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-green);
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 30px;
+    color: white;
+}
+.HeadRightItem{    
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: max-content;
+    background-color: var(--color-blue);
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 50%;
+    color: white;
+    margin-right: 20px;
+}
+.HeadRightCol{
+    display: flex !important;
+    justify-content: end !important;
+    align-items: center !important;
+}
+.HeadContainer{
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+.CirclePlus{
+    cursor: pointer;
+}
+.ManageClassesCompnent{
+    margin-bottom: 30px;
+}
