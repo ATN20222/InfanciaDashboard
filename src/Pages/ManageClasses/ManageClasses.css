@@ -40,3 +40,71 @@
 .ManageClassesCompnent{
     margin-bottom: 30px;
 }
+
+.SubjectsContainer{
+    background-color: var(--color-light-blue);
+    margin-left: 25px;
+    margin-right: 25px;
+    padding: 20px;
+    border-radius: 20px;
+    max-height: 180px;
+    overflow: hidden;
+    overflow-y: scroll;
+
+}
+.SubjectsContainer::-webkit-scrollbar {
+    width:2px;
+    background-color: #ffffff;
+  }
+  
+  .SubjectsContainer::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+  
+  .SubjectsContainer::-webkit-scrollbar-thumb {
+    background-color: var(--color-pink);
+  }
+  
+  
+  .SubjectsContainer::-moz-scrollbar {
+    width:2px;
+    background-color: #ffffff;
+  }
+  
+  .SubjectsContainer::-moz-scrollbar-track {
+    border-radius: 10px;
+  }
+  
+  .SubjectsContainer::-ms-scrollbar {
+    width:2px;
+    background-color: white;
+  }
+  
+  .SubjectsContainer::-ms-scrollbar-track {
+    border-radius: 10px;
+  }
+  
+  .SubjectsContainer::-ms-scrollbar-thumb {
+    /* border-radius: 10px; */
+    background-color:var(--color-pink);
+  }
+  
+.SubjectsContainer>.row{
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+}
+.SubjectItem{
+    background-color: var(--color-pink);
+    border-radius: 30px;
+    margin: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 5px;
+    max-height: 40px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: white;
+}

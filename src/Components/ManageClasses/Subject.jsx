@@ -1,7 +1,6 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import Slider from "../Slider/Slider";
 const Subject = ()=>{
     return(
         <section className="SecondSliderSection ManageClassesCompnent">
@@ -21,15 +20,36 @@ const Subject = ()=>{
                         </div>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-lg-1">Hello</div>
-                    <div className="col-lg-1">Hello</div>
-                    <div className="col-lg-1">Hello</div>
-                    <div className="col-lg-1">Hello</div>
-                    <div className="col-lg-1">Hello</div>
-                    <div className="col-lg-1">Hello</div>
-                    <div className="col-lg-1">Hello</div>
-                    <div className="col-lg-1">Hello</div>
+                <div className="SubjectsContainer">
+                    <div className="row">
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">HelloHelloHelloHello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">Hello</div>
+                    </div> 
+
                 </div>
         </section>
     );
