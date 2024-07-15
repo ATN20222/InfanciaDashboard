@@ -1,0 +1,70 @@
+.kid-table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.kid-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: var(--color-pink);
+    margin-bottom: 10px;
+    padding: 0px;
+    border-radius: 20px;
+}
+
+.kid-avatar {
+    width: 30px;
+    height: 30px;
+    background-color: var(--color-blue);
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.kidNameAndImage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30px;
+    
+}
+.kid-info {
+    display: flex;
+    /* justify-content: space-evenly; */
+    width: 100%;
+    color: white;
+}
+
+.kid-info span {
+    margin: 0 10px;
+}
+.kid-id{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100%/1.5);
+    padding-left: 40px;
+}
+@media (max-width: 768px) {
+    .kid-info {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .kid-info span {
+        margin: 5px 0;
+    }
+    .kid-name{
+        max-width: 90px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .kid-id{
+        padding-left: 0px !important;
+    }
+    .kidNameAndImage{
+        margin-left: 10px;
+    }
+}

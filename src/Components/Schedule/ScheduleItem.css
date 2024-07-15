@@ -1,0 +1,133 @@
+.SubjectsContainer{
+    max-height: 300px;
+}
+
+.ScheduleItem{
+    border: 1px solid var(--color-pink);
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    
+}
+.ScheduleItem h5{
+    font-weight: 700;
+    color: var(--color-pink);
+    color: #787878;
+    margin: 0;
+}
+.LeftSidePartSched{
+    width: calc(100% - 40px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.RightPartSched{
+    height: 40px;
+    background-color: var(--color-pink);
+    /* padding: 10px; */
+    padding-left: 15px;
+    padding-right: 15px;
+    color: white;
+    border-radius: 8px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 40px;
+}
+.RightPartSched svg{
+    width: 20px;
+    height: 20px;
+}
+#ScheduleTime{
+    /* display: none; */
+    border: 0;
+    position: relative;
+    background: none;
+    width: 20px;
+    height: 30px;
+    color: white;
+    cursor: pointer;
+}
+#ScheduleTime:focus{
+    outline: none !important;
+}
+.CirclePlus input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+   
+}
+
+
+.CirclePlus input[type="date"] {
+    position: relative;
+    color: white; 
+    background: transparent;
+    z-index: 1;
+
+}
+
+.CirclePlus input[type="date"]::-moz-focus-inner {
+    border: 0;
+}
+.SelectedDate{
+    border: 0;
+    color: var(--color-blue);
+    text-align: end;
+    padding-right: 20px;
+    background-color: transparent;
+    font-size: 14px;
+}
+.SelectedDate:focus{
+    outline: none !important;
+}
+
+.ScheduleItemContainer{
+    /* height: 100px;
+    overflow: hidden; */
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.ScheduleItemDetails{
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--color-pink);
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    min-height: 80px;
+
+}
+.SchedItemDetailsContainer{
+    max-width: 100% !important;
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+.LeftSideDetailsSchedule{
+    background-color: var(--color-light-pink);
+    padding-left: 20px;
+    padding-right: 20px;
+    color: #514B66;
+    font-weight: 800;
+    font-size: 18px;
+    border-radius: 8px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-right: 1px solid var(--color-pink);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+}
+.ScheuleItemDescription{
+    padding: 10px;
+    text-align: justify;
+    color: #787878;
+}

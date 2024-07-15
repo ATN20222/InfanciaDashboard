@@ -8,6 +8,7 @@ import Sidebar from './Components/Nav/Sidebar';
 import Header from './Components/Nav/Header';
 import Home from './Pages/Home/Home';
 import ManageClasses from './Pages/ManageClasses/ManageClasses';
+import PaymentRequest from './Pages/PaymentRequest/PaymentRequest';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -31,6 +32,7 @@ function App() {
               <Route path='/Register' element={<Register />} />
               <Route path='/' element={<Home />} />
               <Route path='/manageclasses' element={<ManageClasses />} />
+              <Route path='/paymentrequest' element={<PaymentRequest />} />
             </Routes>
         </div>
         

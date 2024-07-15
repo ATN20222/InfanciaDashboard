@@ -1,0 +1,111 @@
+.TableContainer {
+    width: 100%;
+}
+
+.TableContainer table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+.TableContainer td {
+    background-color: var(--color-pink) !important;
+    color: white !important;
+    padding: 10px;
+    border: none;
+    width: calc(100%/6);
+}
+.TableContainer td input[type="checkbox"]{
+    appearance: none;
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 1px solid white;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+.TableContainer input[type="checkbox"]::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-pink); /* Background color before checked */
+    border-radius: 4px;
+}
+
+.TableContainer input[type="checkbox"]:checked::before {
+    background-color: var(--color-pink); /* Background color when checked */
+}
+
+.TableContainer input[type="checkbox"]:checked::after {
+    content: "✓";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 10px;
+    font-weight: 900;
+}
+.TableContainer tr {
+    margin-bottom: 10px; /* Adjust the value to increase/decrease the margin */
+    display: table-row; /* Resetting the display property */
+}
+
+.TableContainer tr td:nth-child(1) {
+    border-top-left-radius: 20px !important;
+    border-bottom-left-radius: 20px !important;
+}
+
+.TableContainer tr td:nth-child(6) {
+    border-top-right-radius: 20px !important;
+    border-bottom-right-radius: 20px !important;
+}
+
+
+/* New styles to add margin between rows */
+.TableContainer tr {
+    display: block;
+    margin-bottom: 10px; /* Adjust the value to increase/decrease the margin */
+}
+
+.TableContainer tr td {
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+    position: relative;
+}
+.NamePayment{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+}
+
+
+@media (max-width:1062px) {
+    .TableContainer .NamePayment::after {
+        content: attr(data-content);
+        position: absolute;
+        top: -100%;
+        left: 0;
+        background-color: var(--color-pink);
+    }
+    
+    .TableContainer .NamePayment:hover::after ,
+    .TableContainer .NamePayment:hover td{
+        top: 2px;
+        overflow: visible;
+        z-index: 10;
+        padding: 5px;
+      
+
+    }
+    td:hover  {
+        overflow: visible;
+    }
+}

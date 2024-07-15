@@ -2,7 +2,7 @@ import React from 'react';
 import './Sidebar.css';
 import SideBarImage from '../../Assets/images/INFANCIA_LOGO.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressCard, faChalkboard, faChildren, faComments, faCreditCard, faFileCircleCheck, faHandPointer, faHandPointUp, faHome, faNewspaper, faRightFromBracket, faUserGroup, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { faAddressCard, faCashRegister, faChalkboard, faChildren, faComments, faCreditCard, faCreditCardAlt, faFileCircleCheck, faHandPointer, faHandPointUp, faHome, faNewspaper, faRightFromBracket, faUserGroup, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 function Sidebar({ isOpen, toggleSidebar }) {
   return (
@@ -47,20 +47,29 @@ function Sidebar({ isOpen, toggleSidebar }) {
         </li>
         <li>
             <FontAwesomeIcon icon={faHandPointUp}/>
-            Parent req...
+            Parent request
         </li>
         <li>
             <FontAwesomeIcon icon={faCreditCard}/>
-            Payment
+            Payment history
         </li>
         <li>
-            <FontAwesomeIcon icon={faComments}/>
-            FAQ
+
+            <Link to="/Paymentrequest" className='nav-link'>
+                <FontAwesomeIcon icon={faCashRegister}/>
+                Payment request
+            </Link>
+            
         </li>
         <li>
             <FontAwesomeIcon icon={faFileCircleCheck}/>
             Nursery Policy
         </li>
+        <li>
+            <FontAwesomeIcon icon={faComments}/>
+            FAQ
+        </li>
+       
         
         <li>
             <FontAwesomeIcon icon={faRightFromBracket}/>
