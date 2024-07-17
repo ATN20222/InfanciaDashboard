@@ -86,7 +86,24 @@
 
 }
 
-
+.SelectAll{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.InputSelectAll{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.InputSelectAll{
+    font-size: 14px;
+    padding: 5px;
+}
+.Payed svg{
+    color: var(--color-green);
+}
 @media (max-width:1062px) {
     .TableContainer .NamePayment::after {
         content: attr(data-content);
