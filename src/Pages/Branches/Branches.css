@@ -1,0 +1,61 @@
+.BranchMobNo span{
+    background-color: var(--color-pink);
+    color: white;
+    border-radius: 25px;
+    padding: 8px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 5%;
+}
+.BranchMobNo input{
+    margin-left: 5px;
+    width: 98%;
+}
+.RecordEmpTable{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+@media (max-width:990px) {
+    .BranchTableSpan{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+    }
+    .BranchTableSpan:hover{
+        overflow: visible;
+    }
+    
+     .TableContainer{
+        overflow: visible !important;
+    }
+    .BranchTableSpan::after {
+        content: attr(data-content);
+        padding: 10px;
+        border-radius: 20px;
+        position: absolute;
+        top: -20px;
+        right: -50px;
+        background-color: rgba(0, 0, 0, 0.619);
+        color: white;
+        visibility: hidden; 
+        opacity: 0;  
+        transition: visibility 0s, opacity 0.2s linear; 
+    }
+    
+    .BranchTableSpan:hover::after {
+        visibility: visible;  
+        opacity: 1;  
+        padding: 10px;
+        border-radius: 10px;
+        position: absolute;
+        top: -20px;
+        right: -10px;
+        background-color: black;
+        color: white;
+        z-index: 10;
+    }
+    .TableContainer:hover .SubjectsContainer {
+        overflow: visible !important;
+    }
+}

@@ -50,8 +50,11 @@ function Sidebar({ isOpen, toggleSidebar }) {
             Parent request
         </li>
         <li>
-            <FontAwesomeIcon icon={faCreditCard}/>
-            Payment history
+            <Link to="/paymenthistory" className='nav-link'>
+                <FontAwesomeIcon icon={faCreditCard}/>
+                Payment history
+            </Link>
+            
         </li>
         <li>
 

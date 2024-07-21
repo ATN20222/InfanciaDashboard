@@ -61,7 +61,7 @@
     border-bottom-left-radius: 20px !important;
 }
 
-.TableContainerRequest tr td:nth-child(6) {
+.TableContainerHistoryPayment tr td:nth-child(6) {
     border-top-right-radius: 20px !important;
     border-bottom-right-radius: 20px !important;
 }
@@ -104,12 +104,29 @@
 .Payed svg{
     color: var(--color-green);
 }
+.SearchPayment{
+    margin-right: 5px;
+    width: 50%;
+}
+.TotalPayContainer{
+    border: 1px solid var(--color-pink);
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 10px;
+    padding: 10px;
+    padding-left: 25px;
+    border-radius: 15px;
+    text-align: start;
+
+}
 @media (max-width:1062px) {
     .TableContainer .NamePayment::after {
         content: attr(data-content);
         position: absolute;
         top: -100%;
         left: 0;
+        border-radius: 15px;
+        padding: 5px;
         background-color: var(--color-pink);
     }
     

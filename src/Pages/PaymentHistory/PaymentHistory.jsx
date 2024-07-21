@@ -1,13 +1,13 @@
-import { faBell, faCommentDollar, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faCommentDollar, faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import './PaymentRequestItem.css';
-import AddRequestModal from "./AddRequestModal";
+import './PaymentHistory.css';
 
-const PaymentRequestItem = () => {
+
+const PaymentHistory = () => {
     const tableData = [
-        { id: 1, name: "Ahmed hamed", paymentId: 20184, amount: "20$", date: "20-8-2024" ,  payed:true},
-        { id: 2, name: "Ahmed hamed", paymentId: 20184, amount: "20$", date: "20-8-2024" ,  payed:false}
+        { id: 1, name: "Ahmed hamed", paymentId: 201, amount: "20$", class:"Class A", date: "20-8-2024" , service:"Travel"},
+        { id: 2, name: "Ahmed hamed", paymentId: 204, amount: "20$", class:"Class B", date: "20-8-2024" , service:"Travel"}
     ];
 
     const [selectedRows, setSelectedRows] = useState([]);
@@ -30,41 +30,32 @@ const PaymentRequestItem = () => {
             }
         });
     };
-
-    const [isOverlayOpen, setIsOverlayOpen] = useState(false);
-
-    
-
-    const handleAddRequest = (className) => {
-        
-      };
     
 
     return (
         <section className="SecondSliderSection ManageClassesCompnent">
-             <AddRequestModal
-                isOpen={isOverlayOpen}
-                onClose={() => setIsOverlayOpen(false)}
-                onAddRequest={handleAddRequest}
-            />
+             
             <div className="Container HeadContainer">
                 <div className="row">
                     <div className="col-lg-6 col-md-6 col-sm-6 col-6">
                         <div className="HeadLeftItem">
-                            Payment Request
+                            Payment History
                         </div>
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-6 col-6 HeadRightCol">
+                            <div className="SearchPayment SearchCol">
+                                <input type="text" className="FormInput" name="" id="" placeholder="Search..."/>
+                            </div>
                         <div className="HeadRightItem">
-                            <div className="CirclePlus" onClick={() => setIsOverlayOpen(true)}>
-                                <FontAwesomeIcon icon={faPlus} />
+                            <div className="CirclePlus">
+                                <FontAwesomeIcon icon={faSearch} />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="SubjectsContainer">
-                <div className="SelectAllContainer">
+                {/* <div className="SelectAllContainer">
                     <div className="SelectAll">
                         <div className="InputSelectAll">
                             <input
@@ -77,34 +68,37 @@ const PaymentRequestItem = () => {
                             <label htmlFor="SelectAll">Select All</label>
                         </div>
                     </div>
-                </div>
-                <div className="table-responsive TableContainer TableContainerRequest">
+                </div> */}
+                <div className="table-responsive TableContainer TableContainerHistoryPayment">
                     <table className="table">
                         <tbody>
                             {tableData.map((row) => (
                                 <tr key={row.id}>
-                                    <td>
+                                    {/* <td>
                                         <input
                                             type="checkbox"
                                             checked={selectedRows.includes(row.id)}
                                             onChange={() => handleRowChange(row.id)}
                                         />
-                                    </td>
+                                    </td> */}
                                     <td className="NamePayment" data-content={row.name}>{row.name}</td>
-                                    <td>{row.paymentId}</td>
+                                    <td className="NamePayment" data-content={row.paymentId} >{row.paymentId}</td>
+                                    <td  className="NamePayment" data-content={row.class} >{row.class}</td>
                                     <td>{row.amount}</td>
                                     <td className="NamePayment" data-content={row.date}>{row.date}</td>
-                                    <td className={`${row.payed?"Payed":""}`}>
-                                        <FontAwesomeIcon icon={faCommentDollar} />
-                                    </td>
+                                    <td className="NamePayment" data-content={row.service}>{row.service}</td>
+                                    
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
             </div>
+            <div className="TotalPayContainer">
+                <span>Total</span>
+            </div>
         </section>
     );
 };
 
-export default PaymentRequestItem;
+export default PaymentHistory;

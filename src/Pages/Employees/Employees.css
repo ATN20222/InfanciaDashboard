@@ -7,12 +7,12 @@
     border-spacing: 0;
 }
 
-.TableContainer td {
+.TableContainerEmployees td {
     background-color: var(--color-pink) !important;
     color: white !important;
     padding: 10px;
     border: none;
-    width: calc(100%/6);
+    width: calc(100%/3);
 }
 .TableContainer td input[type="checkbox"]{
     appearance: none;
@@ -61,7 +61,7 @@
     border-bottom-left-radius: 20px !important;
 }
 
-.TableContainerRequest tr td:nth-child(6) {
+.TableContainerEmployees tr td:nth-child(3) {
     border-top-right-radius: 20px !important;
     border-bottom-right-radius: 20px !important;
 }
@@ -73,17 +73,22 @@
     margin-bottom: 10px; /* Adjust the value to increase/decrease the margin */
 }
 
-.TableContainer tr td {
+.TableContainerEmployees tr td {
     display: inline-block;
     margin: 0;
     vertical-align: middle;
     position: relative;
+    height: 46px;
 }
 .NamePayment{
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 
+}
+.AvatarTd span{
+    display: flex;
+    align-items: center;
 }
 
 .SelectAll{
@@ -104,12 +109,54 @@
 .Payed svg{
     color: var(--color-green);
 }
+.SearchPayment{
+    margin-right: 5px;
+    width: 50%;
+}
+
+.EmpName{
+    display: flex;
+    align-items: center;
+}
+.AvatarCol{
+    width: 10% !important;
+}
+.NameCol{
+    width: 80% !important;
+}
+.avatar{
+    min-width: 30px;
+    min-height: 30px;
+    background-color: var(--color-blue);
+    border-radius: 50%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.RecordEmpTable{
+    background-color: var(--color-pink);
+    color: white;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 20px;
+}
+.TableContainerEmployees{
+    display: flex;
+    justify-content: center;
+}
+.TableContainerEmployees>.container{
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+    min-width: 97% !important;
+}
 @media (max-width:1062px) {
     .TableContainer .NamePayment::after {
         content: attr(data-content);
         position: absolute;
         top: -100%;
         left: 0;
+        border-radius: 15px;
+        padding: 5px;
         background-color: var(--color-pink);
     }
     
