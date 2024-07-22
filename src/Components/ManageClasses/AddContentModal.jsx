@@ -25,7 +25,7 @@ const AddContentModal = ({ isOpen, onClose, onAddContent }) => {
                     <form className="add-class-form">
                         <label>
                            
-                            <textarea type="text" name="Newsletter" className='ClassNameInput NewsletterDescription' placeholder='Newsletter description...' />
+                            <textarea type="text" name="Newsletter" className='ClassNameInput NewsletterDescription' placeholder='Subject description...' />
                         </label>
                        
                         <div className="AttachImage">

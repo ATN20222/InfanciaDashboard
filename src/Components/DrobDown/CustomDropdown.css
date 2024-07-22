@@ -66,3 +66,19 @@
     color:var(--color-pink) !important;
 
 }
+.dropdown2{
+    max-height: 150px;
+    overflow-y: scroll;
+}
+.dropdown2::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; 
+}
+
+.dropdown2 {
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
+}
+.dropdown-header2{
+    border-radius: 10px !important;
+}

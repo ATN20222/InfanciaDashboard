@@ -12,6 +12,7 @@ import PaymentRequest from './Pages/PaymentRequest/PaymentRequest';
 import PaymentHistory from './Pages/PaymentHistory/PaymentHistory';
 import Employees from './Pages/Employees/Employees';
 import Branches from './Pages/Branches/Branches';
+import NewsLetter from './Pages/NewsLetter/NewsLetter';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -39,6 +40,7 @@ function App() {
               <Route path='/paymenthistory' element={<PaymentHistory />} />
               <Route path='/employees' element={<Employees />} />
               <Route path='/branches' element={<Branches />} />
+              <Route path='/newsletter' element={<NewsLetter />} />
             </Routes>
         </div>
         

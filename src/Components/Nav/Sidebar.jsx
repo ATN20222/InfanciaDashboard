@@ -42,8 +42,13 @@ function Sidebar({ isOpen, toggleSidebar }) {
             Meals
         </li>
         <li>
-            <FontAwesomeIcon icon={faNewspaper}/>
-            Newsletter
+
+            <Link to="/newsletter" className='nav-link'>
+                <FontAwesomeIcon icon={faNewspaper}/>
+                Newsletter
+            </Link>
+
+            
         </li>
         <li>
             <FontAwesomeIcon icon={faHandPointUp}/>
