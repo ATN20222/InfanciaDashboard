@@ -38,8 +38,11 @@ function Sidebar({ isOpen, toggleSidebar }) {
             Children
         </li>
         <li>
-            <FontAwesomeIcon icon={faUtensils}/>
-            Meals
+            <Link to="/meals" className='nav-link'>
+                <FontAwesomeIcon icon={faUtensils}/>
+                Meals
+            </Link>
+            
         </li>
         <li>
 
@@ -70,12 +73,19 @@ function Sidebar({ isOpen, toggleSidebar }) {
             
         </li>
         <li>
-            <FontAwesomeIcon icon={faFileCircleCheck}/>
-            Nursery Policy
+            <Link to="/nurserypolicy" className='nav-link'>
+                <FontAwesomeIcon icon={faFileCircleCheck}/>
+                Nursery Policy
+            </Link>
+            
         </li>
         <li>
-            <FontAwesomeIcon icon={faComments}/>
-            FAQ
+
+            <Link to="/faq" className='nav-link'>
+                <FontAwesomeIcon icon={faComments}/>
+                FAQ
+            </Link>
+           
         </li>
        
         

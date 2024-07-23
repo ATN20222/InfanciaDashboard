@@ -43,56 +43,67 @@ const responsive = {
     }
   };
 
-  const CustomPrevButton = ({ onClick }) => (
-    <button className='Center CustomPrevBtn' onClick={onClick}>
+  const CustomPrevButton = ({ onClick , Class }) => (
+    <button className={`Center CustomPrevBtn ${Class}`} onClick={onClick}>
         <FontAwesomeIcon icon={faCaretLeft}/>
     </button>
   );
 
-  const CustomNextButton = ({ onClick }) => (
-    <button className='Center CustomNextBtn' onClick={onClick}>
+  const CustomNextButton = ({ onClick , Class }) => (
+    <button className={`Center CustomNextBtn ${Class}`} onClick={onClick}>
         <FontAwesomeIcon icon={faCaretRight}/>
     </button>
   );
 
-function Slider() {
+function Slider({IsMeals}) {
   return (
     <section className='SecondSliderSection'>
-          <div className="Container">
+          <div className={`Container ${IsMeals?"ClassesMeals":""}`}>
+            {IsMeals?<div className="SelectAllClasses">
+              <input type="checkbox" id='SelectAllClasses' />
+
+              <label htmlFor="SelectAllClasses">
+
+                  Select All
+              </label>
+            </div>:<></>
+            
+            }
+            
             <div className="slider-container ">
                 <Carousel 
                     responsive={responsive} 
                     infinite={true}  
-                    customLeftArrow={<CustomPrevButton/>}
-                    customRightArrow={<CustomNextButton/>}
+                    customLeftArrow={<CustomPrevButton Class="WithSelectAllPrev"/>}
+                    customRightArrow={<CustomNextButton Class="WithSelectAllNext" />}
                     
                 >
-                    <div className="class-item ActiveClassItem">Class A</div>
-                    <div className="class-item">Class B</div>
-                    <div className="class-item">Class C</div>
-                    <div className="class-item">Class D</div>
-                    <div className="class-item">Class E</div>
-                    <div className="class-item">Class F</div>
-                    <div className="class-item">Class G</div>
-                    <div className="class-item">Class H</div>
-                    <div className="class-item">Class H</div>
-                    <div className="class-item">Class E</div>
-                    <div className="class-item">Class F</div>
-                    <div className="class-item">Class G</div>
-                    <div className="class-item">Class H</div>
-                    <div className="class-item">Class H</div>
-                    <div className="class-item">Class H</div>
-                    <div className="class-item">Class E</div>
-                    <div className="class-item">Class F</div>
-                    <div className="class-item">Class G</div>
-                    <div className="class-item">Class H</div>
-                    <div className="class-item">Class H</div>
-                    <div className="class-item">Class H</div>
-                    <div className="class-item">Class E</div>
-                    <div className="class-item">Class F</div>
-                    <div className="class-item">Class G</div>
-                    <div className="class-item">Class H</div>
-                    <div className="class-item">Class H</div>
+                    <div className={`class-item ActiveClassItem ${IsMeals?"ClassItemWithSelectAll":""} `}>Class A</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class B</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class C</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class D</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class E</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class F</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class G</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class E</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class F</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class G</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class E</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class F</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class G</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class E</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class F</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class G</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
                 </Carousel>
                 <div className="SliderHr"></div>
                 <div className="info">

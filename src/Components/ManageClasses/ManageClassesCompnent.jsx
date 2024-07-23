@@ -1,10 +1,15 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "../Slider/Slider";
 import AddClassModal from "./AddClassModal";
-const ManageClassesCompnent = ()=>{
-
+const ManageClassesCompnent = ({IsMeals})=>{
+    const [isMeals ,setIsMeals] = useState(false);
+    useEffect(()=>{
+        if(IsMeals){
+            setIsMeals(true);
+        }
+    },[]);
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
     
@@ -21,7 +26,7 @@ const ManageClassesCompnent = ()=>{
                 onClose={() => setIsOverlayOpen(false)}
                 onAddClass={handleAddClass}
             />
-            <div className="Container HeadContainer">
+            <div className={`Container HeadContainer`}>
                     <div className="row">
                         <div className="col-lg-6 col-md-6 col-sm-6 col-6">
                             <div className="HeadLeftItem">
@@ -37,7 +42,7 @@ const ManageClassesCompnent = ()=>{
                         </div>
                     </div>
                 </div>
-                <Slider/>
+                <Slider IsMeals={isMeals}/>
         </section>
     );
 }

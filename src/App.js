@@ -13,6 +13,9 @@ import PaymentHistory from './Pages/PaymentHistory/PaymentHistory';
 import Employees from './Pages/Employees/Employees';
 import Branches from './Pages/Branches/Branches';
 import NewsLetter from './Pages/NewsLetter/NewsLetter';
+import FAQ from './Pages/FAQ/FAQ';
+import NurseryPolicy from './Pages/NurseryPolicy/NurseryPolicy';
+import Meals from './Pages/Meals/Meals';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -41,6 +44,9 @@ function App() {
               <Route path='/employees' element={<Employees />} />
               <Route path='/branches' element={<Branches />} />
               <Route path='/newsletter' element={<NewsLetter />} />
+              <Route path='/faq' element={<FAQ />} />
+              <Route path='/nurserypolicy' element={<NurseryPolicy />} />
+              <Route path='/meals' element={<Meals />} />
             </Routes>
         </div>
         

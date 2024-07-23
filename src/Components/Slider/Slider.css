@@ -87,3 +87,19 @@
     border: none !important;
     outline: none !important;
   }
+  .WithSelectAllNext{
+    top: 4%;
+    right: 0px;
+    height: 100%;
+    margin: 0 ;
+  }
+  .WithSelectAllPrev{
+    top: 4%;
+    left: 0px;
+    height: 100%;
+    margin: 0 ;
+
+  }
+  .ClassItemWithSelectAll{
+    font-size: 14px;
+  }

@@ -1,0 +1,91 @@
+.FAQItemCol{
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+.FAQItem{
+    position: relative;
+    overflow: hidden;
+}
+.DeleteFAQ{
+    position: absolute;
+    background-color: var(--color-pink);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    width: 50px;
+    height: 100%;
+    right:50%;
+    bottom: -100%;
+    /* border-radius: 10px; */
+    transition: all 0.1s linear;
+    
+}
+.DeleteFAQ svg{
+    color: white;
+}
+
+.FAQQuestCol:hover .DeleteFAQ{
+    cursor: pointer;
+    bottom: 0%;
+}
+.FAQItem{
+    border: 1px solid var(--color-pink);
+    border-radius: 10px;
+}
+.FAQQuestCol{
+    text-align: justify;
+}
+.FAQQuestCol{
+    padding: 10px;
+}
+.FAQQuestCol span{
+    color: #787878;
+    font-weight: 700;
+}
+.FAQDrobCol{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    cursor: pointer;
+
+}
+.FAQDrobCol svg{
+    color: var(--color-pink);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.FAQAnswerItem{
+    text-align: start;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+
+}
+.FAQAnswerItem p{
+    position: relative;
+    font-size: 15px;
+    padding-left: 10px;
+    padding-right: 100px;
+    margin-bottom: 0;
+    color: #787878;
+    
+}
+.FAQAnswerItem p::after{
+    content: " ";
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    background-color: var(--color-pink);
+
+}
+.FAQItemInnerContainer{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.AnswerFAQ{
+    background-color: var(--color-light-blue);
+}
