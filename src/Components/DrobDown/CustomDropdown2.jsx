@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './CustomDropdown.css';
 
-const CustomDropdown2 = ({Options , DefaultValue}) => {
+const CustomDropdown2 = ({Options , DefaultValue , IsAddTeacher}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(DefaultValue);
 
@@ -18,7 +18,7 @@ const CustomDropdown2 = ({Options , DefaultValue}) => {
 
     return (
         <div className="dropdown-container">
-            <div className="dropdown-header dropdown-header2" onClick={toggleDropdown}>
+            <div className={`dropdown-header  ${IsAddTeacher?"ClassTeacherDropDown":'dropdown-header2'}`} onClick={toggleDropdown}>
                 {selectedOption}
                 <span className={`dropdown-arrow ${isOpen ? 'open' : ''}`}></span>
             </div>

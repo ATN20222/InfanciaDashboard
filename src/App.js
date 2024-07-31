@@ -16,6 +16,10 @@ import NewsLetter from './Pages/NewsLetter/NewsLetter';
 import FAQ from './Pages/FAQ/FAQ';
 import NurseryPolicy from './Pages/NurseryPolicy/NurseryPolicy';
 import Meals from './Pages/Meals/Meals';
+import ParentRequest from './Pages/ParentRequest/ParentRequest';
+import AddTeacher from './Components/Employees/AddTeacher';
+import Admins from './Pages/Admins/Admins';
+import Roles from './Pages/Roles/Roles';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -41,12 +45,16 @@ function App() {
               <Route path='/manageclasses' element={<ManageClasses />} />
               <Route path='/paymentrequest' element={<PaymentRequest />} />
               <Route path='/paymenthistory' element={<PaymentHistory />} />
-              <Route path='/employees' element={<Employees />} />
+              <Route path='/teachers' element={<Employees />} />
+              <Route path='/addteacher' element={<AddTeacher />} />
               <Route path='/branches' element={<Branches />} />
+              <Route path='/roles' element={<Roles />} />
               <Route path='/newsletter' element={<NewsLetter />} />
               <Route path='/faq' element={<FAQ />} />
               <Route path='/nurserypolicy' element={<NurseryPolicy />} />
               <Route path='/meals' element={<Meals />} />
+              <Route path='/parentrequest' element={<ParentRequest />} />
+              <Route path='/admins' element={<Admins />} />
             </Routes>
         </div>
         

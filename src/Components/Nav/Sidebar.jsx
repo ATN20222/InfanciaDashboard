@@ -34,10 +34,6 @@ function Sidebar({ isOpen, toggleSidebar }) {
             
         </li>
         <li>
-            <FontAwesomeIcon icon={faChildren}/>
-            Children
-        </li>
-        <li>
             <Link to="/meals" className='nav-link'>
                 <FontAwesomeIcon icon={faUtensils}/>
                 Meals
@@ -54,8 +50,11 @@ function Sidebar({ isOpen, toggleSidebar }) {
             
         </li>
         <li>
-            <FontAwesomeIcon icon={faHandPointUp}/>
-            Parent request
+            <Link to="/parentrequest" className='nav-link'>
+                <FontAwesomeIcon icon={faHandPointUp}/>
+                Parent request
+            </Link>
+           
         </li>
         <li>
             <Link to="/paymenthistory" className='nav-link'>

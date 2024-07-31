@@ -1,0 +1,23 @@
+.ChooseRoleItems{
+    margin-top: 10px;
+    border: 2px solid var(--color-pink);
+    height: 200px;
+    max-height: 200px;
+    overflow-y: scroll;
+    border-radius: 10px;
+    padding: 10px;  
+    scrollbar-width: none;  
+    -ms-overflow-style: none;  
+}
+
+
+.ChooseRoleItems::-webkit-scrollbar {
+    display: none;
+}
+.RoleItem{
+    display: flex;
+}
+.RoleItem label{
+    margin-left: 5px;
+    font-weight: 500;
+}

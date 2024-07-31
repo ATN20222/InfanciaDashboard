@@ -2,6 +2,7 @@ import { faBell, faCommentDollar, faPlus, faSearch } from "@fortawesome/free-sol
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import './Employees.css';
+import { Link } from "react-router-dom";
 
 
 const Employees = () => {
@@ -18,7 +19,7 @@ const Employees = () => {
                 <div className="row">
                     <div className="col-lg-6 col-md-6 col-sm-6 col-6">
                         <div className="HeadLeftItem">
-                            Employees
+                            Teachers
                         </div>
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-6 col-6 HeadRightCol">
@@ -27,7 +28,8 @@ const Employees = () => {
                             </div>
                         <div className="HeadRightItem">
                             <div className="CirclePlus">
-                                <FontAwesomeIcon icon={faPlus} />
+                                <Link to="/addteacher" className="text-decoration-none text-white"><FontAwesomeIcon icon={faPlus} /></Link>
+                                
                             </div>
                         </div>
                     </div>

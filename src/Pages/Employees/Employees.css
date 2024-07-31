@@ -149,6 +149,110 @@
     margin-right: 10px !important;
     min-width: 97% !important;
 }
+
+.FormContainer{
+    background-color: white;
+    max-height:100%  !important;
+    overflow: visible;
+}
+.AddTeacherRow{
+    justify-content: space-between !important;
+}
+.EmpFormCol{
+    position: relative;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+
+}
+.EmpInput{
+    border: none;
+    border: 2px solid var(--color-pink);
+    height: 35px !important;
+    border-radius: 30px;
+    width: 100%;
+    outline: none;
+}
+.EmpLabel{
+    position: absolute;
+    left: 20px;
+    top: 4px;
+    color: var(--color-pink);
+    font-weight: 600;
+}
+.EmpNameInput{
+    padding-left: 60px;
+}
+.EmpJobTitleInput{
+    padding-left: 75px;
+}
+.EmpEmailInput{
+    padding-left: 60px;
+}
+.EmpAddressInput{
+    padding-left: 80px;
+}
+.FormEmpCol{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+.EgEmpMob{
+    width: 100px;
+    color: white;
+    background-color: var(--color-pink);
+    border-radius: 30px;
+    height: 35px;
+    margin-right: 5px;
+    font-size: 14px;
+
+}
+.EmpMobFormCol{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.EmpMobLabel{
+    left: 110px;
+}
+.EmpMobInput{
+    padding-left: 110px;
+}
+.TeacherManagement{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: var(--color-pink);
+    color: white;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    font-weight: 600;
+    font-size: 16px;
+}
+@media (max-width:1600px) {
+    .EmpMobLabel{
+        left:100px;
+    }
+    .EmpMobInput{
+        padding-left: 115px;
+    }
+}
+@media (max-width:1250px) {
+    .EmpMobLabel{
+        left:100px;
+    }
+    .EmpMobInput{
+        padding-left: 110px;
+    }
+}
+@media (max-width:990px) {
+    .EmpMobLabel{
+        left:110px;
+    }
+    .EmpMobInput{
+        padding-left: 110px;
+    }
+}
 @media (max-width:1062px) {
     .TableContainer .NamePayment::after {
         content: attr(data-content);
@@ -171,5 +275,21 @@
     }
     td:hover  {
         overflow: visible;
+    }
+}
+@media (max-width:480px) {
+    .EmpMobLabel{
+        left:90px;
+    }
+    .EmpMobInput{
+        padding-left: 100px;
+    }
+}
+@media (max-width:360px) {
+    .EmpMobLabel{
+        left:90px;
+    }
+    .EmpMobInput{
+        padding-left: 110px;
     }
 }

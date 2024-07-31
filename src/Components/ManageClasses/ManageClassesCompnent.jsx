@@ -30,16 +30,20 @@ const ManageClassesCompnent = ({IsMeals})=>{
                     <div className="row">
                         <div className="col-lg-6 col-md-6 col-sm-6 col-6">
                             <div className="HeadLeftItem">
-                                Manage classes
+                                
+                                {IsMeals?"Meals":"Manage classes"}
                             </div>
                         </div>
-                        <div className="col-lg-6 col-md-6 col-sm-6 col-6 HeadRightCol">
+                        {!IsMeals&&
+                         <div className="col-lg-6 col-md-6 col-sm-6 col-6 HeadRightCol">
                             <div className="HeadRightItem">
                                 <div className="CirclePlus" onClick={()=>setIsOverlayOpen(true)}>
                                     <FontAwesomeIcon icon={faPlus}/>
                                 </div>
                             </div>
                         </div>
+                        }
+                       
                     </div>
                 </div>
                 <Slider IsMeals={isMeals}/>
