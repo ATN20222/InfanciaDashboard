@@ -20,6 +20,9 @@ import ParentRequest from './Pages/ParentRequest/ParentRequest';
 import AddTeacher from './Components/Employees/AddTeacher';
 import Admins from './Pages/Admins/Admins';
 import Roles from './Pages/Roles/Roles';
+import AddKid from './Pages/Kids/AddKid';
+import KidProfile from './Pages/Kids/KidProfile';
+import NurseryProfile from './Pages/NurseryProfile/NurseryProfile';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -55,6 +58,10 @@ function App() {
               <Route path='/meals' element={<Meals />} />
               <Route path='/parentrequest' element={<ParentRequest />} />
               <Route path='/admins' element={<Admins />} />
+              <Route path='/addkid' element={<AddKid />} />
+              <Route path='/kidProfile' element={<KidProfile />} />
+              <Route path='/NurseryProfile' element={<NurseryProfile />} />
+              
             </Routes>
         </div>
         

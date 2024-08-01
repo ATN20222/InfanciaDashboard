@@ -2,7 +2,7 @@ import React from 'react';
 import './Sidebar.css';
 import SideBarImage from '../../Assets/images/INFANCIA_LOGO.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressCard, faCashRegister, faChalkboard, faChildren, faComments, faCreditCard, faCreditCardAlt, faFileCircleCheck, faHandPointer, faHandPointUp, faHome, faNewspaper, faRightFromBracket, faUserGroup, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { faAddressCard, faCashRegister, faChalkboard, faChildren, faComments, faCreditCard, faCreditCardAlt, faFileCircleCheck, faHand, faHandPointer, faHandPointUp, faHome, faNewspaper, faRightFromBracket, faUserGroup, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 function Sidebar({ isOpen, toggleSidebar }) {
   return (
@@ -24,8 +24,12 @@ function Sidebar({ isOpen, toggleSidebar }) {
            
         </li>
         <li>
-            <FontAwesomeIcon icon={faUserGroup}/>
-            Nursery Profile</li>
+            <Link to="/nurseryprofile" className='nav-link'>
+                <FontAwesomeIcon icon={faUserGroup}/>
+                Nursery Profile
+            </Link>
+            
+        </li>
         <li>
         <Link to="/manageclasses" className='nav-link'>
             <FontAwesomeIcon icon={faChalkboard}/>
@@ -78,6 +82,14 @@ function Sidebar({ isOpen, toggleSidebar }) {
             </Link>
             
         </li>
+
+        <li>
+            <Link to="/roles" className='nav-link'>
+                <FontAwesomeIcon icon={faHand}/>
+                Roles
+            </Link>
+        </li>
+
         <li>
 
             <Link to="/faq" className='nav-link'>

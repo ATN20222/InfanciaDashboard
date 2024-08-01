@@ -55,32 +55,13 @@ const PaymentHistory = () => {
                 </div>
             </div>
             <div className="SubjectsContainer">
-                {/* <div className="SelectAllContainer">
-                    <div className="SelectAll">
-                        <div className="InputSelectAll">
-                            <input
-                                type="checkbox"
-                                name=""
-                                id="SelectAll"
-                                checked={selectedRows.length === tableData.length}
-                                onChange={handleSelectAllChange}
-                            />
-                            <label htmlFor="SelectAll">Select All</label>
-                        </div>
-                    </div>
-                </div> */}
+                
                 <div className="table-responsive TableContainer TableContainerHistoryPayment">
                     <table className="table">
                         <tbody>
                             {tableData.map((row) => (
                                 <tr key={row.id}>
-                                    {/* <td>
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedRows.includes(row.id)}
-                                            onChange={() => handleRowChange(row.id)}
-                                        />
-                                    </td> */}
+                                   
                                     <td className="NamePayment" data-content={row.name}>{row.name}</td>
                                     <td className="NamePayment" data-content={row.paymentId} >{row.paymentId}</td>
                                     <td  className="NamePayment" data-content={row.class} >{row.class}</td>

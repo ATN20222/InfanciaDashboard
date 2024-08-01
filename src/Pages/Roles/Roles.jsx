@@ -10,14 +10,14 @@ const Roles = () => {
         { id: 1,  Role: "Top Admin"},
         { id: 2,  Role: "Top Admin"}
     ];
-    const [isOverlayOpen, setIsOverlayOpen] = useState(false);
-
+    
     const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
-   
+    
     const handleDelete = (item) => {
         
     };
-
+    
+    const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const handleAddRequest = (className) => {
         
       };
@@ -39,7 +39,7 @@ const Roles = () => {
                 <div className="row">
                     <div className="col-lg-6 col-md-6 col-sm-6 col-6">
                         <div className="HeadLeftItem">
-                            Admins
+                            Roles
                         </div>
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-6 col-6 HeadRightCol">
@@ -75,8 +75,8 @@ const Roles = () => {
                                                             <FontAwesomeIcon icon={faPen}/>
                                                         </span>
                                                     </div>
-                                                    <div className="col-lg-2 col-md-2 col-sm-2 col-2 Center " onClick={()=>setIsDeleteOverlayOpen(true)}>
-                                                        <span className="DeleteAdmin">
+                                                    <div className="col-lg-2 col-md-2 col-sm-2 col-2 Center ">
+                                                        <span className="DeleteAdmin" onClick={()=>setIsDeleteOverlayOpen(true)}>
                                                             <FontAwesomeIcon icon={faTrash}/>
                                                         </span>
                                                     </div>

@@ -1,0 +1,140 @@
+
+.NurseryProfileTopPart{
+    background-image: url("../../Assets/images/NurseryProfileImageTop.jpg");
+    background-size: cover;
+    background-position: center;
+    border-radius: 60px;
+    border-bottom-left-radius:30px;
+    border-bottom-right-radius: 30px;
+    min-height: 270px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+.NurseryProfileImage{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.NurseryProfileImage img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.NurseryProfileTopPartCol{
+    margin-top: 10px !important;
+    padding: 10px;
+    flex-direction: column;
+}
+.NurseryProfileTitle{
+    margin-top: 10px;
+    font-size: 16px;
+    color: #00FFFF;
+}
+.NurseryRating{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 30px;
+}
+.NurseryRating svg{
+    color: #FFD300;
+}
+.RatingNumber{
+    color: var(--color-pink);
+    font-weight: 500;
+    margin-left: 2px;
+    font-size: 14px;
+}
+.RatingNurseryCol{
+    display: flex;
+    justify-content: space-between;
+}
+.NurseryProfileRatingCol{
+    display: flex;
+    align-items: center;
+    width: calc(100%/2 - 100px);
+    margin-top: 20px !important;
+    margin-bottom:20px !important;
+}
+.NurseryRatingText{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.NurseryProfileLine{
+    height: 1px;
+    width: 100%;
+    background-color: #00FFFF;
+}
+.NuseryProfileTabbing{
+    background-color: var(--color-pink);
+    color: white;
+    margin-top: 20px !important;
+    border-radius: 50px !important;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 600;
+}
+.NuseryProfileTabbing span{
+    cursor: pointer;
+}
+.NuseryProfileTabbingCol{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.NurseryContainer{
+    margin-top: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
+    padding-bottom: 20px;
+}
+.NurseryGallery{
+    background-color: white;
+    min-height: 120px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.AddGallery{
+    border-bottom: 2px solid #00FFFF;
+    padding: 10px;
+}
+.AddGallery span{
+    cursor: pointer;
+}
+.GalleryItem{
+    height: 200px;
+    margin: 20px !important;
+    min-width: 200px;
+}
+.GalleryImage{
+    background-color: #ddd;
+    width: 100%;
+    height: 100%;
+    border-radius: 35px ;
+}
+.AlbumName{
+    margin-top:5px ;
+    margin-bottom: 5px;
+}
+
+@media (max-width:486px) {
+    .NuseryProfileTabbing{
+        font-size: 14px;
+        font-weight: 600;
+    }
+}

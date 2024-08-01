@@ -1,0 +1,197 @@
+.KidFirstNameInput{
+    padding-left: 99px;
+}
+.KidDataCol label{
+    padding-left: 10px;
+}
+.KidLastNameInput{
+    padding-left: 125px;
+}
+.KidEmailInput{
+    padding-left: 70px;
+}
+.KidAddressInput{
+    padding-left: 90px;
+}
+.GenderContainer{
+    border: 2px solid var(--color-pink);
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+.GenderContainer .Boy , .GenderContainer .Girl{
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid var(--color-pink);
+    height: fit-content;
+    border-radius: 30px;
+    color: var(--color-blue);
+    font-weight: 900;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.1s linear;
+}
+.TopInputTitle{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: var(--color-pink);
+    color: white;
+    width: 92%;
+    margin-left: auto;
+    margin-right: auto;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    font-weight: 600;
+    font-size: 16px;
+
+}
+.BirthDateContainer{
+    border: 2px solid var(--color-pink);
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.BirthDateContainer>div{
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid var(--color-pink);
+    height: fit-content;
+    border-radius: 30px;
+    
+    padding-left: 15px;
+    padding-right: 15px;
+    width: calc(100%/4);
+}
+.BirthDateContainer>div input{
+    border: none;
+    outline: none;
+    width: 80%;
+    color: var(--color-blue);
+    font-weight: 900;
+    font-size: 16px;
+    text-align: center;
+}
+.BirthDateContainer>div input::placeholder{
+    color: var(--color-blue);
+    font-weight: 900;
+}
+
+.SelectedGender{
+    background-color: var(--color-pink);
+    color: white !important;
+}
+
+.ParentsInformationHeader{
+    color: var(--color-blue);
+    text-align: start;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important  ;
+}
+.KidParentData input{
+    border-color: var(--color-blue);
+}
+.KidParentData label{
+    color: var(--color-blue);
+    padding-left: 10px;
+}
+.FathertNameInput{
+    padding-left: 120px;
+}
+.FathertMobInput{
+    padding-left: 128px;
+}
+.FathertJobInput{
+    padding-left: 110px;
+}
+.MotherNameInput{
+    padding-left: 130px;
+}
+.MotherMobInput{
+    padding-left: 140px;
+
+}
+.MotherJobInput{
+    padding-left: 115px;
+
+}
+.HasMedicalCase{
+    flex-direction: row;
+    align-items: center;
+}
+.HasMedicalCaseCol{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+.HasMedicalCase label{
+    margin-left: 10px;
+    font-size: 16px !important;
+    font-weight: 600;
+}
+.KidIDCodeInput{
+    padding-left: 90px;
+}
+.KidGenderInput{
+    padding-left: 80px;
+}
+.KidBirthDateInput{
+    padding-left: 105px;
+}
+.EmergencyPhoneInput{
+    padding-left: 160px;
+}
+.PaymentKidContainer{
+    padding: 20px;
+    border-radius: 20px;
+    max-height: 180px;
+    overflow: hidden;
+    overflow-y: scroll;
+    background-color: var(--color-light-blue);
+}
+
+.PaymentKidContainer::-webkit-scrollbar {
+    width:2px;
+    background-color: #ffffff;
+  }
+  
+  .PaymentKidContainer::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+  
+  .PaymentKidContainer::-webkit-scrollbar-thumb {
+    background-color: var(--color-pink);
+  }
+  
+  
+  .PaymentKidContainer::-moz-scrollbar {
+    width:2px;
+    background-color: #ffffff;
+  }
+  
+  .PaymentKidContainer::-moz-scrollbar-track {
+    border-radius: 10px;
+  }
+  
+  .PaymentKidContainer::-ms-scrollbar {
+    width:2px;
+    background-color: white;
+  }
+  
+  .PaymentKidContainer::-ms-scrollbar-track {
+    border-radius: 10px;
+  }
+  
+  .PaymentKidContainer::-ms-scrollbar-thumb {
+    /* border-radius: 10px; */
+    background-color:var(--color-pink);
+  }
+@media (max-width:480px) {
+    .BirthDateContainer>div input{
+        font-size: 14px;
+        width: 100%;
+
+    }
+}
