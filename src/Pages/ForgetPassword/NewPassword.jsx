@@ -1,8 +1,10 @@
-import React from "react";
-import './Login.css'
+import React, { useEffect } from "react";
 import InfanciaLogo from '../../Assets/images/INFANCIA_LOGO.png'
 import { Link } from "react-router-dom";
-const Login = ()=>{
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+const NewPassword = ()=>{
+ 
     return(
         <div className="LoginMain">
             <div className="row">
@@ -16,8 +18,8 @@ const Login = ()=>{
                         <div className="row">
                             <div className="col-lg-12">
                                 <div className="Welcome">
-                                    <h3>Welcome</h3>
-                                    <span>Hey, welcome back to your special place </span>
+                                    <h3>Forgot Password?</h3>
+                                    <span>No Worries, we'll send you reset instructions.</span>
                                 </div>
                             </div>
 
@@ -26,31 +28,20 @@ const Login = ()=>{
                                 
                                 <div className="row Center">
                                     <div className="col-lg-12 FormInputCol">
-                                        <input type="email" className="FormInput" name="" id="Email" />
-                                        <label className="FormLabel" htmlFor="Email">Email : </label>
-                                    </div>
-                                    <div className="col-lg-12 FormInputCol">
                                         <input type="password" className="FormInput" name="" id="Password" />
                                         <label className="FormLabel" htmlFor="Password">Password : </label>
 
                                     </div>
-                                    <div className="col-lg-12 FormInputCol AfterPassword">
-                                        <div className="container">
-                                            <div className="row">
-                                                <div className="col-6 RememberCol">
-                                                    <input type="checkbox" className="Remember" name="" id="Remember" />
-                                                    <label className="" htmlFor="Remember">Remember me </label>
-                                                </div>
-                                                <div className="col-6 ForgetPasswordCol">
-                                                    <Link className="ForgetPassword" to="/ForgetPassword">Forgot password</Link>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div className="col-lg-12 FormInputCol">
+                                        <input type="password" className="FormInput ConfirmPassword" name="" id="ConfirmPassword" />
+                                        <label className="FormLabel" htmlFor="ConfirmPassword">Confirm Password : </label>
+
                                     </div>
+                                    
                                     <div className="col-lg-12 FormInputCol Center LoginBtnContainer">
                                         <button className=" LoginBtn">Login</button>
-                                        <span>
-                                            Don't have account?<Link className="RegisterLink" > register now</Link>
+                                        <span className="BackToLogin">
+                                            <Link className="RegisterLink" to="/Login" ><FontAwesomeIcon icon={faChevronLeft}/> Bach to login</Link>
                                         </span>
 
                                     </div>
@@ -69,4 +60,4 @@ const Login = ()=>{
         </div>
     );
 }   
-export default Login;
+export default NewPassword;

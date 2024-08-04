@@ -1,8 +1,9 @@
 import React from "react";
+import HomeCard from "../../Components/Home/HomeCard";
 const Home = ()=>{
     return(
         <div className="Home">
-            Home
+            <HomeCard/>
         </div>
     );
 }

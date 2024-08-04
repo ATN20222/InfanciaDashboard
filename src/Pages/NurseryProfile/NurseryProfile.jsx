@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import './NurseryProfile.css';
 import UserImage from '../../Assets/images/User.jpg'
 import Gallery from "../../Components/NurseryProfile/Gallery";
+import Reviews from "../../Components/NurseryProfile/Reviews";
+import BasicInfo from "../../Components/NurseryProfile/BasicInfo";
+import PaymentNurseryProfile from "../../Components/NurseryProfile/PaymentNurseryProfile";
 
 
 const NurseryProfile = () => {
@@ -67,7 +70,10 @@ const NurseryProfile = () => {
                 </div> 
             </div>
             
-           <Gallery/>
+           {/* <Gallery/> */}
+           {/* <Reviews/> */}
+           {/* <BasicInfo/> */}
+           <PaymentNurseryProfile/>
         </section>
     );
 };

@@ -20,6 +20,22 @@
     justify-content: center;
     align-items: center;
 }
+.NurseryReviewImage{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 70px;
+    min-height: 70px;
+}
+.NurseryReviewImage img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .NurseryProfileImage img{
     width: 100%;
     height: 100%;
@@ -108,13 +124,16 @@
     background-color: white;
     min-height: 120px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    position: relative;
 }
 .AddGallery{
     border-bottom: 2px solid #00FFFF;
     padding: 10px;
 }
-.AddGallery span{
+.AddGallery span {
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
 }
 .GalleryItem{
     height: 200px;
@@ -132,9 +151,164 @@
     margin-bottom: 5px;
 }
 
+.GalleryBackBtn{
+    position: absolute;
+    top: 3px;
+    left: 5px;
+}
+.ReviewItem{
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    margin: 20px !important;
+    margin-top: 10px;
+    padding: 20px;
+}
+.ReviewsContainer{
+    padding-top: 10px;
+}
+.NurseryReviewImage{
+    border: 1px solid black;
+}
+.ReviewImageAndHeader{
+    display: flex;
+}
+.ReviewTitle{
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-blue);
+}
+.ReviewItem{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ReviewText{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+    max-width: 80%;
+
+}
+.ReviewBody{
+    text-align: start;
+}
+.ReviewStars{
+    color: #FFD300;
+}
+.ContactInfo ul{
+    padding: 10px;
+    text-align: start;
+}
+.ProvidedServices{
+    text-align: start;
+}
+.ProvidedServices ul li{
+    margin: 10px;
+
+}
+.ContactInfo ul li{
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+.ContactInfo ul li svg{
+    color: var(--color-blue);
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+.HeaderInfo{
+    box-shadow: rgba(50, 50, 93, 0.25) 1px 0px 3px 0px;
+    text-align: center;
+}
+.AboutInfoText{
+    padding: 20px ;
+    padding-top: 10px;
+    text-align: start;
+}
+.ProvidedServices ul li svg{
+    width: 15px !important;
+    height: 15px !important;
+}
+.SubscribtionHeader{
+    color: var(--color-pink);
+    text-align: start;
+    padding: 10px;
+   
+}
+.SubscribtionHeader{
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+.SubscriptionItem .Title{
+    padding-left: 20px !important;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight:500 ;
+}
+
+.SubscriptionItem .Data{
+    padding-right: 20px !important;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight:500 ;
+}
+
+
+.SubscriptionItem{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #009fe337;
+}
+.SubscriptionItem:nth-child(4){
+
+    border-bottom: none;
+}
+.PaymentNurseryItem{
+    padding-bottom: 5px !important;
+}
+.NuseryPaymentHistory{
+    padding: 20px;
+}
 @media (max-width:486px) {
     .NuseryProfileTabbing{
         font-size: 14px;
         font-weight: 600;
+    }
+    .ReviewItem{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+    }
+    .ReviewImageAndHeader {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+    }
+    .ReviewText {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        max-width: 80%;
+    }
+    .ReviewBody {
+        text-align: center;
+    }
+    .ReviewStars {
+        margin-top: 15px;
     }
 }

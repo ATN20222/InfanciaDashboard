@@ -1,91 +1,65 @@
 import React, { useState } from "react";
 import AddGalleryModal from "./AddGalleryModal";
-const Gallery = ()=>{
-    const [isOverlayOpen, setIsOverlayOpen] = useState(false);
-    const handleAddGallery = (className) => {
-        
-      };
-    return(
-        <div className="NurseryContainer NurseryGallery">
-            <AddGalleryModal
-                isOpen={isOverlayOpen}
-                onClose={() => setIsOverlayOpen(false)}
-                onAddGallery={handleAddGallery}
-            />
-            <div className="AddGallery">
-                <span onClick={()=>setIsOverlayOpen(true)}>+ Add</span>
-            </div>
-            <div className="GalleryContainer">
-                <div className="container">
-                    <div className="row Center">
-                        <div className="col-lg-2 col-md-3 col-sm-4 col-6 GalleryItem">
-                            <div className="GalleryImage">
+import GalleryImages from "./GalleryImages"; // Import the component that shows images inside a gallery
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-                            </div>
-                            <span className="AlbumName">Album Name</span>
-                        </div>
+const Gallery = () => {
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const [selectedGallery, setSelectedGallery] = useState(null); // Track selected gallery
 
-                        <div className="col-lg-2 col-md-3 col-sm-4 col-6 GalleryItem">
-                            <div className="GalleryImage">
+  const handleAddGallery = (className) => {
+    // Handle adding gallery
+  };
 
-                            </div>
-                            <span className="AlbumName">Album Name</span>
-                        </div>
+  const handleGalleryClick = (gallery) => {
+    setSelectedGallery(gallery); // Set the clicked gallery as selected
+  };
 
-                        <div className="col-lg-2 col-md-3 col-sm-4 col-6 GalleryItem">
-                            <div className="GalleryImage">
+  const handleBackToGallery = () => {
+    setSelectedGallery(null); // Deselect gallery to go back to overview
+  };
 
-                            </div>
-                            <span className="AlbumName">Album Name</span>
-                        </div>
+  const galleries = [
+    { id: 1, name: "Album Name 1" },
+    { id: 2, name: "Album Name 2" },
+    { id: 3, name: "Album Name 3" },
+    // Add more gallery items here
+  ];
 
-                        <div className="col-lg-2 col-md-3 col-sm-4 col-6 GalleryItem">
-                            <div className="GalleryImage">
+  return (
+    <div className="NurseryContainer NurseryGallery">
+      <AddGalleryModal
+        isOpen={isOverlayOpen}
+        onClose={() => setIsOverlayOpen(false)}
+        onAddGallery={handleAddGallery}
+      />
+      <div className="AddGallery">
+        <span onClick={() => setIsOverlayOpen(true)}> <FontAwesomeIcon  icon={faPlus}/> Add</span>
+      </div>
 
-                            </div>
-                            <span className="AlbumName">Album Name</span>
-                        </div>
-                        <div className="col-lg-2 col-md-3 col-sm-4 col-6 GalleryItem">
-                            <div className="GalleryImage">
-
-                            </div>
-                            <span className="AlbumName">Album Name</span>
-                        </div>
-                        <div className="col-lg-2 col-md-3 col-sm-4 col-6 GalleryItem">
-                            <div className="GalleryImage">
-
-                            </div>
-                            <span className="AlbumName">Album Name</span>
-                        </div>
-                        <div className="col-lg-2 col-md-3 col-sm-4 col-6 GalleryItem">
-                            <div className="GalleryImage">
-
-                            </div>
-                            <span className="AlbumName">Album Name</span>
-                        </div>
-                        <div className="col-lg-2 col-md-3 col-sm-4 col-6 GalleryItem">
-                            <div className="GalleryImage">
-
-                            </div>
-                            <span className="AlbumName">Album Name</span>
-                        </div>
-                        <div className="col-lg-2 col-md-3 col-sm-4 col-6 GalleryItem">
-                            <div className="GalleryImage">
-
-                            </div>
-                            <span className="AlbumName">Album Name</span>
-                        </div>
-                        <div className="col-lg-2 col-md-3 col-sm-4 col-6 GalleryItem">
-                            <div className="GalleryImage">
-
-                            </div>
-                            <span className="AlbumName">Album Name</span>
-                        </div>
-                        
-                    </div>
+      {selectedGallery ? (
+        <GalleryImages gallery={selectedGallery} onBack={handleBackToGallery} />
+      ) : (
+        <div className="GalleryContainer">
+          <div className="container">
+            <div className="row Center">
+              {galleries.map((gallery) => (
+                <div
+                  key={gallery.id}
+                  className="col-lg-2 col-md-3 col-sm-4 col-6 GalleryItem"
+                  onClick={() => handleGalleryClick(gallery)}
+                >
+                  <div className="GalleryImage"></div>
+                  <span className="AlbumName">{gallery.name}</span>
                 </div>
+              ))}
             </div>
+          </div>
         </div>
-    );
-}
+      )}
+    </div>
+  );
+};
+
 export default Gallery;

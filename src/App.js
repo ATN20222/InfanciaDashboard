@@ -4,8 +4,8 @@ import './App.css';
 
 import Login from './Pages/Login/Login';
 import Register from './Pages/Register/Register';
-import Sidebar from './Components/Nav/Sidebar';
-import Header from './Components/Nav/Header';
+import MainLayout from './MainLayout';  // Import the MainLayout component
+
 import Home from './Pages/Home/Home';
 import ManageClasses from './Pages/ManageClasses/ManageClasses';
 import PaymentRequest from './Pages/PaymentRequest/PaymentRequest';
@@ -23,6 +23,9 @@ import Roles from './Pages/Roles/Roles';
 import AddKid from './Pages/Kids/AddKid';
 import KidProfile from './Pages/Kids/KidProfile';
 import NurseryProfile from './Pages/NurseryProfile/NurseryProfile';
+import WriteEmail from './Pages/ForgetPassword/WriteEmail';
+import PasswordReset from './Pages/ForgetPassword/PasswordReset';
+import NewPassword from './Pages/ForgetPassword/NewPassword';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -30,47 +33,101 @@ function App() {
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
+
   return (
     <Router>
-      <div className='App'>
-      <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
-        <div className={`content ${sidebarOpen ? 'shifted ' : 'Shift'}`}>
-          <Header/>
-          
-            <button className="toggle-button" onClick={toggleSidebar}>
-              {sidebarOpen ? 'Close' : 'Open'} Sidebar
-            </button>
-
-            <Routes>
-              <Route path='/Login' element={<Login />} />
-              <Route path='/Register' element={<Register />} />
-              <Route path='/' element={<Home />} />
-              <Route path='/manageclasses' element={<ManageClasses />} />
-              <Route path='/paymentrequest' element={<PaymentRequest />} />
-              <Route path='/paymenthistory' element={<PaymentHistory />} />
-              <Route path='/teachers' element={<Employees />} />
-              <Route path='/addteacher' element={<AddTeacher />} />
-              <Route path='/branches' element={<Branches />} />
-              <Route path='/roles' element={<Roles />} />
-              <Route path='/newsletter' element={<NewsLetter />} />
-              <Route path='/faq' element={<FAQ />} />
-              <Route path='/nurserypolicy' element={<NurseryPolicy />} />
-              <Route path='/meals' element={<Meals />} />
-              <Route path='/parentrequest' element={<ParentRequest />} />
-              <Route path='/admins' element={<Admins />} />
-              <Route path='/addkid' element={<AddKid />} />
-              <Route path='/kidProfile' element={<KidProfile />} />
-              <Route path='/NurseryProfile' element={<NurseryProfile />} />
-              
-            </Routes>
-        </div>
-        
-
-            
-
-          
-        
-      </div>
+      <Routes>
+        <Route path='/Login' element={<Login />} />
+        <Route path='/ForgetPassword' element={<WriteEmail />} />
+        <Route path='/Otp' element={<PasswordReset />} />
+        <Route path='/Register' element={<Register />} />
+        <Route path='/PasswordReset' element={<NewPassword />} />
+        <Route path='/' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <Home />
+          </MainLayout>
+        } />
+        <Route path='/manageclasses' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <ManageClasses />
+          </MainLayout>
+        } />
+        <Route path='/paymentrequest' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <PaymentRequest />
+          </MainLayout>
+        } />
+        <Route path='/paymenthistory' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <PaymentHistory />
+          </MainLayout>
+        } />
+        <Route path='/teachers' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <Employees />
+          </MainLayout>
+        } />
+        <Route path='/addteacher' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <AddTeacher />
+          </MainLayout>
+        } />
+        <Route path='/branches' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <Branches />
+          </MainLayout>
+        } />
+        <Route path='/roles' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <Roles />
+          </MainLayout>
+        } />
+        <Route path='/newsletter' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <NewsLetter />
+          </MainLayout>
+        } />
+        <Route path='/faq' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <FAQ />
+          </MainLayout>
+        } />
+        <Route path='/nurserypolicy' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <NurseryPolicy />
+          </MainLayout>
+        } />
+        <Route path='/meals' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <Meals />
+          </MainLayout>
+        } />
+        <Route path='/parentrequest' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <ParentRequest />
+          </MainLayout>
+        } />
+        <Route path='/admins' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <Admins />
+          </MainLayout>
+        } />
+        <Route path='/addkid' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <AddKid />
+          </MainLayout>
+        } />
+        <Route path='/kidProfile' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <KidProfile />
+          </MainLayout>
+        } />
+        <Route path='/NurseryProfile' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <NurseryProfile />
+          </MainLayout>
+        } />
+      </Routes>
     </Router>
   );
 }
