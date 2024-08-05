@@ -1,11 +1,25 @@
-import React from 'react';
+import React ,{useContext} from 'react';
 import './Sidebar.css';
 import SideBarImage from '../../Assets/images/INFANCIA_LOGO.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAddressCard, faCashRegister, faChalkboard, faChildren, faComments, faCreditCard, faCreditCardAlt, faFileCircleCheck, faHand, faHandPointer, faHandPointUp, faHome, faNewspaper, faRightFromBracket, faUserGroup, faUtensils } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthService } from '../../Service/Api';
+
 function Sidebar({ isOpen, toggleSidebar }) {
+
+    const navigate = useNavigate();
+    const handleLogout = async () => {
+        
+        try {
+          const userData = await AuthService.Logout();
+          navigate('/login'); 
+        } catch (error) {
+          console.error(error.message);
+        }
+      };
   return (
+    
     <div className={`sidebar ${isOpen ? 'open' : ''}`}>
       <button className="close-button" onClick={toggleSidebar}>×</button>
       <div className="SideBarImage Center">
@@ -101,9 +115,12 @@ function Sidebar({ isOpen, toggleSidebar }) {
        
         
         <li>
-            <FontAwesomeIcon icon={faRightFromBracket}/>
 
-            Logout
+            <div onClick={handleLogout} className='Center Logout'>
+                
+                <FontAwesomeIcon icon={faRightFromBracket}/>
+                Logout
+            </div>
             
         </li>
 

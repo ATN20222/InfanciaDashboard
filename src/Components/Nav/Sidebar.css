@@ -40,7 +40,9 @@
   .sidebar li svg {
     padding: 10px;
   }
-  
+  .Logout{
+    cursor: pointer;
+  }
   
   .close-button {
     background: none;

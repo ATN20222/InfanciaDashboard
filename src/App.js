@@ -33,7 +33,7 @@ function App() {
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
-
+ 
   return (
     <Router>
       <Routes>
@@ -43,6 +43,11 @@ function App() {
         <Route path='/Register' element={<Register />} />
         <Route path='/PasswordReset' element={<NewPassword />} />
         <Route path='/' element={
+          <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+            <Home />
+          </MainLayout>
+        } />
+         <Route path='/Home' element={
           <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
             <Home />
           </MainLayout>

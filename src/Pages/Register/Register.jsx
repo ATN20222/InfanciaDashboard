@@ -23,7 +23,7 @@ const Register = ()=>{
                                 <div className="col-lg-12 Center UploadRegisterImageCol">
                                     <div className="UploadRegisterImage Center">
                                         
-                                    <label htmlFor="NurseryImage" className="icon-label">
+                                    <label htmlFor="NurseryImage" className="icon-label text-center">
                                         <FontAwesomeIcon icon={faCamera} />
                                     </label>
                                     <input type="file" className="d-none" id="NurseryImage" />
