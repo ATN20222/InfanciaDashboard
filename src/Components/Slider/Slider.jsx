@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import './Slider.css';
@@ -55,7 +55,14 @@ const responsive = {
     </button>
   );
 
-function Slider({IsMeals}) {
+function Slider({IsMeals , Classes , HandleSelectClass}) {
+  const [ SelectedClass,SetSelectedClass ] = useState(null);
+  useEffect(() => {
+    if (Classes && Classes.length > 0) {
+        SetSelectedClass(Classes[0]);
+        HandleSelectClass(Classes[0]);
+    }
+}, [Classes]);
   return (
     <section className='SecondSliderSection'>
           <div className={`Container ${IsMeals?"ClassesMeals":""}`}>
@@ -78,36 +85,18 @@ function Slider({IsMeals}) {
                     customRightArrow={<CustomNextButton Class="WithSelectAllNext" />}
                     
                 >
-                    <div className={`class-item ActiveClassItem ${IsMeals?"ClassItemWithSelectAll":""} `}>Class A</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class B</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class C</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class D</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class E</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class F</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class G</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class E</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class F</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class G</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class E</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class F</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class G</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class E</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class F</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class G</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
-                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} `}>Class H</div>
+                  {Classes&&Classes.map((item)=>(
+
+                    <div className={`class-item ${IsMeals?"ClassItemWithSelectAll":""} ${SelectedClass?.id==item.id?"ActiveClassItem":""}`} onClick={()=>{HandleSelectClass(item); SetSelectedClass(item)}}>{item.name}</div>
+                  ))
+
+                  }
+                    {/* <div className={`class-item ActiveClassItem ${IsMeals?"ClassItemWithSelectAll":""} `}>Class A</div>  */}
+                    
                 </Carousel>
                 <div className="SliderHr"></div>
                 <div className="info">
-                    <span>Age From 1.6 to 22 | 1 Kids</span>
+                    <span>Age From {SelectedClass?.age_from} to {SelectedClass?.age_to} | {SelectedClass?.kids_count} Kids</span>
                 </div>
                 </div>
           </div>

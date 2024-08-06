@@ -56,5 +56,109 @@ const AuthService = {
           }
     }
 }
+const ClassService = {
+  List: async ()=>{
+    try {
+      const response = await axiosInstance.post(`/classTest`);
+      return response.data; 
 
-export { AuthService };
+    } catch (error) {
+      throw new Error('Failed to list'); 
+    }
+  },
+  Add: async (name , age_from , age_to)=>{
+    try {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('age_from', age_from);
+      formData.append('age_to', age_to);
+      const response = await axiosInstance.post(`/classes` , formData);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to add'); 
+    }
+  }
+}
+const KidsServices = {
+  List: async ()=>{
+    try {
+      const response = await axiosInstance.post(`/classTest`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to list'); 
+    }
+  },
+  Add: async ( 
+    kid_name,
+    name,
+    email,
+    phone,
+    gender,
+    birthdate,
+    city,
+    address,
+    class_id,
+    father_name,
+    father_mobile,
+    father_job,
+    mother_name,
+    mother_mobile,
+    mother_job,
+    has_medical_case,
+    emergency_phone
+  )=>{
+    try {
+      const formData = new FormData();
+      formData.append('kid_name', kid_name);
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('phone', phone);
+      formData.append('gender', gender);
+      formData.append('birthdate', birthdate);
+      formData.append('city', city);
+      formData.append('address', address);
+      formData.append('class_id', class_id);
+      formData.append('father_name', father_name);
+      formData.append('father_mobile', father_mobile);
+      formData.append('father_job', father_job);
+      formData.append('mother_name', mother_name);
+      formData.append('mother_mobile', mother_mobile);
+      formData.append('mother_job', mother_job);
+      formData.append('has_medical_case', has_medical_case);
+      formData.append('emergency_phone', emergency_phone);
+      const response = await axiosInstance.post(`/kids` , formData);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to add'); 
+    }
+  }
+}
+const SubjectServices = {
+  List: async ()=>{
+    try {
+      const response = await axiosInstance.get(`/subjects`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to list'); 
+    }
+  },
+  Add: async (title , description="")=>{
+    try {
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('description', "description");
+ 
+      const response = await axiosInstance.post(`/subjects` , formData);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to add'); 
+    }
+  }
+}
+export { AuthService , ClassService , KidsServices , SubjectServices };
+

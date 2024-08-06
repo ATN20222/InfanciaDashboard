@@ -123,3 +123,10 @@
     margin-bottom: 20px;
     color: #7D7D7D;
 }
+.PopUpValidation{
+    display: flex;
+    text-align: start;
+    width: 100%;
+    padding-left: 10px;
+    
+}

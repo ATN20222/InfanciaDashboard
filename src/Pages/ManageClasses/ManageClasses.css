@@ -149,3 +149,32 @@
   font-size: 14px;
   padding: 5px;
 }
+.existing-subjects{
+  display: flex;
+  justify-content: space-evenly;
+
+}
+.existing-subjects .dropdown-container{
+  width: 90%;
+}
+.AddNew{
+  width: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  
+}
+.existing-subjects .dropdown-list{
+  max-height: 75px !important;
+  overflow-y:scroll ;
+}
+.existing-subjects .dropdown-list{
+  overflow: auto; 
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+.existing-subjects .dropdown-list::-webkit-scrollbar {
+  display: none; 
+}

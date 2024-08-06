@@ -188,6 +188,15 @@
     /* border-radius: 10px; */
     background-color:var(--color-pink);
   }
+  .FormError{
+    display: flex;
+    margin-top: 10px;
+    text-align: start;
+    padding-left: 20px;
+  }
+  .KidImageColForm{
+    flex-direction: column;
+  }
 @media (max-width:480px) {
     .BirthDateContainer>div input{
         font-size: 14px;

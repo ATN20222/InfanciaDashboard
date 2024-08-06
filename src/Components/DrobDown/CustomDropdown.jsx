@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './CustomDropdown.css';
 
-const CustomDropdown = ({Options , DefaultValue}) => {
+const CustomDropdown = ({Options , DefaultValue,onChange}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(DefaultValue);
 
     const toggleDropdown = () => setIsOpen(!isOpen);
     const handleOptionClick = (option) => {
         setSelectedOption(option);
+        onChange(option);
         setIsOpen(false);
     };
 
