@@ -69,7 +69,7 @@
 
     font-size: 18px;
 }
-.FormInput[type="email"]{
+.EmailLogin{
     padding-left: 70px;
 }
 .FormInput[type="password"]{

@@ -73,14 +73,7 @@ const AddKid = () => {
         setLoading(true);
         event.preventDefault();
         let valid = true;
-        if(yearInputRef.current.value==''||dayInputRef.current.value==''||monthInputRef.current.value==''){
-            setDateError("Day , Month and Year are required")
-            valid=false;
-        }
-        else{
-            setDateError("")
 
-        }
 
         if (kidName === '') {
             setKidNameError("Kid name is required");
@@ -152,6 +145,16 @@ const AddKid = () => {
 
         } else {
             setAddressError('');
+        }
+        if(yearInputRef.current.value==''||dayInputRef.current.value==''||monthInputRef.current.value==''){
+            setDateError("Day , Month and Year are required");
+            setLoading(false);
+            valid=false;
+            return;
+        }
+        else{
+            setDateError("")
+
         }
 
         if (fatherName === '') {

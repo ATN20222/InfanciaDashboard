@@ -16,9 +16,18 @@ const Login = () => {
 
   const handleLogin = async (event) => {
     setEmailError("")
+    setErrorSummary("");
+
     event.preventDefault();
     setPasswordError("")
-
+    if(email==''){
+      setEmailError('email is required');
+      return;
+    }
+    if(password==''){
+      setPasswordError('password is required');
+      return;
+    }
     if(!validateEmail(email)){
         setEmailError("invalid email")
         return
@@ -82,10 +91,11 @@ const Login = () => {
                   <div className="row Center">
                     <div className="col-lg-12 FormInputCol LoginCol">
                       <input
-                        type="email"
-                        className="FormInput"
+                        type="text"
+                        className="FormInput EmailLogin"
                         id="Email"
                         value={email}
+                        placeholder="example@example.com"
                         onChange={(e) => setEmail(e.target.value)}
                         
                       />

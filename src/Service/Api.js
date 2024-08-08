@@ -11,6 +11,7 @@ const AuthService = {
         formData.append('password', password);
         const response = await axiosInstance.post(`/auth/login`, formData);
         setToken(response.data.token);
+        console.log(response);
         return response.data; 
 
       } catch (error) {
