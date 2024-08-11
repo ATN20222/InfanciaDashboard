@@ -68,3 +68,13 @@
         margin-left: 10px;
     }
 }
+.KidNameCol{
+    justify-content: start;
+    padding-left: 30px !important  ;
+}
+
+.KidIdCol{
+    display: flex;
+    justify-content: end;
+    padding-right: 30px !important;
+}

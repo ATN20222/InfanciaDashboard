@@ -1,6 +1,6 @@
 import axiosInstance, { deleteToken, setToken } from './AxiosApi';
 
-const baseURL = 'https://in-centrally-viper.ngrok-free.app/api'; 
+const baseURL = 'https://infancia.app/api'; 
 
 
 const AuthService = {
@@ -79,12 +79,34 @@ const ClassService = {
     } catch (error) {
       throw new Error('Failed to add'); 
     }
-  }
+  },
+
+  Edit: async ( id , name , age_from , age_to)=>{
+    try {
+
+
+      const response = await axiosInstance.put(`/classes/${id}?name=${name}&age_from=${age_from}&age_to=${age_to}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to edit'); 
+    }
+  },
+  Get:async (id)=>{
+    try {
+      const response = await axiosInstance.get(`/classes/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to get'); 
+    }
+  },
+
 }
 const KidsServices = {
   List: async ()=>{
     try {
-      const response = await axiosInstance.post(`/classTest`);
+      const response = await axiosInstance.get(`/kids`);
       return response.data; 
 
     } catch (error) {

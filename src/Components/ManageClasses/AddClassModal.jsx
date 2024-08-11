@@ -32,6 +32,15 @@ const AddClassModal = ({ isOpen, onClose, onAddClass }) => {
 
   if (!isOpen) return null;
 
+  const ClearData = ()=>{
+    setClassName('');
+    setClassAgeFrom('');
+    setClassAgeTo('');
+    setClassNameError('');
+    setClassAgeFromToError('');
+  }
+
+
   return (
     <div className="overlay">
      <div className="mymodal">
@@ -54,11 +63,11 @@ const AddClassModal = ({ isOpen, onClose, onAddClass }) => {
                             
                             <div className="Age">
                                 <label htmlFor="">Age</label>
-                                <input type="number" name="ageFrom" placeholder="From : "
+                                <input type="number" name="ageFrom" placeholder="From  "
                                     value={classAgeFrom}
                                     onChange={(e) => setClassAgeFrom(e.target.value)}
                                 />
-                                <input type="number" name="ageTo" placeholder="To : " value={classAgeTo}
+                                <input type="number" name="ageTo" placeholder="To  " value={classAgeTo}
                                     onChange={(e) => setClassAgeTo(e.target.value)}
                                 />
 
@@ -73,7 +82,7 @@ const AddClassModal = ({ isOpen, onClose, onAddClass }) => {
                                             Save
                                         </button>
                                 
-                                        <button className="CancelBtn" onClick={onClose}>
+                                        <button className="CancelBtn" onClick={()=>{onClose();ClearData();}}>
                                             Cancel
                                         </button>
 

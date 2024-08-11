@@ -3,7 +3,10 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import './Slider.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { faCaretLeft, faCaretRight, faPen } from '@fortawesome/free-solid-svg-icons';
+import EditClassModal from '../ManageClasses/EditClassModal';
+import { ClassService } from '../../Service/Api';
+import toast from 'react-hot-toast';
 
 const responsive = {
     superLargeDesktop: {
@@ -55,7 +58,8 @@ const responsive = {
     </button>
   );
 
-function Slider({IsMeals , Classes , HandleSelectClass}) {
+function Slider({IsMeals , Classes , HandleSelectClass ,OnEdit}) {
+
   const [ SelectedClass,SetSelectedClass ] = useState(null);
   useEffect(() => {
     if (Classes && Classes.length > 0) {
@@ -63,8 +67,12 @@ function Slider({IsMeals , Classes , HandleSelectClass}) {
         HandleSelectClass(Classes[0]);
     }
 }, [Classes]);
+
+
+
   return (
     <section className='SecondSliderSection'>
+            
           <div className={`Container ${IsMeals?"ClassesMeals":""}`}>
             {IsMeals?<div className="SelectAllClasses">
               <input type="checkbox" id='SelectAllClasses' />
@@ -95,8 +103,16 @@ function Slider({IsMeals , Classes , HandleSelectClass}) {
                     
                 </Carousel>
                 <div className="SliderHr"></div>
-                <div className="info">
-                    <span>Age From {SelectedClass?.age_from} to {SelectedClass?.age_to} | {SelectedClass?.kids_count} Kids</span>
+                <div className="info ClassInfo">
+                    <span>Age From {SelectedClass?.age_from} to {SelectedClass?.age_to} | {SelectedClass?.kids_count} Kids 
+                      <span>
+                        <div className='EditClassBtn' onClick={()=>OnEdit(SelectedClass)}>
+
+                        <FontAwesomeIcon icon={faPen}/>
+                        </div>  
+                      </span>
+                      
+                      </span>
                 </div>
                 </div>
           </div>

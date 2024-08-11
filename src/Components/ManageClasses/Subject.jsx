@@ -1,6 +1,6 @@
 import { faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddSubjectModal from "./AddSubjectModal";
 import SelectSubjectModal from "./SelectSubjectModal";
 import DeleteSubjectModal from "./DeleteSubjectModal";
@@ -13,23 +13,43 @@ const Subject = () => {
   const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
   const [subjects, setSubjects] = useState(["Subject 1", "Subject 2", "Subject 3"]);
 
+
+  useEffect(()=>{
+    GetData();
+  },[]);
+
   const handleAddSubject = async (subject) => {
     try {
     
         const response = await SubjectServices.Add(subject);
         toast.success('subject added successfully');
+        GetData();
         setIsSelectOverlayOpen(true);
-        
         
       } catch (error) {
         toast.error('failed to add subject');
   
       }
   };
+  async function GetData() {
+    try {
 
-  const handleDeleteSubject = (subject) => {
-    setSubjects(subjects.filter(s => s !== subject));
+      const response = await SubjectServices.List();
+      setSubjects(response.content);
+
+      
+    } catch (error) {
+        console.log(error)
+
+    }
+}
+
+  const handleDeleteSubject = (subject_id) => {
+    
   };
+  const handleAssignSubject = (subject) =>{
+    console.log(subject)
+  }
 
   return (
     <section className="SecondSliderSection ManageClassesCompnent">
@@ -46,7 +66,11 @@ const Subject = () => {
           setIsSelectOverlayOpen(false);
           setIsAddOverlayOpen(true);
         }}
+        onAssignSubject={handleAssignSubject}
+
       />
+
+
       <DeleteSubjectModal
         isOpen={isDeleteOverlayOpen}
         onClose={() => setIsDeleteOverlayOpen(false)}
@@ -71,14 +95,14 @@ const Subject = () => {
       </div>
       <div className="SubjectsContainer">
         <div className="row">
-          {subjects.map((subject, index) => (
+          {subjects.length>0?subjects.map((subject, index) => (
             <div key={index} className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">
-              {subject}
+              {subject.title}
               <div className="RemoveSubject">
-                <FontAwesomeIcon icon={faTrashAlt} onClick={() => handleDeleteSubject(subject)} />
+                <FontAwesomeIcon icon={faTrashAlt} onClick={() => setIsDeleteOverlayOpen(subject.id)} />
               </div>
             </div>
-          ))}
+          )):<span>No subjects added yet</span>}
         </div>
       </div>
     </section>

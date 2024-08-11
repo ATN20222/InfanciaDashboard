@@ -3,16 +3,34 @@ import './AddClassModal.css';
 
 const AddSubjectModal = ({ isOpen, onClose, onAddSubject }) => {
   const [Subject, setSubject] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (Subject.trim() === '') {
+      setError('Subject is required');
+      return;
+    }
     onAddSubject(Subject);
     setSubject('');
+    setError('');
     onClose();
+  };
+
+  const handleInputChange = (e) => {
+    setSubject(e.target.value);
+    if (e.target.value.trim() !== '') {
+      setError('');
+    }
   };
 
   if (!isOpen) return null;
 
+  const ClearData = ()=>{
+    setSubject('');
+    setError('');
+    
+  }
   return (
     <div className="overlay">
       <div className="mymodal">
@@ -21,16 +39,21 @@ const AddSubjectModal = ({ isOpen, onClose, onAddSubject }) => {
           <div className="FormHr"></div>
           <form className="add-class-form addSubjectForm" onSubmit={handleSubmit}>
             <label>
-              <input type="text" name="Subject" className='ClassNameInput' placeholder='Subject : '
+              <input
+                type="text"
+                name="Subject"
+                className='ClassNameInput'
+                placeholder='Subject '
                 value={Subject}
-                onChange={(e) => setSubject(e.target.value)}
+                onChange={handleInputChange}
               />
+            {error && <div className="text-danger PopUpError mt-0">{error}</div>}
             </label>
             <div className="form-buttons">
               <button className="RegisterBtn">
                 Save
               </button>
-              <button className="CancelBtn" onClick={onClose}>
+              <button className="CancelBtn" onClick={()=>{onClose();ClearData();}}>
                 Cancel
               </button>
             </div>

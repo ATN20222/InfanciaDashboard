@@ -2,13 +2,11 @@
 import React, { useState } from 'react';
 import './AddClassModal.css';
 
-const DeleteSubjectModal = ({ isOpen, onClose, onDelete }) => {
-  const [className, setClassName] = useState('');
+const DeleteSubjectModal = ({ id, isOpen, onClose, onDelete }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onDelete(className);
-    setClassName('');
+    onDelete(id);
     onClose();
   };
 

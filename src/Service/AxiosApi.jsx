@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 
 // ---------- Const Variables ---------- //
-const baseURL = 'https://in-centrally-viper.ngrok-free.app/api';
+const baseURL = 'https://infancia.app/api';
 const cookie = new Cookies();
 
 // ---------- Functions ---------- //

@@ -1,15 +1,27 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import KidTable from "../Table/KidTable";
 import { Link } from "react-router-dom";
+import { KidsServices } from "../../Service/Api";
 const Kids = ({SelectedClassId})=>{
-    const cids = [
-        { name: 'Kid name', id: '10245', date: 'Date' },
-        { name: 'Kid name', id: '10245', date: 'Date' },
-        { name: 'Kid name', id: '10245', date: 'Date' },
-        { name: 'Kid name', id: '10245', date: 'Date' }
-    ];
+    const [kids , setKids] = useState([]);
+    useEffect(()=>{
+        GetData();
+    },[]);
+    async function GetData() {
+        try {
+    
+            const response = await KidsServices.List();
+            setKids(response.content);
+        
+        
+        } catch (error) {
+            console.log(error)
+    
+        }
+    }
+
     return(
         <section className="SecondSliderSection ManageClassesCompnent">
             <div className="Container HeadContainer">
@@ -29,7 +41,7 @@ const Kids = ({SelectedClassId})=>{
                     </div>
                 </div>
                 <div className="SubjectsContainer">
-                    <KidTable kids={cids} />
+                    <KidTable kids={kids} />
 
 
                 </div>
