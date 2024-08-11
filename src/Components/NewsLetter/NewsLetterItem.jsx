@@ -4,12 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
 import DeleteSubjectModal from "../ManageClasses/DeleteSubjectModal";
 
-const NewletterItem = ({PublisherImage , PublisherName, PublishDate , Image , Text , Likes})=>{
+const NewletterItem = ({id,PublisherImage , PublisherName, PublishDate , Image , Text , Likes ,OnDeleteNewsletter})=>{
     const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
    
-    const handleDelete = (item) => {
-        
-    };
+
    
     
     return(
@@ -17,7 +15,7 @@ const NewletterItem = ({PublisherImage , PublisherName, PublishDate , Image , Te
              <DeleteSubjectModal
                 isOpen={isDeleteOverlayOpen}
                 onClose={() => setIsDeleteOverlayOpen(false)}
-                onDelete={handleDelete}
+                onDelete={()=>OnDeleteNewsletter(id)}
             />
             
             <div className="row">

@@ -181,7 +181,51 @@ const SubjectServices = {
     } catch (error) {
       throw new Error('Failed to add'); 
     }
-  }
+  },
+  Delete:async (id)=>{
+    try {
+      const response = await axiosInstance.delete(`/subjects/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to delete'); 
+    }
+  },
 }
-export { AuthService , ClassService , KidsServices , SubjectServices };
+
+const NewsLetterServices = {
+  List: async ()=>{
+    try {
+      const response = await axiosInstance.get(`/newsletters`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to list'); 
+    }
+  },
+  Add: async (description , image)=>{
+    const formData = new FormData();
+    // formData.append('image', image);
+    formData.append('description', description);
+    formData.append('title', "Test");
+    try {
+      const response = await axiosInstance.post(`/newsletters`, formData);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to add'); 
+    }
+  },
+  Delete:async (id)=>{
+    try {
+      const response = await axiosInstance.delete(`/newsletters/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to delete'); 
+    }
+  },
+  
+}
+export { AuthService , ClassService , KidsServices , SubjectServices , NewsLetterServices };
 

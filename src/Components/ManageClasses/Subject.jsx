@@ -12,7 +12,7 @@ const Subject = () => {
   const [isSelectOverlayOpen, setIsSelectOverlayOpen] = useState(false);
   const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
   const [subjects, setSubjects] = useState(["Subject 1", "Subject 2", "Subject 3"]);
-
+  const [subjectToDelete , setSubjectToDelete]= useState(null);
 
   useEffect(()=>{
     GetData();
@@ -44,8 +44,18 @@ const Subject = () => {
     }
 }
 
-  const handleDeleteSubject = (subject_id) => {
+  const handleDeleteSubject = async () => {
+    try {
     
+      const response = await SubjectServices.Delete(subjectToDelete);
+      toast.success('subject deleted successfully');
+      GetData();
+      
+    } catch (error) {
+      toast.error('failed to delete subject');
+
+    }
+    setSubjectToDelete(null);
   };
   const handleAssignSubject = (subject) =>{
     console.log(subject)
@@ -99,7 +109,7 @@ const Subject = () => {
             <div key={index} className="col-lg-1 col-md-2 col-sm-3 col-xs-4 col-4 SubjectItem">
               {subject.title}
               <div className="RemoveSubject">
-                <FontAwesomeIcon icon={faTrashAlt} onClick={() => setIsDeleteOverlayOpen(subject.id)} />
+                <FontAwesomeIcon icon={faTrashAlt} onClick={() => {setIsDeleteOverlayOpen(true);setSubjectToDelete(subject.id)}} />
               </div>
             </div>
           )):<span>No subjects added yet</span>}
