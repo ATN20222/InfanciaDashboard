@@ -190,12 +190,15 @@
   }
   .FormError{
     display: flex;
-    margin-top: 10px;
+    margin-top: 0px;
     text-align: start;
     padding-left: 20px;
   }
   .KidImageColForm{
     flex-direction: column;
+  }
+  .CancelBtn{
+    text-decoration: none;
   }
 @media (max-width:480px) {
     .BirthDateContainer>div input{

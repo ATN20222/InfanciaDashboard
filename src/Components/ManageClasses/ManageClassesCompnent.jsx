@@ -17,7 +17,7 @@ const ManageClassesCompnent = ({IsMeals , ChangeClass})=>{
         if(IsMeals){
             setIsMeals(true);
         }
-        GetData()
+        GetData();
     },[]);
 
     
@@ -61,6 +61,7 @@ const ManageClassesCompnent = ({IsMeals , ChangeClass})=>{
     
           const response = await ClassService.List();
           setClasses(response.content);
+          console.log("response.content",response)
     
           
         } catch (error) {

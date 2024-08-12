@@ -293,7 +293,7 @@ const AddKid = () => {
     };
     return (
         <section className="SecondSliderSection ManageClassesCompnent">
-             <div className="Toaster">
+            <div className="Toaster">
                 <Toaster
                     position="top-right"
                     reverseOrder={false}
@@ -381,6 +381,8 @@ const AddKid = () => {
                             </div>
                         </div>
                     </div>
+
+
                     <div className="col-lg-5 EmpFormCol">
                         <div className="TopInputTitle">Birth Date</div>
                         <div className="BirthDateContainer">
@@ -417,9 +419,13 @@ const AddKid = () => {
                         </div>
                             {DateError && <span className="text-danger FormError">{DateError}</span>}
                     </div>
+
+
                     <div className="col-lg-12 ParentsInformationHeader">
                         <h5>Parents Information</h5>
                     </div>
+
+
                     <div className="col-lg-5 EmpFormCol KidParentData">
                         <input type="text" className="EmpInput FathertNameInput" value={fatherName} onChange={(e) => setFatherName(e.target.value)} />
                         <label className="EmpLabel EmpNameLabel" htmlFor="FathertName">Father Name : </label>

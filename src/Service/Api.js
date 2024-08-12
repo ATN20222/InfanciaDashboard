@@ -60,7 +60,7 @@ const AuthService = {
 const ClassService = {
   List: async ()=>{
     try {
-      const response = await axiosInstance.post(`/classTest`);
+      const response = await axiosInstance.get(`/classes`);
       return response.data; 
 
     } catch (error) {
@@ -157,7 +157,66 @@ const KidsServices = {
     } catch (error) {
       throw new Error('Failed to add'); 
     }
-  }
+  },
+  Edit: async (
+    id,
+    kid_name,
+    name,
+    email,
+    phone,
+    gender,
+    birthdate,
+    city,
+    address,
+    class_id,
+    father_name,
+    father_mobile,
+    father_job,
+    mother_name,
+    mother_mobile,
+    mother_job,
+    has_medical_case,
+    emergency_phone
+  ) => {
+    try {
+      const queryParams = new URLSearchParams({
+        kid_name,
+        name,
+        email,
+        phone,
+        gender,
+        birthdate,
+        city,
+        address,
+        class_id,
+        father_name,
+        father_mobile,
+        father_job,
+        mother_name,
+        mother_mobile,
+        mother_job,
+        has_medical_case,
+        // emergency_phone
+      }).toString();
+      console.log(`/kids/${id}?${queryParams}`)
+      const response = await axiosInstance.put(`/kids/${id}?${queryParams}`);
+  
+      return response.data;
+  
+    } catch (error) {
+      throw new Error('Failed to edit');
+    }
+  },
+  
+  profile:async (id)=>{
+    try {
+      const response = await axiosInstance.get(`/kids/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to get data'); 
+    }
+  },
 }
 const SubjectServices = {
   List: async ()=>{
