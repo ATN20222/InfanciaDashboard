@@ -213,6 +213,23 @@ input[type=number]::-webkit-outer-spin-button {
     font-weight:500 ;
     border-radius: 20px;
 }
+.EmailRegisterInput{
+    padding-left: 70px !important;
+}
+.nurseryNameInput{
+    padding-left: 130px !important;
+}
+.NurseryNumberRegister{
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline !important;
+}
+.EmpNoRegisterInput{
+    padding-left: 180px !important;
+}
+.NurseryNumberRegister input{
+    padding-left: 110px !important;
+}
 
 @media (max-width:1400px) {
     #NurseryName {

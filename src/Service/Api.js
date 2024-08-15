@@ -55,8 +55,32 @@ const AuthService = {
           } catch (error) {
             throw new Error('Failed to reset password'); 
           }
+    },
+    RegisterApi:async (name, email, phone, password, province, address, branches_number, classes_number, kids_number, employees_number, start_fees, about)=>{
+      try {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('phone', phone);
+        formData.append('password', password);
+        formData.append('province', province);
+        formData.append('address', address);
+        formData.append('branches_number', branches_number);
+        formData.append('classes_number', classes_number);
+        formData.append('kids_number', kids_number);
+        formData.append('employees_number', employees_number);
+        formData.append('start_fees', start_fees);
+        formData.append('about', about);
+
+        const response = await axiosInstance.post(`/nurseries`,formData);
+        return response.data; 
+  
+      } catch (error) {
+        throw new Error('Failed to register'); 
+  }
     }
 }
+
 const ClassService = {
   List: async ()=>{
     try {
@@ -241,6 +265,19 @@ const SubjectServices = {
       throw new Error('Failed to add'); 
     }
   },
+  Assign: async (subject_id , class_id)=>{
+    try {
+      const formData = new FormData();
+      formData.append('subject_id', subject_id);
+      formData.append('class_id', class_id);
+ 
+      const response = await axiosInstance.post(`/assign-subject` , formData);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to assign'); 
+    }
+  },
   Delete:async (id)=>{
     try {
       const response = await axiosInstance.delete(`/subjects/${id}`);
@@ -248,6 +285,24 @@ const SubjectServices = {
 
     } catch (error) {
       throw new Error('Failed to delete'); 
+    }
+  },
+  ListWithClassId: async (class_id)=>{
+    try {
+      const response = await axiosInstance.get(`/classes-subject/${class_id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to list'); 
+    }
+  },
+  DeleteAssign:async (assign_id)=>{
+    try {
+      const response = await axiosInstance.delete(`/remove-subject/${assign_id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to list'); 
     }
   },
 }
@@ -286,5 +341,43 @@ const NewsLetterServices = {
   },
   
 }
-export { AuthService , ClassService , KidsServices , SubjectServices , NewsLetterServices };
+const FAQServices = {
+  Add: async (question , answer)=>{
+    try {
+      const formData = new FormData();
+      formData.append('questions', question);
+      formData.append('answer', answer);
+      
+      const response = await axiosInstance.post(`/faq` , formData);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to add'); 
+    }
+  },
+  List: async ()=>{
+    try {
+      const response = await axiosInstance.get(`/faq`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to list'); 
+    }
+  },
+  Delete: async (id)=>{
+    try {
+      const response = await axiosInstance.delete(`/faq/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to delete'); 
+    }
+  },
+}
+export { 
+  AuthService , ClassService ,
+  KidsServices , SubjectServices , 
+  NewsLetterServices,
+  FAQServices
+};
 
