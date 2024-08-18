@@ -10,10 +10,8 @@ const SelectSubjectModal = ({ isOpen, onClose, subjects, onAddNewSubject, onAssi
   const handleSave = async () => {
     if (selectedSubject) {
       try {
-        // Call the API to assign the subject to a class
         await onAssignSubject(selectedSubject);
 
-        // Close the modal after successful API call
         onClose();
       } catch (error) {
         console.error('Failed to assign subject to class:', error);

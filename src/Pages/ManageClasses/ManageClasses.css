@@ -178,3 +178,40 @@
 .existing-subjects .dropdown-list::-webkit-scrollbar {
   display: none; 
 }
+
+.CalenderCol{
+  position: relative;
+}
+.Days{
+  position: absolute;
+  top: 41px;
+  right: 15px;
+  background: #009fe3;
+  color:rgb(216 214 214 / 77%);
+  padding: 10px;
+  z-index: 20;  
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: none;
+}
+.ActiveDays{
+  display: flex;
+}
+.DayItem{
+  padding: 2px;
+}
+.DayItem{
+  display: flex;
+  justify-content: space-between;
+}
+.DayInnerItem{
+  margin: 5px;
+}
+.DayInnerItem{
+  cursor: pointer;
+}
+.SelectedDateItem{
+  color: white;
+  font-weight: 500;
+  
+}

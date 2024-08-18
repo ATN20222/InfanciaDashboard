@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import ParentRequestItem from './ParentRequestItem';
+import Chat from '../Chat/Chat';
 
 const ReplyRequest = ({ isOpen, onClose, onReply ,id, PublisherImage , PublisherName, PublishDate , Text }) => {
   const [className, setClassName] = useState('');
@@ -15,45 +16,53 @@ const ReplyRequest = ({ isOpen, onClose, onReply ,id, PublisherImage , Publisher
   if (!isOpen) return null;
 
   return (
-    <div className="overlay">
-     <div className="mymodal">
-                <div className="modal-content">
-                    <h3>Parent Request</h3>
-                    <div className="FormHr"></div>
-                    <form className="add-class-form">
-                    <ParentRequestItem
-                        key={id}
-                        PublishDate={PublishDate}
-                        PublisherImage={PublisherImage}
-                        PublisherName={PublisherName}
-                        Text={Text}
-                        IsPopUp={true}
-                    />
+    // <div className="overlay">
+    //  <div className="mymodal">
+    //             <div className="modal-content">
+    //                 <h3>Parent Request</h3>
+    //                 <div className="FormHr"></div>
+    //                 <form className="add-class-form">
+    //                 <ParentRequestItem
+    //                     key={id}
+    //                     PublishDate={PublishDate}
+    //                     PublisherImage={PublisherImage}
+    //                     PublisherName={PublisherName}
+    //                     Text={Text}
+    //                     IsPopUp={true}
+    //                 />
 
                        
-                        <label>
+    //                     <label>
                            
-                            <textarea type="text" name="className" className='ClassNameInput ReplyParentRequest mt-2 mb-4' placeholder='Add Reply : ' />
-                        </label>
+    //                         <textarea type="text" name="className" className='ClassNameInput ReplyParentRequest mt-2 mb-4' placeholder='Add Reply : ' />
+    //                     </label>
                        
                        
                       
                             
                            
                         
-                        <div className="form-buttons Center">
-                                        <button className="RegisterBtn">
-                                            Reply
-                                        </button>
-                                        <button className="CancelBtn" onClick={onClose}>
-                                            Cancel
-                                        </button>
+    //                     <div className="form-buttons Center">
+    //                                     <button className="RegisterBtn">
+    //                                         Reply
+    //                                     </button>
+    //                                     <button className="CancelBtn" onClick={onClose}>
+    //                                         Cancel
+    //                                     </button>
 
-                            {/* <button type="button" className="cancel-button" >Cancel</button> */}
-                        </div>
-                    </form>
-                </div>
+    //                         {/* <button type="button" className="cancel-button" >Cancel</button> */}
+    //                     </div>
+    //                 </form>
+    //             </div>
+    //         </div>
+    // </div>
+    <div className="overlay">
+        <div className="mymodal">
+            <div className="modal-content">
+
+                <Chat/>
             </div>
+        </div>
     </div>
   );
 };

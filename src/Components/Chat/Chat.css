@@ -1,0 +1,119 @@
+.ChatArea{
+    height: 400px;
+    overflow: hidden;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.ChatArea::-webkit-scrollbar-thumb{
+    background-color: rgb(127, 126, 126) !important;
+    width: 0;
+}
+.BottomChatBar{
+    position: relative;
+    margin-top: 15px !important;
+}
+
+.MessageInput {
+    height: 55px;
+    padding-left: 25px !important;
+    direction: ltr;
+    border-radius: 25px !important;
+    padding-right: 50px !important;
+    border: 1px solid #009fe3 !important;
+}
+.MessageInput:focus{
+    box-shadow: none !important;
+}
+.Send{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 6%;
+    right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none !important;
+    border: none !important;
+    background-color: transparent;
+}
+
+.Send svg{
+   
+    width: 25px;
+    height: 25px;
+    color: var(--color-blue);
+}
+
+
+.Attach{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 8%;
+    left: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Attach svg{
+   
+    width: 25px;
+    height: 25px;
+    color: #f6cd03;
+    cursor: pointer;
+}
+#Attachments{
+    display: none;
+    cursor: pointer;
+}
+.CloseRequest svg{
+    color: var(--color-pink);
+}
+.CloseRequest {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    width: 100px;
+    background-color: var(--color-pink);
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: -100%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    rotate: 180deg;
+    font-size: 14px;
+}
+
+.tooltip-text .text{
+    rotate: -180deg;
+}
+.tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--color-pink) transparent transparent transparent;
+}
+
+.CloseRequest:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}

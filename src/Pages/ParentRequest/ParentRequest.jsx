@@ -89,7 +89,7 @@ const ParentRequest = () => {
             PublisherName={SelectedRequestToReply.PublisherName}
             />
            
-
+            
             <div className="Container HeadContainer">
                 <div className="row ParentRequestRow">
                     <div 

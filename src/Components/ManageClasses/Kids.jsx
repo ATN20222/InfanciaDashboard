@@ -12,8 +12,10 @@ const Kids = ({SelectedClassId})=>{
     async function GetData() {
         try {
     
-            const response = await KidsServices.List();
-            setKids(response.content);
+            const response = await KidsServices.ListClassKids(SelectedClassId);
+            console.log("response" , response);
+            
+            setKids(response.content.kids);
         
         
         } catch (error) {

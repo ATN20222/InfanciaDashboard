@@ -34,10 +34,16 @@ const EditClassModal = ({ isOpen, onClose, onEditClass, Data }) => {
       setClassNameError('Class name is required');
       return;
     }
+    const ageFromNum = parseInt(classAgeFrom, 10);
+    const ageToNum = parseInt(classAgeTo, 10);
     if (classAgeFrom === '' || classAgeTo === '') {
       setClassAgeFromToError('Age from-to is required');
       return;
-    }
+    }else if(ageFromNum>=ageToNum){
+        
+      setClassAgeFromToError("age-to must be greater than age-from")
+      return;
+  }
     onEditClass(Data.id, className, classAgeFrom, classAgeTo);
     onClose();
   };

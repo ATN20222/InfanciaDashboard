@@ -7,58 +7,51 @@ import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
-const Subject = ({ SelectedClassId }) => {
+const Subject = ({ SelectedClassId, onUpdate }) => {
     const [isAddOverlayOpen, setIsAddOverlayOpen] = useState(false);
     const [isSelectOverlayOpen, setIsSelectOverlayOpen] = useState(false);
     const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
     const [subjects, setSubjects] = useState([]);
-    const [Allsubjects, setAllSubjects] = useState([]);
-
+    const [allSubjects, setAllSubjects] = useState([]);
     const [subjectToDelete, setSubjectToDelete] = useState(null);
 
     useEffect(() => {
         if (SelectedClassId) {
-            GetData();
-            GetSubjects();
+            fetchSubjects();
         }
     }, [SelectedClassId]);
 
+    const fetchSubjects = async () => {
+        try {
+            const [subjectResponse, allSubjectResponse] = await Promise.all([
+                SubjectServices.ListWithClassId(SelectedClassId),
+                SubjectServices.List()
+            ]);
+            setSubjects(subjectResponse.content);
+            setAllSubjects(allSubjectResponse.content);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const handleAddSubject = async (subject) => {
         try {
-            const response = await SubjectServices.Add(subject);
+            await SubjectServices.Add(subject);
             toast.success('Subject added successfully');
-            GetData();
+            fetchSubjects();
+            onUpdate(); 
             setIsSelectOverlayOpen(true);
         } catch (error) {
             toast.error('Failed to add subject');
         }
     };
 
-    async function GetData() {
-        try {
-            const response = await SubjectServices.ListWithClassId(SelectedClassId);
-            setSubjects(response.content);
-            console.log(response);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    async function GetSubjects() {
-      try {
-          const response = await SubjectServices.List();
-          setAllSubjects(response.content);
-          console.log(response);
-      } catch (error) {
-          console.log(error);
-      }
-  }
-
     const handleDeleteSubject = async () => {
         try {
-          console.log(subjectToDelete)
-            const response = await SubjectServices.DeleteAssign(subjectToDelete);
+            await SubjectServices.DeleteAssign(subjectToDelete);
             toast.success('Subject deassigned successfully');
-            GetData();
+            fetchSubjects();
+            onUpdate(); 
         } catch (error) {
             toast.error('Failed to deassign subject');
         }
@@ -66,16 +59,14 @@ const Subject = ({ SelectedClassId }) => {
     };
 
     const handleAssignSubject = async (subject) => {
-      try {
-        const response = await SubjectServices.Assign(subject ,SelectedClassId);
-        setAllSubjects(response.content);
-        toast.success('Subject assigned successfully');
-        GetData();
-      } catch (error) {
-          console.log(error);
-          toast.error('Failed to assign subject');
-
-      }
+        try {
+            await SubjectServices.Assign(subject, SelectedClassId);
+            toast.success('Subject assigned successfully');
+            fetchSubjects(); 
+            onUpdate(); 
+        } catch (error) {
+            toast.error('Failed to assign subject');
+        }
     };
 
     return (
@@ -88,7 +79,7 @@ const Subject = ({ SelectedClassId }) => {
             <SelectSubjectModal
                 isOpen={isSelectOverlayOpen}
                 onClose={() => setIsSelectOverlayOpen(false)}
-                subjects={Allsubjects}
+                subjects={allSubjects}
                 onAddNewSubject={() => {
                     setIsSelectOverlayOpen(false);
                     setIsAddOverlayOpen(true);

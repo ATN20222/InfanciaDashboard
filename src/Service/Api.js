@@ -137,6 +137,15 @@ const KidsServices = {
       throw new Error('Failed to list'); 
     }
   },
+  ListClassKids: async (class_id)=>{
+    try {
+      const response = await axiosInstance.get(`/classes/${class_id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to list'); 
+    }
+  },
   Add: async ( 
     kid_name,
     name,
@@ -374,10 +383,42 @@ const FAQServices = {
     }
   },
 }
+
+const ScheduleServices = {
+  getClassSchedule: async (class_id,day)=>{
+    try {
+      
+      
+      const response = await axiosInstance.get(`/schedules/${class_id}/${day}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to load data'); 
+    }
+  },
+  AddScheduleContent: async (class_id,subject_id ,content , day)=>{
+    try {
+      const formData = new FormData();
+      formData.append('class_id', class_id);
+      formData.append('subject_id', subject_id);
+      formData.append('content', content);
+      formData.append('days', day);
+      
+      const response = await axiosInstance.post(`/schedules`,formData);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to Add'); 
+    }
+  },
+ 
+}
+
+
 export { 
   AuthService , ClassService ,
   KidsServices , SubjectServices , 
   NewsLetterServices,
-  FAQServices
+  FAQServices,ScheduleServices
 };
 

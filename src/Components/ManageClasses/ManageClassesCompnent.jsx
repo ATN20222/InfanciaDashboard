@@ -72,7 +72,7 @@ const ManageClassesCompnent = ({IsMeals , ChangeClass})=>{
 
     const ChangeSelectedClass = (classs) => {
         setSelectclass(classs);
-        ChangeClass(classs); // This will update the selected class in the parent component
+        ChangeClass(classs); 
     };
     
     return(
