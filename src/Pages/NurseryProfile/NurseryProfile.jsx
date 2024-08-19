@@ -43,7 +43,7 @@ const NurseryProfile = () => {
                                 <div className="row">
                                     <div className="col-lg-3 col-md-3 col-sm-3 col-3 NuseryProfileTabbingCol">
                                         <span 
-                                            className={activeTab === 'basicInfo' ? 'active' : ''}
+                                            className={activeTab === 'basicInfo' ? 'ProfileActive' : ''}
                                             onClick={() => handleTabClick('basicInfo')}
                                         >
                                             Basic Info
@@ -51,7 +51,7 @@ const NurseryProfile = () => {
                                     </div>
                                     <div className="col-lg-3 col-md-3 col-sm-3 col-3 NuseryProfileTabbingCol">
                                         <span 
-                                            className={activeTab === 'gallery' ? 'active' : ''}
+                                            className={activeTab === 'gallery' ? 'ProfileActive' : ''}
                                             onClick={() => handleTabClick('gallery')}
                                         >
                                             Gallery
@@ -59,7 +59,7 @@ const NurseryProfile = () => {
                                     </div>
                                     <div className="col-lg-3 col-md-3 col-sm-3 col-3 NuseryProfileTabbingCol">
                                         <span 
-                                            className={activeTab === 'reviews' ? 'active' : ''}
+                                            className={activeTab === 'reviews' ? 'ProfileActive' : ''}
                                             onClick={() => handleTabClick('reviews')}
                                         >
                                             Reviews
@@ -67,7 +67,7 @@ const NurseryProfile = () => {
                                     </div>
                                     <div className="col-lg-3 col-md-3 col-sm-3 col-3 NuseryProfileTabbingCol">
                                         <span 
-                                            className={activeTab === 'payment' ? 'active' : ''}
+                                            className={activeTab === 'payment' ? 'ProfileActive' : ''}
                                             onClick={() => handleTabClick('payment')}
                                         >
                                             Payment

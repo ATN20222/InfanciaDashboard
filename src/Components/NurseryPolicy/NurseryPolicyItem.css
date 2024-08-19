@@ -4,6 +4,9 @@
     font-weight: 700;
     color: var(--color-pink);
     padding-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .PolicyDescription{
     text-align: start;
@@ -12,4 +15,11 @@
 .DescriptionPolicy{
     min-height: 150px;
     padding-top: 5px;
+}
+.PolicyHeader svg{
+    width: 15px;
+    height:15px;
+}   
+.DeletePolicy{
+    cursor: pointer;
 }

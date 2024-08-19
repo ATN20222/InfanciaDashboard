@@ -22,6 +22,23 @@ export const deleteToken = () => {
     sessionStorage.clear();
 };
 
+
+// Set NurseryId
+export const setNurseryId = (nursery_id) => {
+    cookie.set('nursery_id', nursery_id, { path: '/' });
+};
+// Get NurseryId
+export const getNurseryId = () => {
+    return cookie.get('nursery_id');
+};
+// Delete NurseryId
+export const deleteNurseryId = () => {
+    cookie.remove('nursery_id', { path: '/' });
+    localStorage.clear();
+    sessionStorage.clear();
+}
+
+
 // Instance From Axios
 const axiosInstance = axios.create({
     baseURL: baseURL,
@@ -31,6 +48,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     async config => {
         const token = getToken();
+        const nursery_id = getNurseryId();
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
             config.headers.Accept = 'application/json';
@@ -56,6 +74,7 @@ axiosInstance.interceptors.response.use(
                 const response = await axiosInstance.post('auth/refresh');
 
                 setToken(response.data.token);
+                
 
                 originalRequest.headers.Authorization = `Bearer ${response.data.access_token}`;
 

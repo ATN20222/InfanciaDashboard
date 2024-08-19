@@ -97,6 +97,7 @@
     transition: opacity 0.3s;
     rotate: 180deg;
     font-size: 14px;
+    z-index: 100;
 }
 
 .tooltip-text .text{

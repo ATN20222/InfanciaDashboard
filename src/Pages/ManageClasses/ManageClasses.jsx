@@ -7,7 +7,7 @@ import { ClassService } from "../../Service/Api";
 import './ManageClasses.css';
 
 const ManageClasses = () => {
-    const [updateKey, setUpdateKey] = useState(0); 
+    const [updateKey, setUpdateKey] = useState(0);
     const [selectedClass, setSelectedClass] = useState(null);
 
     useEffect(() => {
@@ -19,25 +19,29 @@ const ManageClasses = () => {
                     setSelectedClass(defaultClass.id);
                 }
             } catch (error) {
-                console.log(error);
+                console.error('Error fetching default class:', error);
             }
         }
         fetchDefaultClass();
     }, []);
 
     const handleChangeClass = (classs) => {
+        // console.log('Class changed:', classs); 
         setSelectedClass(classs.id);
         setUpdateKey(prevKey => prevKey + 1);
     };
+    const updateSchedule=()=>{
+        setUpdateKey(prevKey => prevKey + 1);
+    }
 
     return (
         <div className="LoginMain">
             <ManageClassesCompnent ChangeClass={handleChangeClass} />
             {selectedClass && (
                 <div className="div">
-                    <Kids key={`Kids-${selectedClass}`} SelectedClassId={selectedClass} />
-                    <Subject key={`Subject-${selectedClass}`} SelectedClassId={selectedClass} onUpdate={handleChangeClass} />
-                    <Schedule key={`Schedule-${selectedClass}`} SelectedClassId={selectedClass} />
+                    <Kids key={`Kids-${updateKey}`} SelectedClassId={selectedClass} />
+                    <Subject key={`Subject-${updateKey}`} SelectedClassId={selectedClass} onUpdate={updateSchedule} />
+                    <Schedule key={`Schedule-${updateKey}`} SelectedClassId={selectedClass} />
                 </div>
             )}
         </div>

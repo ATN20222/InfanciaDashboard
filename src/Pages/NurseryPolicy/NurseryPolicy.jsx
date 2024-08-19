@@ -1,10 +1,15 @@
 import { faBell, faCommentDollar, faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddFAQModal from "../../Components/FAQ/AddFAQModal";
 import NurseryPolicyItem from "../../Components/NurseryPolicy/NurseryPolicyItem";
 import AddNurseryPolicyModal from "../../Components/NurseryPolicy/AddNurseryPolicyModal";
+import { PolicyServices } from "../../Service/Api";
+import toast, { Toaster } from "react-hot-toast";
 const NurseryPolicy = () => {
+    const [policies , setPolicies] = useState([]);
+    const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+
     const Data = [
         { 
             id: 1, 
@@ -21,21 +26,57 @@ const NurseryPolicy = () => {
         
     ];
 
-    const [isOverlayOpen, setIsOverlayOpen] = useState(false);
-
+    useEffect(()=>{
+        GetData();
+    },[]);
     
 
-    const handleAddFAQ = (content) => {
-        
-      };
+    const handleAddPolicy = async (title, description ) => {
+        try {
+            const response = await PolicyServices.Add(title, description);
+            toast.success('Policy added successfully');
+            GetData();
+        } catch (error) {
+            console.log(error);
+            toast.error('Failed to add policy');
 
+        }
+    };
+    async function GetData() {
+        try {
+
+            const response = await PolicyServices.List();
+            setPolicies(response.content);
+            
+        } catch (error) {
+            console.log(error)
+
+        }
+    }
+    const handleDeletePolicy = async (id)=>{
+        try {
+            const response = await PolicyServices.Delete(id);
+            toast.success('Policy deleted successfully');
+            GetData();
+        } catch (error) {
+            console.log(error);
+            toast.error('Failed to delete policy');
+
+        }
+    }
     return (
         <section className="SecondSliderSection ManageClassesCompnent">
              <AddNurseryPolicyModal
                 isOpen={isOverlayOpen}
                 onClose={() => setIsOverlayOpen(false)}
-                onAddNurseryPolicy={handleAddFAQ}
+                onAddNurseryPolicy={handleAddPolicy}
             />
+            <div className="Toaster">
+                <Toaster
+                    position="top-right"
+                    reverseOrder={false}
+                />
+            </div>
             <div className="Container HeadContainer">
                 <div className="row">
                     <div className="col-lg-6 col-md-6 col-sm-6 col-6">
@@ -55,13 +96,19 @@ const NurseryPolicy = () => {
             <div className="DropDownContainer">
 
                 <div className="row">
-                {Data.map((row) => (
+                {policies.length>0?policies.map((row) => (
                     <NurseryPolicyItem 
+                        id={row.id}
                         key={row.id}
-                        Title={row.Title}
-                        Description={row.Description}
+                        Title={row.title}
+                        Description={row.description}
+                        DeletePolicy={handleDeletePolicy}
                     />
-                ))}
+                )):
+                    <div className="Center">
+                        No policies added yet
+                    </div>
+                }
                 </div>
             </div>
             

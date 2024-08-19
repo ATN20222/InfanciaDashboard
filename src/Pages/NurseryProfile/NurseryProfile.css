@@ -145,6 +145,11 @@
     width: 100%;
     height: 100%;
     border-radius: 35px ;
+    display: flex;
+    overflow: hidden;
+}
+.GalleryImage img{
+    object-fit: cover;
 }
 .AlbumName{
     margin-top:5px ;
@@ -280,6 +285,17 @@
 }
 .NuseryPaymentHistory{
     padding: 20px;
+}
+.ProfileActive{
+    border-bottom: 1px solid;
+}
+.EditAlbumName{
+    margin-left: 10px;
+    display: inline;
+    cursor: pointer;
+}
+.UploadImage{
+    cursor: pointer;
 }
 @media (max-width:486px) {
     .NuseryProfileTabbing{

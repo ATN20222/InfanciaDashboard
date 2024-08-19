@@ -21,10 +21,10 @@ const GalleryImages = ({ gallery, onBack }) => {
     <div className="GalleryImagesContainer">
       <button onClick={onBack} className="btn GalleryBackBtn"><FontAwesomeIcon icon={faChevronLeft}/></button>
       <div className="row Center">
-        {images.map((image) => (
+        {gallery.map((image) => (
           <div key={image.id} className="col-lg-2 col-md-3 col-sm-4 col-6 GalleryItem">
             <div className="GalleryImage Center">
-              <img src={image.src} alt={`Image ${image.id}`} width="100%" />
+              <img src={image.original_url} alt={`Image ${image.id}`} width="100%" />
             </div>
           </div>
         ))}

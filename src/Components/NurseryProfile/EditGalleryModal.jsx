@@ -1,44 +1,49 @@
-import React, { useState } from 'react';
-import CustomDropdown2 from '../../Components/DrobDown/CustomDropdown2';
+import React, { useEffect, useState } from 'react';
 
-const AddGalleryModal = ({ isOpen, onClose, onAddGallery }) => {
+const EditGalleryModal = ({ id, title, isOpen, onClose, onEditGallery }) => {
   const [albumName, setAlbumName] = useState('');
   const [albumNameError, setAlbumNameError] = useState('');
 
+  useEffect(() => {
+    if (isOpen) {
+      setAlbumName(title || '');
+    }
+  }, [title, isOpen]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setAlbumNameError(''); 
+    setAlbumNameError('');
 
     if (albumName.trim() === '') {
       setAlbumNameError('album name is required');
       return;
     }
 
-    onAddGallery(albumName);
+    onEditGallery(id, albumName);
     clearData();
     onClose();
   };
-
-  if (!isOpen) return null;
 
   const clearData = () => {
     setAlbumName('');
     setAlbumNameError('');
   };
 
+  if (!isOpen) return null;
+
   return (
     <div className="overlay">
       <div className="mymodal">
         <div className="modal-content">
-          <h3>Add Album</h3>
+          <h3>Edit Album</h3>
           <div className="FormHr"></div>
           <form className="add-class-form" onSubmit={handleSubmit}>
             <label>
               <input
                 type="text"
                 name="albumName"
-                className={`ClassNameInput mt-2 ${albumNameError?'':'mb-4'}`}
-                placeholder='Album Name  '
+                className={`ClassNameInput mt-2 ${albumNameError ? '' : 'mb-4'}`}
+                placeholder='Album Name'
                 value={albumName}
                 onChange={(e) => setAlbumName(e.target.value)}
               />
@@ -65,4 +70,4 @@ const AddGalleryModal = ({ isOpen, onClose, onAddGallery }) => {
   );
 };
 
-export default AddGalleryModal;
+export default EditGalleryModal;

@@ -1,34 +1,48 @@
 import React from "react";
-import UserImage from '../../Assets/images/User.jpg'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
+import { faStar as faStarEmpty } from "@fortawesome/free-regular-svg-icons";
 
-const ReviewItem = ()=>{
-    return(
+const ReviewItem = ({ name, text, rate }) => {
+    const renderStars = (rate) => {
+        console.log(rate);
+        const stars = [];
+        const fullStars = Math.floor(rate); 
+        const halfStar = rate % 1 !== 0; 
+        const emptyStars = 5 - Math.ceil(rate); 
+
+        for (let i = 0; i < fullStars; i++) {
+            stars.push(<FontAwesomeIcon key={i} icon={faStar} />);
+        }
+
+        if (halfStar) {
+            stars.push(<FontAwesomeIcon key="half" icon={faStarHalfAlt} />);
+        }
+
+        for (let i = 0; i < emptyStars; i++) {
+            stars.push(<FontAwesomeIcon key={`empty-${i}`} icon={faStarEmpty} />);
+        }
+
+        return stars;
+    };
+
+    return (
         <div className="ReviewItem">
             <div className="ReviewImageAndHeader">
-                <div className="NurseryReviewImage">
-                    <img src={UserImage} width="100%" alt="" />
+            <div className="ReviewText">
+                <div className="ReviewTitle">
+                <span>{name}</span>
                 </div>
-                <div className="ReviewText">
-                    <div className="ReviewTitle">
-                        <span className="">Holiday Nursery</span>
-
-                    </div>
-                    <div className="ReviewBody">
-                        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. At culpa odio praesentium amet aliquam perspiciatis harum optio maiores, illo ab, voluptatibus assumenda doloremque autem quo consequatur. Exercitationem neque incidunt quod.</span>
-                    </div>
+                <div className="ReviewBody">
+                <span>{text}</span>
                 </div>
-
+            </div>
             </div>
             <div className="ReviewStars Center">
-                <FontAwesomeIcon icon={faStar}/>
-                <FontAwesomeIcon icon={faStar}/>
-                <FontAwesomeIcon icon={faStar}/>
-                <FontAwesomeIcon icon={faStar}/>
-                <FontAwesomeIcon icon={faStar}/>
+            {renderStars(rate)}
             </div>
         </div>
     );
-}
-export default ReviewItem;
+};
+
+    export default ReviewItem;

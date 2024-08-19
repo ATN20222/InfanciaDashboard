@@ -1,4 +1,4 @@
-import axiosInstance, { deleteToken, setToken } from './AxiosApi';
+import axiosInstance, { deleteNurseryId, deleteToken, setNurseryId, setToken ,getNurseryId } from './AxiosApi';
 
 const baseURL = 'https://infancia.app/api'; 
 
@@ -11,6 +11,7 @@ const AuthService = {
         formData.append('password', password);
         const response = await axiosInstance.post(`/auth/login`, formData);
         setToken(response.data.token);
+        setNurseryId(response.data.nursery_id)
         console.log(response);
         return response.data; 
 
@@ -22,6 +23,7 @@ const AuthService = {
         try {
           const response = await axiosInstance.post(`/auth/logout`);
           deleteToken();
+          deleteNurseryId();
           localStorage.clear();
           return response.data;
         } catch (error) {
@@ -383,6 +385,39 @@ const FAQServices = {
     }
   },
 }
+const PolicyServices = {
+  Add: async (title, description )=>{
+    try {
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('description', description);
+      
+      const response = await axiosInstance.post(`/policies` , formData);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to add'); 
+    }
+  },
+  List: async ()=>{
+    try {
+      const response = await axiosInstance.get(`/policies`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to list'); 
+    }
+  },
+  Delete: async (id)=>{
+    try {
+      const response = await axiosInstance.delete(`/policies/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to delete'); 
+    }
+  },
+}
 
 const ScheduleServices = {
   getClassSchedule: async (class_id,day)=>{
@@ -415,10 +450,94 @@ const ScheduleServices = {
 }
 
 
+const NurseryProfileService = {
+  ListInfo: async ()=>{
+    const id = getNurseryId();
+    try {
+      const response = await axiosInstance.get(`/guest/nurseries/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to get data'); 
+    }
+  },
+  ListReviews: async ()=>{
+    try {
+      const response = await axiosInstance.get(`/reviews`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to get data'); 
+    }
+  },
+  ListGallery: async ()=>{
+    try {
+      const response = await axiosInstance.get(`/nursery-album`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to get data'); 
+    }
+  },
+  AddAlbum: async (title)=>{
+    try {
+      const formData = new FormData();
+      formData.append('title', title);
+      
+      const response = await axiosInstance.post(`/nursery-album` , formData);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to add'); 
+    }
+  },
+  EditAlbum: async (id , title)=>{
+    try {
+      const response = await axiosInstance.put(`/nursery-album/${id}?title=${title}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to edit'); 
+    }
+  },
+  ListGalleryImages: async (id)=>{
+    try {
+      const response = await axiosInstance.get(`/nursery-album/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to get data'); 
+    }
+  },
+  UploadGalleryImage: async (album_id  , media)=>{
+    try {
+      const formData = new FormData();
+      formData.append('album_id', album_id);
+      formData.append('media', media);
+      const response = await axiosInstance.post(`/nursery-album/add-photo/`,formData,{
+        headers: {
+          'Content-Type': 'multipart/form-data', 
+          
+        },
+        withCredentials: true,
+      });
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to upload'); 
+    }
+  },
+
+
+
+}
+
 export { 
   AuthService , ClassService ,
   KidsServices , SubjectServices , 
   NewsLetterServices,
-  FAQServices,ScheduleServices
+  FAQServices,ScheduleServices,
+  PolicyServices,NurseryProfileService,
+
 };
 
