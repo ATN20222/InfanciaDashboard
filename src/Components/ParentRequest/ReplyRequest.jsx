@@ -3,17 +3,21 @@ import React, { useState } from 'react';
 import ParentRequestItem from './ParentRequestItem';
 import Chat from '../Chat/Chat';
 
-const ReplyRequest = ({ isOpen, onClose, onReply ,id, PublisherImage , PublisherName, PublishDate , Text }) => {
+const ReplyRequest = ({ userId, userName, isOpen, onClose , closedRequest }) => {
   const [className, setClassName] = useState('');
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    onReply(className);
+    // onReply(className);
     setClassName('');
     onClose();
   };
+  console.log("closedRequest",closedRequest)
 
   if (!isOpen) return null;
+  const handleClose = ()=>{
+    console.log("test")
+    onClose();
+  }
 
   return (
     // <div className="overlay">
@@ -60,7 +64,7 @@ const ReplyRequest = ({ isOpen, onClose, onReply ,id, PublisherImage , Publisher
         <div className="mymodal">
             <div className="modal-content">
 
-                <Chat/>
+                <Chat SelectedUserId={userId} Name={userName} ClosedChat={closedRequest} close={handleClose}/>
             </div>
         </div>
     </div>

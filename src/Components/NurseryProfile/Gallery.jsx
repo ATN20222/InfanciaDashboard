@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import AddGalleryModal from "./AddGalleryModal";
 import GalleryImages from "./GalleryImages"; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faPlus, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faPlus, faTrash, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { NurseryProfileService } from "../../Service/Api";
 import toast, { Toaster } from "react-hot-toast";
 import GalleryTempImage from '../../Assets/images/GalleryTempImage.jpg'
 import EditGalleryModal from "./EditGalleryModal";
+import DeleteSubjectModal from "../ManageClasses/DeleteSubjectModal";
 
 const Gallery = () => {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
@@ -17,6 +18,8 @@ const Gallery = () => {
   const [uploadImage , setUploadImage] = useState(null);
   const [uploadError,setUploadError]= useState('');
   const [currentGallery,setCurrentGallery] = useState(null);
+  const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
+  const [galleryIdToDelete , setGalleryIdToDelete] = useState([]);
   useEffect(()=>{
     GetData();
   },[]);
@@ -107,9 +110,24 @@ const Gallery = () => {
   };
   
 
-
+  const handleDeleteGallery = (id)=>{
+    setGalleryIdToDelete(id);
+    setIsDeleteOverlayOpen(true);
+  }
   
+  const HandleConfirmDelete = async (id)=>{
 
+    try {
+      const response = await NurseryProfileService.DeleteGallery(id);
+      toast.success('Album deleted successfully');
+      GetData();
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to delete album');
+    }
+    setGalleryIdToDelete(null);
+
+  }
   return (
     <div className="NurseryContainer NurseryGallery">
       <AddGalleryModal
@@ -124,12 +142,19 @@ const Gallery = () => {
         onClose={() => setIsEditOverlayOpen(false)}
         onEditGallery={handleEditGallery}
       />
+      <DeleteSubjectModal
+            id={galleryIdToDelete}
+            isOpen={isDeleteOverlayOpen}
+            onClose={() => setIsDeleteOverlayOpen(false)}
+            onDelete={HandleConfirmDelete}
+      />
       <div className="Toaster">
           <Toaster
               position="top-right"
               reverseOrder={false}
           />
       </div>  
+
       {!selectedGallery?
       <div className="AddGallery">
         <span onClick={() => setIsOverlayOpen(true)}> <FontAwesomeIcon  icon={faPlus}/> Add</span>
@@ -156,6 +181,8 @@ const Gallery = () => {
       </div>
     }
 
+    
+
       {selectedGallery ? (
         <GalleryImages gallery={selectedGallery} onBack={handleBackToGallery} />
       ) : (
@@ -168,11 +195,15 @@ const Gallery = () => {
                   className="col-lg-2 col-md-3 col-sm-4 col-6 GalleryItem"
                 >
                   <div className="GalleryImage Center" onClick={() => {handleGalleryClick(album.id); setCurrentGallery(album.id) }}>
-                    <img src={GalleryTempImage} width="90%" alt="" />
+                    <img src={GalleryTempImage} width="100%"  alt="" />
                   </div>
                   <span className="AlbumName">{album.title}</span>
                   <div className="EditAlbumName" onClick={() => openEditModal(album)}>
                     <FontAwesomeIcon icon={faPen}/>
+                  </div>
+
+                  <div className="DeleteGallery" onClick={()=>handleDeleteGallery(album.id)}>
+                    <FontAwesomeIcon icon={faTrash} />
                   </div>
                 </div>
               ))}

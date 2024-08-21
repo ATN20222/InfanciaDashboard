@@ -1,18 +1,34 @@
-import React ,{useContext} from 'react';
+import React ,{useContext, useEffect} from 'react';
 import './Sidebar.css';
 import SideBarImage from '../../Assets/images/INFANCIA_LOGO.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAddressCard, faCashRegister, faChalkboard, faChildren, faComments, faCreditCard, faCreditCardAlt, faFileCircleCheck, faHand, faHandPointer, faHandPointUp, faHome, faNewspaper, faRightFromBracket, faUserGroup, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthService } from '../../Service/Api';
+import { useAuth } from '../../Context/AuthContext';
 
 function Sidebar({ isOpen, toggleSidebar }) {
+    useEffect(()=>{
+        GetPermissions();
+    },[])
+
+    async function GetPermissions() {
+        try {
+            const response = await AuthService.AuthRole();
+            console.log("response",response);
+        } catch (error) {
+    
+            console.error(error);
+        }
+    }
 
     const navigate = useNavigate();
+    const { logout } = useAuth();
     const handleLogout = async () => {
         
         try {
           const userData = await AuthService.Logout();
+          logout();
           navigate('/login'); 
         } catch (error) {
           console.error(error.message);

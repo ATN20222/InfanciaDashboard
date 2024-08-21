@@ -74,7 +74,15 @@ const AddKid = () => {
         event.preventDefault();
         let valid = true;
 
+        if (!ImageFile) {
+            setImageError("Kid image is required");
+            valid = false;
+            setLoading(false);
+            return;
 
+        } else {
+            setImageError('');
+        }
         if (kidName === '') {
             setKidNameError("Kid name is required");
             valid = false;
@@ -84,15 +92,7 @@ const AddKid = () => {
         } else {
             setKidNameError('');
         }
-        if ( ImageFile=== null) {
-            setImageError("Kid image is required");
-            valid = false;
-            setLoading(false);
-            return;
-
-        } else {
-            setKidNameError('');
-        }
+        
         if (parentName === '') {
             setParentNameError("Parent name is required");
             valid = false;
@@ -250,9 +250,9 @@ const AddKid = () => {
                     fatherName,fatherMobile,fatherJob,
                     motherName,motherMobile,
                     motherJob,hasMedicalCase?'1':'0',
-                    emergencyPhone
-
-                      );
+                    emergencyPhone,
+                    ImageFile
+                    );
                 console.log(response);
                 toast.success('Kid added successfully');
                 setLoading(false);

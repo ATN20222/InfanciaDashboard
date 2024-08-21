@@ -40,7 +40,7 @@ const KidTable = ({ kids }) => {
             
     
 
-</div>
+        </div>
     );
 };
 

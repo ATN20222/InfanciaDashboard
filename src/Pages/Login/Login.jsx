@@ -1,8 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import './Login.css';
 import InfanciaLogo from '../../Assets/images/INFANCIA_LOGO.png';
 import { Link, useNavigate  } from "react-router-dom";
 import { AuthService } from '../../Service/Api';
+import { useAuth } from "../../Context/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,7 +14,14 @@ const Login = () => {
   const [loading , setLoading] = useState(false);
 
   const navigate = useNavigate();
-
+  const { login } = useAuth();
+  useEffect(()=>{
+    if(localStorage.getItem("isAuthenticated")){
+      // navigate('/hpme')
+      login();
+      console.log("hi")
+    }
+  })
   const handleLogin = async (event) => {
     setEmailError("")
     setErrorSummary("");
@@ -42,7 +50,7 @@ const Login = () => {
 
       const userData = await AuthService.Login(email, password);
       localStorage.setItem("welcome" , 1);
-
+      login();
       
       navigate('/home'); 
     } catch (error) {

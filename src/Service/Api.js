@@ -1,3 +1,4 @@
+import axios from 'axios';
 import axiosInstance, { deleteNurseryId, deleteToken, setNurseryId, setToken ,getNurseryId } from './AxiosApi';
 
 const baseURL = 'https://infancia.app/api'; 
@@ -80,7 +81,16 @@ const AuthService = {
       } catch (error) {
         throw new Error('Failed to register'); 
   }
-    }
+    },
+    AuthRole:async ()=>{
+      try {
+          
+          const response = await axiosInstance.post(`/auth/auth-role`);
+          return response.data; 
+        } catch (error) {
+          throw new Error('Failed to get roles'); 
+        }
+  },
 }
 
 const ClassService = {
@@ -165,7 +175,8 @@ const KidsServices = {
     mother_mobile,
     mother_job,
     has_medical_case,
-    emergency_phone
+    emergency_phone,
+    media
   )=>{
     try {
       const formData = new FormData();
@@ -186,6 +197,7 @@ const KidsServices = {
       formData.append('mother_job', mother_job);
       formData.append('has_medical_case', has_medical_case);
       formData.append('emergency_phone', emergency_phone);
+      formData.append('media', media);
       const response = await axiosInstance.post(`/kids` , formData);
       return response.data; 
 
@@ -330,7 +342,7 @@ const NewsLetterServices = {
   },
   Add: async (description , image)=>{
     const formData = new FormData();
-    // formData.append('image', image);
+    formData.append('media', image);
     formData.append('description', description);
     formData.append('title', "Test");
     try {
@@ -472,7 +484,8 @@ const NurseryProfileService = {
   },
   ListGallery: async ()=>{
     try {
-      const response = await axiosInstance.get(`/nursery-album`);
+      const id = getNurseryId();
+      const response = await axiosInstance.get(`/nurseies-albums/${id}`);
       return response.data; 
 
     } catch (error) {
@@ -509,6 +522,15 @@ const NurseryProfileService = {
       throw new Error('Failed to get data'); 
     }
   },
+  DeleteGallery: async (id)=>{
+    try {
+      const response = await axiosInstance.delete(`/nursery-album/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to delete'); 
+    }
+  },
   UploadGalleryImage: async (album_id  , media)=>{
     try {
       const formData = new FormData();
@@ -531,6 +553,158 @@ const NurseryProfileService = {
 
 
 }
+const MealsServices = {
+  List: async (id)=>{
+    try {
+      const response = await axiosInstance.get(`/meals/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to get data'); 
+    }
+  },
+  Add: async (meal , day ,type , class_id)=>{
+    const data = {
+      "meals": [
+          { "days": day, "type":type, "description": meal, "class_id" : class_id},
+      ],
+      
+      "class_id":class_id
+  }
+    try {
+
+      const response = await axiosInstance.post(`/meals` , data);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to add'); 
+    }
+  },
+  
+  Edit: async ( id , class_id , type , days, description)=>{
+    try {
+
+
+      const response = await axiosInstance.put(`/meals/${id}?class_id=${class_id}&type=${type}&days=${days}&description=${description}`);
+      return response.data; 
+    } catch (error) {
+      throw new Error('Failed to edit'); 
+    }
+  },
+
+  Delete: async (id)=>{
+    try {
+      const response = await axiosInstance.delete(`/meals/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to delete'); 
+    }
+  },
+
+}
+
+const ParentRequestServices = {
+  ListRequests: async () => {
+    try {
+      const id = getNurseryId();
+      const response = await axiosInstance.get(`/chat/get-request/${id}`);
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to get data');
+    }
+  },
+  ListMessages: async (id) => {
+    try {
+      const response = await axiosInstance.get(`/chat/${id}`);
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to get data');
+    }
+  },
+
+  SendMessages: async (receiver , message) => {
+    try {
+      const response = await axiosInstance.post(`/chat/send-message`,
+        {
+        receiver: receiver,
+        message: message,
+      }
+      // , {
+      //   headers: {
+      //     Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2xpZ2h0c2t5Ymx1ZS1wb3Jwb2lzZS05MDMyNzEuaG9zdGluZ2Vyc2l0ZS5jb20vYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MjQxODYzNTMsImV4cCI6MTcyNDM2OTk1MywibmJmIjoxNzI0MTg2MzUzLCJqdGkiOiI1djVrMTk5VUNqdTRUcktzIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.teF8h9rW1xUPvs2GkZ1xU7Ot2a-NOimIQMqeyELUmuk`,
+      //   },
+      // }
+    );
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to send');
+    }
+  },
+
+};
+const RolesServices = {
+  List: async ()=>{
+    try {
+      const response = await axiosInstance.get(`/roles`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to get data'); 
+    }
+  },
+  Add:async (data)=>{
+    try {
+      const response = await axiosInstance.post(`/roles`,data);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to add'); 
+    }
+  },
+  Delete:async (id)=>{
+    try {
+      const response = await axiosInstance.delete(`/roles/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to delete'); 
+    }
+  },
+}
+
+const PaymentRequestServices = {
+  List: async ()=>{
+    try {
+      const response = await axiosInstance.get(`/payment-request`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to get data'); 
+    }
+  },
+  Add:async (data)=>{
+    try {
+      const response = await axiosInstance.post(`/payment-request`,data);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to add'); 
+    }
+  },
+  MarkPaid:async (id)=>{
+    try {
+      const response = await axiosInstance.post(`payment-request/paid/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to change state'); 
+    }
+  },
+
+
+}
+
 
 export { 
   AuthService , ClassService ,
@@ -538,6 +712,7 @@ export {
   NewsLetterServices,
   FAQServices,ScheduleServices,
   PolicyServices,NurseryProfileService,
-
+  MealsServices,ParentRequestServices,
+  RolesServices,PaymentRequestServices
 };
 

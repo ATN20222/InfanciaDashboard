@@ -121,7 +121,7 @@ const NewsLetter = () => {
                 <NewletterItem
                     key={row.id}
                     id={row.id}
-                    Image={row.Image}
+                    Image={row.media.original_url}
                     Likes={row.likes_counts}
                     PublishDate={formatDate(row.created_at) }
                     PublisherImage={row.PublisherImage}

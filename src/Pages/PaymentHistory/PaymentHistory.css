@@ -12,7 +12,7 @@
     color: white !important;
     padding: 10px;
     border: none;
-    width: calc(100%/6);
+    width: calc(100%/7);
 }
 .TableContainer td input[type="checkbox"]{
     appearance: none;
@@ -61,7 +61,7 @@
     border-bottom-left-radius: 20px !important;
 }
 
-.TableContainerHistoryPayment tr td:nth-child(6) {
+.TableContainerHistoryPayment tr td:nth-child(7) {
     border-top-right-radius: 20px !important;
     border-bottom-right-radius: 20px !important;
 }
@@ -118,6 +118,27 @@
     border-radius: 15px;
     text-align: start;
 
+}
+.Paied{
+    color: green !important;
+
+}
+.NotPaied{
+    color: white !important;
+
+}
+.PaymentHistoryTableContainer{
+    overflow: visible !important;
+    max-height: 500px;
+}
+.PaymentHistoryCol{
+    padding: 0 !important;
+}
+.PaymentHistoryCol:nth-child(1){
+    padding-left: 5px !important;
+}
+.PaymentHistoryCol:nth-child(8){
+    padding-right: 5px !important;
 }
 @media (max-width:1062px) {
     .TableContainer .NamePayment::after {

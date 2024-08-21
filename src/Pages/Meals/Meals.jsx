@@ -5,10 +5,9 @@ import MealsSchedule from "../../Components/Meals/MealsSchedule";
 import { ClassService } from "../../Service/Api";
 
 const Meals = ()=>{
-    const [SelectedMeals , setSelectedMeal]= useState(1);
+    const [selectedMeal, setSelectedMeal] = useState(1); 
     const [selectedClass, setSelectedClass] = useState(null);
-    const [updateKey, setUpdateKey] = useState(0); 
-
+    const [updateKey, setUpdateKey] = useState(0);
     useEffect(() => {
 
         async function fetchDefaultClass() {
@@ -30,13 +29,21 @@ const Meals = ()=>{
         setUpdateKey(prevKey => prevKey + 1);
     };
 
+    const handleSelectMeal = (meal) => {
+        setSelectedMeal(meal);
+        setUpdateKey((prevKey) => prevKey + 1);
+    };
+
     return(
         <div className="LoginMain">
+            <ManageClassesCompnent  IsMeals={false} ChangeClass={handleChangeClass} />
+            {selectedClass&&
+            <>
+            <MealsToSelect key={`MealsToSelect-${updateKey}`} SelectedClassId={selectedClass} selectedMeal={selectedMeal} onSelectMeal={handleSelectMeal} />
+            <MealsSchedule key={`MealsSchedule-${updateKey}`} SelectedClassId={selectedClass} selectedMeal={selectedMeal} updateKey={updateKey} />
             
-                <ManageClassesCompnent IsMeals={true} ChangeClass={handleChangeClass}/>
-                {/* {selectedClass && ()} */}
-                <MealsToSelect/>
-                <MealsSchedule/>
+            </>
+            }
         </div>
     )
 }

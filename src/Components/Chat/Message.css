@@ -66,7 +66,6 @@
     font-size: 12px;
     color: rgba(128, 128, 128, 0.639);
     position: relative;
-    left: -10%;
 }
 .Received{
     direction: rtl;
@@ -76,12 +75,16 @@
     margin-left: 0;
     margin-right: 20px;
     display: flex;
-
+    flex-direction: column;
+    justify-content: start;
+    text-align: start;
 }
 .MsgTextReceived span{
     z-index: 500;
 }
-
+.SentDate span{
+    color: #ffffff !important;
+}
 /* .MsgTextReceived::after{
     content: "";
     position: absolute;
@@ -108,5 +111,7 @@
     background-color: #e6e9f1;
 }
 .MsgTextReceived{
+    position: relative;
     color: black;
+    
 }

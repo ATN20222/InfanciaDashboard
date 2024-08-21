@@ -7,11 +7,12 @@
     border-radius: 10px;
     max-width: 500px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 5px;
   }
   
   .circle-container {
     position: relative;
-    width: 100px;
+    width: 200px;
     height: 100px;
     margin-right: 20px;
   }
@@ -39,10 +40,12 @@
     font-size: 0.5em;
     text-anchor: middle;
     fill: #ff007f;
+    fill: white;
   }
   
   .card-content {
     flex-grow: 1;
+    text-align: start;
   }
   
   .card-header {

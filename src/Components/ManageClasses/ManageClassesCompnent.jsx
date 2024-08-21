@@ -74,6 +74,8 @@ const ManageClassesCompnent = ({IsMeals , ChangeClass})=>{
         setSelectclass(classs);
         ChangeClass(classs); 
     };
+
+
     
     return(
         <section className="SecondSliderSection ManageClassesCompnent">
@@ -114,7 +116,7 @@ const ManageClassesCompnent = ({IsMeals , ChangeClass})=>{
                         }
                        
                     </div>
-                </div>
+            </div>
                 <Slider OnEdit={HandleEditClassClick} IsMeals={isMeals} Classes={classes} HandleSelectClass={ChangeSelectedClass}/>
         </section>
     );

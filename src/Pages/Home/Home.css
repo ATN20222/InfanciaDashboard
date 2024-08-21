@@ -1,0 +1,12 @@
+.ChartsRow{
+    margin-top: 40px !important;
+    display: flex;
+    justify-content: space-between;
+}
+.PieChartCol{
+    padding: 50px;
+    padding-top: 0;
+}
+.ChartsRow h5{
+    text-align: start;
+}

@@ -139,6 +139,7 @@
     height: 200px;
     margin: 20px !important;
     min-width: 200px;
+    position: relative;
 }
 .GalleryImage{
     background-color: #ddd;
@@ -327,4 +328,12 @@
     .ReviewStars {
         margin-top: 15px;
     }
+}
+.DeleteGallery{
+    position: absolute;
+    z-index: 10;
+    top: 20px;
+    right:30px;
+    color: var(--color-pink);
+    cursor: pointer;
 }

@@ -85,3 +85,6 @@
 .ClassTeacherDropDown{
     border-radius: 30px !important;
 }
+.daydropdown{
+    max-height: 75px;
+}

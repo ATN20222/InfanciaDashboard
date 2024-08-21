@@ -34,6 +34,11 @@ const AddNewsLetterModal = ({ isOpen, onClose, onAddNewsLetter }) => {
       setDescriptionError("");
     }
 
+    if(description.length<50 || description.length>1000){
+      setDescriptionError('description must be between 50 - 1000 characters');
+      return;
+  }
+
     if (valid) {
       onAddNewsLetter(description, image);
       setDescription('');

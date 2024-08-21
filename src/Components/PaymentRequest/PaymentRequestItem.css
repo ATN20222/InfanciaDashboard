@@ -148,6 +148,59 @@
 .Payed svg{
     color: var(--color-green);
 }
+.PaymentRequestContainer{
+    max-height: 800px !important;
+}
+
+
+
+
+
+.SelectKidToRequest input[type="checkbox"]{
+    appearance: none;
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 1px solid white;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+.SelectKidToRequest input[type="checkbox"]::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-pink); /* Background color before checked */
+    border-radius: 4px;
+}
+
+.SelectKidToRequest input[type="checkbox"]:checked::before {
+    background-color: var(--color-pink); /* Background color when checked */
+}
+
+.SelectKidToRequest input[type="checkbox"]:checked::after {
+    content: "✓";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+
+
+
+
+
+
+
 @media (max-width:1062px) {
     .TableContainer .NamePayment::after {
         content: attr(data-content);
