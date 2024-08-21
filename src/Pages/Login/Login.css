@@ -136,6 +136,22 @@
 .LoginCol label{
     top: 14px;
 }
+.EmailLoginCol label{
+    left: 30px ;
+}
+
+.EmailLoginCol input{
+    padding-left: 70px;
+    padding-right: 10px;
+}
+
+.PasswordLoginCol label{
+    left: 30px;
+}
+.PasswordLoginCol input{
+    padding-left: 80px;
+    padding-right: 10px;
+}
 @media (max-width:768px) {
     .InfGroup{
         display: none;

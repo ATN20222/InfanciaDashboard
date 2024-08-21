@@ -28,7 +28,7 @@ const CustomDropdown = ({Options , DefaultValue,onChange}) => {
                     {options.map((option, index) => (
                         <div
                             key={index}
-                            className="dropdown-item"
+                            className="dropdown-item "
                             onClick={() => handleOptionClick(option)}
                         >
                             {option}

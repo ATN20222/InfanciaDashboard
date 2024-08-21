@@ -5,8 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import CustomDropdown from "../../Components/DrobDown/CustomDropdown";
 import { AuthService } from "../../Service/Api";
+import toast, { Toaster } from "react-hot-toast";
 
 const Register = () => {
+    const [loading , setLoading] = useState(false);
     const [formData, setFormData] = useState({
         nurseryName: "",
         email: "",
@@ -24,13 +26,45 @@ const Register = () => {
         aboutNursery: "",
         accept: false
     });
+    const [imageError, setImageError] = useState('');
+    const [image, setImage] = useState(null);
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        
+        // Validate image size (max 8 MB)
+        if (file.size > 8 * 1024 * 1024) {
+          setImageError("Image size should not exceed 8 MB");
+          setImage(null);
+          return;
+        }
+      
+        // Validate image format
+        const allowedFormats = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+        if (!allowedFormats.includes(file.type)) {
+          setImageError("Only .jpeg, .jpg, .png, and .gif formats are allowed");
+          setImage(null);
+          return;
+        }
+      
+        // Set image if valid
+        setImage(file);
+        setImageError("");
+      };
 
     const [errors, setErrors] = useState({});
+    
+
 
     const validate = () => {
         let tempErrors = {};
         let isValid = true;
-    
+
+        if (!image) {
+            isValid = false;
+            setImageError('Nursery image is required');
+            return;
+        }
+        
         if (!formData.nurseryName) {
             console.log("Nursery name is required");
             tempErrors.nurseryName = "Nursery name is required";
@@ -67,6 +101,19 @@ const Register = () => {
             return;
         }
     
+        if(!formData.country){
+            tempErrors.country = "Country is required";
+            isValid = false;
+            setErrors(tempErrors);
+            return;
+        }
+        if(!formData.city){
+            tempErrors.city = "City is required";
+            isValid = false;
+            setErrors(tempErrors);
+            return;
+        }
+
         if (!formData.address) {
             console.log("Address is required");
             tempErrors.address = "Address is required";
@@ -184,7 +231,10 @@ const Register = () => {
     };
 
     const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
+        setErrors({});
+        setImageError('');
         if (validate()) {
             try {
                 const response = await AuthService.RegisterApi(
@@ -193,7 +243,8 @@ const Register = () => {
                     formData.mobileNo,
                     "InfanciaNursery2024", 
                     // "formData.province",
-                    "cairo",
+                    formData.city,
+                    formData.country,
                     formData.address,
                     formData.branches,
                     formData.classesNo,
@@ -202,20 +253,66 @@ const Register = () => {
                     formData.startFees,
                     formData.aboutNursery
                 );
-                console.log("Form data submitted successfully", response);
-                // Handle successful registration, e.g., redirect or show a success message
+                // console.log("Form data submitted successfully", response);
+                toast.success('Your Application has been sent');
+                
             } catch (error) {
                 console.error("Registration failed", error);
-                // Handle registration failure, e.g., show an error message
+                toast.error('Failed to send your Application');
+
             }
         } else {
             console.log("Form validation failed");
         }
+        setLoading(false);
     };
     
+    const egyptianCities = [
+        "Cairo",
+        "Alexandria",
+        "Giza",
+        "Port Said",
+        "Suez",
+        "Luxor",
+        "Asyut",
+        "Ismailia",
+        "Aswan",
+        "Mansoura",
+        "Tanta",
+        "Faiyum",
+        "Zagazig",
+        "Damietta",
+        "Minya",
+        "Beni Suef",
+        "Qena",
+        "Sohag",
+        "Hurghada",
+        "Shibin El Kom",
+        "Banha",
+        "Arish",
+        "Mallawi",
+        "10th of Ramadan City",
+        "Sadat City",
+        "Obour City",
+        "6th of October City",
+        "New Cairo"
+    ];
+    
+    const handleCountryChange = (selectedCountry) => {
+        setFormData({ ...formData, country: selectedCountry });
+    };
 
+    const handleCityChange = (selectedCity) => {
+        setFormData({ ...formData, city: selectedCity });
+    };
     return (
         <div className="RegisterMain">
+            <div className="Toaster">
+                <Toaster
+                    position="top-right"
+                    reverseOrder={false}
+                />
+            </div>
             <div className="TopImage">
                 <img src={TopImage} width="200px" alt="" />
             </div>
@@ -228,14 +325,17 @@ const Register = () => {
                         </div>
 
                         <div className="col-lg-12">
-                            <form className="row Center" onSubmit={handleSubmit}>
+                            <form className="row Center RegisterForm" onSubmit={handleSubmit}>
                                 <div className="col-lg-12 Center UploadRegisterImageCol mb-3">
                                     <div className="UploadRegisterImage Center">
                                         <label htmlFor="NurseryImage" className="icon-label text-center">
                                             <FontAwesomeIcon icon={faCamera} />
                                         </label>
-                                        <input type="file" className="d-none" id="NurseryImage" />
+
+                                        <input type="file"  className="d-none" id="NurseryImage" onChange={handleImageChange} />
+
                                     </div>
+                                        {imageError && <span className="text-danger FormError">{imageError}</span>}
                                 </div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryName">
                                     <input
@@ -249,7 +349,7 @@ const Register = () => {
                                     {errors.nurseryName && <span className="text-danger FormError">{errors.nurseryName}</span>}
                                 </div>
                                 <div className="col-lg-1"></div>
-                                <div className="col-lg-5 FormInputCol FormInputColReg">
+                                <div className="col-lg-5 FormInputCol FormInputColReg EmailRegisterCol">
                                     <input
                                         type="text"
                                         className="FormInput FormInputReg EmailRegisterInput"
@@ -272,21 +372,24 @@ const Register = () => {
                                             value={formData.mobileNo}
                                             onChange={handleChange}
                                         />
-                                        <label className="FormLabel FormLabelReg" htmlFor="MobileNo">Mobile No. : </label>
+                                        <label className="FormLabel FormLabelReg MobileNoLabel" htmlFor="MobileNo">Mobile No. : </label>
                                         {errors.mobileNo && <span className="text-danger FormError">{errors.mobileNo}</span>}
                                     </div>
                                 </div>
                                 <div className="col-lg-1"></div>
+                                <div className="col-lg-5 FormInputCol FormInputColReg">
+                                    <CustomDropdown Options={["Egypt"]} DefaultValue={"Country  "} onChange={handleCountryChange} />
+                                    {errors.country && <span className="text-danger FormError">{errors.country}</span>}
+
+                                </div>
                                 {/* <div className="col-lg-5 FormInputCol FormInputColReg">
-                                    <CustomDropdown Options={["Egypt"]} DefaultValue={"Country : "} />
-                                </div>
-                                <div className="col-lg-5 FormInputCol FormInputColReg">
                                     <CustomDropdown Options={["Cairo"]} DefaultValue={"Province : "} />
-                                </div>
-                                <div className="col-lg-1"></div>
-                                <div className="col-lg-5 FormInputCol FormInputColReg">
-                                    <CustomDropdown Options={["El-Marg"]} DefaultValue={"City : "} />
                                 </div> */}
+                                <div className="col-lg-5 FormInputCol FormInputColReg">
+                                    <CustomDropdown Options={egyptianCities} DefaultValue={"City  "} onChange={handleCityChange}/>
+                                    {errors.city && <span className="text-danger FormError">{errors.city}</span>}
+                                    
+                                </div>
                                 <div className="col-lg-12 FormInputCol FormInputColReg AddressCol">
                                     <input
                                         type="text"
@@ -347,10 +450,10 @@ const Register = () => {
                                     <label className="FormLabel FormLabelReg" htmlFor="ChildrenNo">Children No. : </label>
                                     {errors.childrenNo && <span className="text-danger FormError">{errors.childrenNo}</span>}
                                 </div>
-                                <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol ChildrenNoCol">
+                                <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol EmployeeNumbers">
                                     <input
                                         type="number"
-                                        className="FormInput FormInputReg EmpNoRegisterInput"
+                                        className="FormInput FormInputReg"
                                         name="employeeNo"
                                         value={formData.employeeNo}
                                         onChange={handleChange}
@@ -358,7 +461,7 @@ const Register = () => {
                                     <label className="FormLabel FormLabelReg" htmlFor="EmployeeNo">Employee No. : </label>
                                     {errors.employeeNo && <span className="text-danger FormError">{errors.employeeNo}</span>}
                                 </div>
-                                <div className="col-lg-12 FormInputCol FormInputColReg NurseryDetailsCol AddressCol">
+                                <div className="col-lg-12 FormInputCol FormInputColReg NurseryDetailsCol ProvidedServicesCol">
                                     <input
                                         type="text"
                                         className="FormInput FormInputReg"
@@ -369,7 +472,7 @@ const Register = () => {
                                     <label className="FormLabel FormLabelReg" htmlFor="ProvidedServices">Provided Services : </label>
                                     {errors.providedServices && <span className="text-danger FormError">{errors.providedServices}</span>}
                                 </div>
-                                <div className="col-lg-12 FormInputCol FormInputColReg NurseryDetailsCol AddressCol ">
+                                <div className="col-lg-12 FormInputCol FormInputColReg NurseryDetailsCol AboutNurseryCol ">
                                     
                                 <input
                                     type="text"
@@ -380,6 +483,7 @@ const Register = () => {
                                     onChange={handleChange}
                                 />
                                     <label className="FormLabel FormLabelReg" htmlFor="AboutNursery">About nursery : </label>
+                                    {errors.aboutNursery && <span className="text-danger FormError">{errors.aboutNursery}</span>}
                                 
                                 </div>
 
@@ -391,7 +495,7 @@ const Register = () => {
                                                 id="Accept"
                                                 checked={formData.accept}
                                                 onChange={handleChange}
-                                             />
+                                            />
                                             
                                             {/* <input
                                                 className="form-check-input"
@@ -403,6 +507,8 @@ const Register = () => {
                                             /> */}
 
                                     <label className="" htmlFor="Accept">Accept All</label>
+                                    {errors.accept && <span className="text-danger FormError">{errors.accept}</span>}
+
                                 </div>
 
                                 <div className="col-lg-12 FormInputCol FormInputColReg ">
@@ -415,15 +521,17 @@ const Register = () => {
                                         </div>
                                 </div>
 
-                                <div className="col-lg-12 FormInputCol FormInputColReg RegisterBtns">
+                               {!loading? <div className="col-lg-12 FormInputCol FormInputColReg RegisterBtns">
                                         <button type="submit" className="RegisterBtn">
                                             Send
                                         </button>
-                                
-                                        <button className="CancelBtn">
-                                            Cancel
-                                        </button>
+                                        
                                 </div>
+                                :
+                    
+                                <div className="col-lg-12 FormInputCol Center LoginBtnContainer"><div class="loader"></div></div>
+                                }    
+                            
                             </form>
                         </div>
                     </div>

@@ -57,8 +57,20 @@
     padding: 5px 10px !important;
     cursor: pointer;
     color:white !important;
+    text-align: center !important;
 
 }
+.dropdown-list {
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+.dropdown-list::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+
 
 
 .dropdown-item:hover {

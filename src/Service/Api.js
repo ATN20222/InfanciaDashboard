@@ -59,14 +59,15 @@ const AuthService = {
             throw new Error('Failed to reset password'); 
           }
     },
-    RegisterApi:async (name, email, phone, password, province, address, branches_number, classes_number, kids_number, employees_number, start_fees, about)=>{
+    RegisterApi:async (name, email, phone, password , city,country, address, branches_number, classes_number, kids_number, employees_number, start_fees, about)=>{
       try {
         const formData = new FormData();
         formData.append('name', name);
         formData.append('email', email);
         formData.append('phone', phone);
         formData.append('password', password);
-        formData.append('province', province);
+        formData.append('city', city);
+        formData.append('country', country);
         formData.append('address', address);
         formData.append('branches_number', branches_number);
         formData.append('classes_number', classes_number);

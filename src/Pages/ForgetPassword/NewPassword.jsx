@@ -95,7 +95,7 @@ const NewPassword = () => {
                             <div className="col-lg-12 FormCol">
                                 <form className="container" onSubmit={handleSubmit}>
                                     <div className="row Center">
-                                        <div className="col-lg-12 FormInputCol LoginCol">
+                                        <div className="col-lg-12 FormInputCol LoginCol PasswordLoginCol">
                                             <input
                                                 type="password"
                                                 className="FormInput"

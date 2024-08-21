@@ -48,7 +48,7 @@ const PasswordReset = () => {
                             <div className="col-lg-12">
                                 <div className="Welcome">
                                     <h3>Password Reset</h3>
-                                    <span>We sent code to antonabdalla30@gmail.com</span>
+                                    <span>We sent code to your email</span>
                                 </div>
                             </div>
 

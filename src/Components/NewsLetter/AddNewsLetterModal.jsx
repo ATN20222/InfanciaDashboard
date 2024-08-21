@@ -10,35 +10,45 @@ const AddNewsLetterModal = ({ isOpen, onClose, onAddNewsLetter }) => {
   const [imageError, setImageError] = useState('');
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    const file = e.target.files[0];
+    
+    // Validate image size (max 8 MB)
+    if (file.size > 8 * 1024 * 1024) {
+      setImageError("Image size should not exceed 8 MB");
+      setImage(null);
+      return;
+    }
+  
+    // Validate image format
+    const allowedFormats = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+    if (!allowedFormats.includes(file.type)) {
+      setImageError("Only .jpeg, .jpg, .png, and .gif formats are allowed");
+      setImage(null);
+      return;
+    }
+  
+    // Set image if valid
+    setImage(file);
+    setImageError("");
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     let valid = true;
-
+  
     if (!image) {
       setImageError("Image is required");
       valid = false;
-      return;
-    } else {
-      setImageError("");
     }
-
-
+  
     if (description === '') {
       setDescriptionError("Description is required");
       valid = false;
-      return;
-    } else {
-      setDescriptionError("");
+    } else if (description.length < 50 || description.length > 1000) {
+      setDescriptionError("Description must be between 50 - 1000 characters");
+      valid = false;
     }
-
-    if(description.length<50 || description.length>1000){
-      setDescriptionError('description must be between 50 - 1000 characters');
-      return;
-  }
-
+  
     if (valid) {
       onAddNewsLetter(description, image);
       setDescription('');
@@ -46,6 +56,7 @@ const AddNewsLetterModal = ({ isOpen, onClose, onAddNewsLetter }) => {
       onClose();
     }
   };
+  
 
   if (!isOpen) return null;
   const ClearData = ()=>{

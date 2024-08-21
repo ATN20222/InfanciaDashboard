@@ -70,7 +70,7 @@
                                 <div className="col-lg-12 FormCol">
                                     <form className="container" onSubmit={handleFormSubmit}>
                                         <div className="row Center">
-                                            <div className="col-lg-12 FormInputCol LoginCol ">
+                                            <div className="col-lg-12 FormInputCol LoginCol EmailLoginCol">
                                                 <input
                                                     type="email"
                                                     className="FormInput EmailLogin"

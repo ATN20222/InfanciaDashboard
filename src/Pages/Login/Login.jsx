@@ -97,10 +97,10 @@ const Login = () => {
               <div className="col-lg-12 FormCol">
                 <form onSubmit={handleLogin} className="container">
                   <div className="row Center">
-                    <div className="col-lg-12 FormInputCol LoginCol">
+                    <div className="col-lg-12 FormInputCol LoginCol EmailLoginCol">
                       <input
                         type="text"
-                        className="FormInput EmailLogin"
+                        className="FormInput EmailInputLogin"
                         id="Email"
                         value={email}
                         placeholder="example@example.com"
@@ -113,7 +113,7 @@ const Login = () => {
                       </div>
                     </div>
                     
-                    <div className="col-lg-12 FormInputCol LoginCol">
+                    <div className="col-lg-12 FormInputCol LoginCol PasswordLoginCol">
                       <input
                         type="password"
                         className="FormInput"
