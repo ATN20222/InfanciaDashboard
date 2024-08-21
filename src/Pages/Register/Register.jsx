@@ -6,6 +6,7 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import CustomDropdown from "../../Components/DrobDown/CustomDropdown";
 import { AuthService } from "../../Service/Api";
 import toast, { Toaster } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const Register = () => {
     const [loading , setLoading] = useState(false);
@@ -251,7 +252,8 @@ const Register = () => {
                     formData.childrenNo,
                     formData.employeeNo,
                     formData.startFees,
-                    formData.aboutNursery
+                    formData.aboutNursery,
+                    formData.providedServices,
                 );
                 // console.log("Form data submitted successfully", response);
                 toast.success('Your Application has been sent');
@@ -525,6 +527,9 @@ const Register = () => {
                                         <button type="submit" className="RegisterBtn">
                                             Send
                                         </button>
+                                        <Link to='/login' className="CancelBtn">
+                                            Cancel
+                                        </Link>
                                         
                                 </div>
                                 :

@@ -29,7 +29,7 @@ const Home = () => {
     };
 
     const pieData = {
-        labels: ['Employees', 'Admins', 'Branches'],
+        labels: ['Teachers', 'Admins', 'Branches'],
         datasets: [
             {
                 label: 'Distribution',
@@ -67,9 +67,10 @@ const Home = () => {
                 <div className="row Center">
                     <div className="col-lg-4">
                         <HomeCard 
-                            Title={"Employee"} 
+                            Title={"Teachers"} 
                             Text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet"}
                             Number={"100"}
+                            link={'teachers'}
                         />
                     </div>
                     <div className="col-lg-4">
@@ -77,6 +78,7 @@ const Home = () => {
                             Title={"Admins"} 
                             Text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet"}
                             Number={"50"}
+                            link={'admins'}
                         />
                     </div>
                     <div className="col-lg-4">
@@ -84,6 +86,8 @@ const Home = () => {
                             Title={"Branches"} 
                             Text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet"}
                             Number={"10"}
+                            link={'branches'}
+
                         />
                     </div>
                 </div>

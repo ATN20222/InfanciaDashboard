@@ -59,7 +59,7 @@ const AuthService = {
             throw new Error('Failed to reset password'); 
           }
     },
-    RegisterApi:async (name, email, phone, password , city,country, address, branches_number, classes_number, kids_number, employees_number, start_fees, about)=>{
+    RegisterApi:async (name, email, phone, password , city,country, address, branches_number, classes_number, kids_number, employees_number, start_fees, about , provided_services)=>{
       try {
         const formData = new FormData();
         formData.append('name', name);
@@ -75,6 +75,7 @@ const AuthService = {
         formData.append('employees_number', employees_number);
         formData.append('start_fees', start_fees);
         formData.append('about', about);
+        formData.append('provided_services', provided_services);
 
         const response = await axiosInstance.post(`/nurseries`,formData);
         return response.data; 

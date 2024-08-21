@@ -1,7 +1,8 @@
 import React from 'react';
 import './HomeCard.css';
+import { Link } from 'react-router-dom';
 
-const HomeCard = ({Title , Text , Number , Link}) => {
+const HomeCard = ({Title , Text , Number , link}) => {
   return (
     <div className="HomeCard">
       <div className="circle-container">
@@ -25,7 +26,12 @@ const HomeCard = ({Title , Text , Number , Link}) => {
       <div className="card-content">
         <div className="card-header">
           <h3>{Title}</h3>
-          <span className="view-link">View</span>
+          
+          <span className="view-link">
+            <Link to={'/'+link} className='nav-link'>
+              View
+            </Link>
+          </span>
         </div>
         <p>{Text}</p>
         {/* <div className="card-footer">
