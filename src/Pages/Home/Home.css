@@ -10,3 +10,11 @@
 .ChartsRow h5{
     text-align: start;
 }
+
+
+
+.PieChartCol{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}

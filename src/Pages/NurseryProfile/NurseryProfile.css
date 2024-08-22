@@ -36,9 +36,11 @@
     height: 100%;
     object-fit: cover;
 }
+.NurseryProfileImage{
+    /* background-color: white; */
+}
 .NurseryProfileImage img{
-    width: 100%;
-    height: 100%;
+    width: 70px !important;
     object-fit: cover;
 }
 
@@ -336,4 +338,8 @@
     right:30px;
     color: var(--color-pink);
     cursor: pointer;
+}
+
+.HeartBlackOutlined svg{
+    color: black;
 }

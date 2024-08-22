@@ -23,7 +23,7 @@ const Home = () => {
             {
                 label: 'Count',
                 data: [100, 50, 10],
-                backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)'],
+                backgroundColor: ['#ED6D91', '#009FE3', '#AED065'],
             },
         ],
     };
@@ -34,7 +34,7 @@ const Home = () => {
             {
                 label: 'Distribution',
                 data: [100, 50, 10],
-                backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)'],
+                backgroundColor: ['#ED6D91', '#009FE3', '#AED065'],
                 hoverOffset: 4,
             },
         ],
@@ -48,11 +48,33 @@ const Home = () => {
                 label: 'Branches Growth',
                 data: [2, 3, 5, 7, 10], // Hypothetical growth data
                 fill: false,
-                backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: '#ED6D91',
+                borderColor: '#ED6D91',
                 tension: 0.1,
             },
         ],
+    };
+
+    // Chart options to control size
+    const chartOptions = {
+        maintainAspectRatio: false, // Disable the aspect ratio to allow custom size
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top', // Position of the legend
+            },
+        },
+        layout: {
+            padding: 20, // Adds padding around the chart
+        },
+        scales: {
+            x: {
+                beginAtZero: true,
+            },
+            y: {
+                beginAtZero: true,
+            },
+        },
     };
 
     return (
@@ -68,7 +90,7 @@ const Home = () => {
                     <div className="col-lg-4">
                         <HomeCard 
                             Title={"Teachers"} 
-                            Text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet"}
+                            Text={"View Nursery teachers and manage them easy"}
                             Number={"100"}
                             link={'teachers'}
                         />
@@ -76,7 +98,7 @@ const Home = () => {
                     <div className="col-lg-4">
                         <HomeCard 
                             Title={"Admins"} 
-                            Text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet"}
+                            Text={"View your admins and manage them easy"}
                             Number={"50"}
                             link={'admins'}
                         />
@@ -84,7 +106,7 @@ const Home = () => {
                     <div className="col-lg-4">
                         <HomeCard 
                             Title={"Branches"} 
-                            Text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet"}
+                            Text={"View your branches and manage them easy."}
                             Number={"10"}
                             link={'branches'}
 
@@ -92,27 +114,37 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="container">
-
                     <div className="row ChartsRow">
                         <div className="col-lg-4 PieChartCol">
-                            <h5>Distribution</h5>
-                            <Pie data={pieData} />
+                            <div className="ChartItem">
+                                <div className="Center" style={{ width: '100%', height: '400px' }}>
+                                    <Pie data={pieData} />
+                                </div>
+                                {/* <h5>Distribution</h5> */}
+                                <span>Distribution</span>
+                            </div>
+                            
                         </div>
                         <div className="col-lg-4">
-                            <h5>Employee, Admins, and Branches Count</h5>
-                            <Bar data={barData} />
+                                <div className="ChartItem">
+                                    <div style={{ width: '100%', height: '400px' }}>
+                                        <Bar data={barData} options={chartOptions} />
+                                    </div>
+                                <span>Employee, Admins, and Branches Count</span>
+                                </div>
+                            
                         </div>
-                        
                         <div className="col-lg-4">
-                            <h5>Branches Growth Over Time</h5>
-                            <Line data={branchGrowthData} />
-                        </div>
-                        
-                    </div>
-                </div>
+                            <div className="ChartItem">
+                                <div style={{ width: '100%', height: '400px' }}>
+                                    <Line data={branchGrowthData} options={chartOptions} />
+                                </div>
 
-                <div className="row">
-                    
+                                <span>Branches Growth Over Time</span>
+                            </div>
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

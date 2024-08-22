@@ -4,17 +4,17 @@ import { Link } from 'react-router-dom';
 
 const HomeCard = ({Title , Text , Number , link}) => {
   return (
-    <div className="HomeCard">
+    <div className={`HomeCard ${Title==='Admins'?'PinkCard':""}`}>
       <div className="circle-container">
         <svg className="progress-circle" viewBox="0 0 36 36">
           <path
-            className="circle-bg"
+            className={"circle-bg"}
             d="M18 2.0845
                a 15.9155 15.9155 0 0 1 0 31.831
                a 15.9155 15.9155 0 0 1 0 -31.831"
           />
           <path
-            className="circle"
+            className={"circle"}
             strokeDasharray="75, 100"
             d="M18 2.0845
                a 15.9155 15.9155 0 0 1 0 31.831

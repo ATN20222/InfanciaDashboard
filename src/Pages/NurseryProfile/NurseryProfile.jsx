@@ -2,7 +2,7 @@ import { faBell, faCommentDollar, faPlus, faSearch, faStar } from "@fortawesome/
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import './NurseryProfile.css';
-import UserImage from '../../Assets/images/User.jpg';
+import UserImage from '../../Assets/images/HeaderLogo.png';
 import Gallery from "../../Components/NurseryProfile/Gallery";
 import Reviews from "../../Components/NurseryProfile/Reviews";
 import BasicInfo from "../../Components/NurseryProfile/BasicInfo";
