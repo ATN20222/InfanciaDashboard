@@ -242,7 +242,7 @@ const Register = () => {
                     formData.nurseryName,
                     formData.email,
                     formData.mobileNo,
-                    "InfanciaNursery2024", 
+                    // "InfanciaNursery2024", 
                     // "formData.province",
                     formData.city,
                     formData.country,
@@ -254,6 +254,8 @@ const Register = () => {
                     formData.startFees,
                     formData.aboutNursery,
                     formData.providedServices,
+                    image
+                    
                 );
                 // console.log("Form data submitted successfully", response);
                 toast.success('Your Application has been sent');

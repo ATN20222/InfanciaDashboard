@@ -6,7 +6,6 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
-        // Check local storage for authentication status
         const storedAuthState = localStorage.getItem('isAuthenticated');
         setIsAuthenticated(storedAuthState === 'true');
     }, []);

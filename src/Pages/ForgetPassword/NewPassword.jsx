@@ -40,6 +40,7 @@ const NewPassword = () => {
         if (isValid) {
             try {
             console.log(token , email , password , confirmPassword);
+            
               const userData = await AuthService.ResetPassword(token , email , password , confirmPassword);
               toast.success('Password reseted successfully');
                 setTimeout(() => {

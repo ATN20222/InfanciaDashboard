@@ -28,10 +28,16 @@ import PasswordReset from './Pages/ForgetPassword/PasswordReset';
 import NewPassword from './Pages/ForgetPassword/NewPassword';
 import { AuthProvider } from './Context/AuthContext';
 import PrivateRoute from './Context/PrivateRoute';
+import { getIsSuperAdmin } from './Service/AxiosApi';
+import HomeSuper from './Pages/Home/HomeSuper';
+import Nurseries from './Pages/Nurseries/Nurseries';
+import NurseryForm from './Pages/Nurseries/NurseryForm';
+import NurseryDetails from './Pages/Nurseries/NurseryDetails';
+import Applications from './Pages/Nurseries/Applications';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const isSuperAdmin = getIsSuperAdmin();
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
@@ -45,19 +51,54 @@ function App() {
           <Route path='/Otp' element={<PasswordReset />} />
           <Route path='/Register' element={<Register />} />
           <Route path='/PasswordReset' element={<NewPassword />} />
-
-          {/* Protected Routes */}
+          
           <Route path='/' element={
             <PrivateRoute>
               <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
-                <Home />
+                {
+                  !isSuperAdmin?<Home />:
+                  <HomeSuper />
+                }
+                
               </MainLayout>
             </PrivateRoute>
           } />
           <Route path='/Home' element={
             <PrivateRoute>
               <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
-                <Home />
+              {
+                  !isSuperAdmin?<Home />:
+                  <HomeSuper />
+                }
+              </MainLayout>
+            </PrivateRoute>
+          } />
+          <Route path='/Nurseries' element={
+            <PrivateRoute>
+              <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+                <Nurseries />
+              </MainLayout>
+            </PrivateRoute>
+          } />
+          <Route path='/Applications' element={
+            <PrivateRoute>
+              <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+                <Applications />
+              </MainLayout>
+            </PrivateRoute>
+          } />
+          <Route path='/Applications/:id' element={
+            <PrivateRoute>
+              <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+                <NurseryForm />
+              </MainLayout>
+            </PrivateRoute>
+          } />
+
+          <Route path='/Nurseries/:id' element={
+            <PrivateRoute>
+              <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+                <NurseryDetails />
               </MainLayout>
             </PrivateRoute>
           } />
@@ -68,6 +109,7 @@ function App() {
               </MainLayout>
             </PrivateRoute>
           } />
+
           <Route path='/paymentrequest' element={
             <PrivateRoute>
               <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>

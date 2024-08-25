@@ -330,3 +330,12 @@ input[type=number]::-webkit-outer-spin-button {
 .MobileNoLabel{
     left: 15px !important;
 }
+.linkNursery{
+    text-decoration: none;
+}
+.CityProfile label{
+    left: 30px;
+}
+.CityProfile input{
+    padding-left: 55px;
+}

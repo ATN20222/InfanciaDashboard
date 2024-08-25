@@ -7,7 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { ClassService, KidsServices } from "../../Service/Api";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import KidProfileDropdown from "../../Components/DrobDown/KidProfileDropdown";
-
+import DeleteSubjectModal from '../../Components/ManageClasses/DeleteSubjectModal'
 const KidProfile = () => {
     const [birthdate, setBirthdate] = useState('');
     const [selectedGender, setSelectedGender] = useState('');
@@ -54,6 +54,8 @@ const KidProfile = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const kidId = searchParams.get('kidId');
+    const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
+
 
     useEffect(()=>{
         GetData();
@@ -351,6 +353,21 @@ const KidProfile = () => {
         console.log(classId)
     };
 
+    const handleConfirmDelete = async()=>{
+        // console.log("del")
+        try {
+            console.log(kidId);
+            const response = await KidsServices.Delete(kidId);
+            toast.success('kid deleted successfully');
+            console.log(response);
+            GetData();
+            
+        } catch (error) {
+            toast.error('Failed to delete kid');
+
+        }
+    }
+
     const tableData = [
         { id: 1, name: "Ahmed hamed", paymentId: 201, amount: "20$", class:"Class A", date: "20-8-2024" , service:"Travel"},
         { id: 2, name: "Ahmed hamed", paymentId: 204, amount: "20$", class:"Class B", date: "20-8-2024" , service:"Travel"}
@@ -358,6 +375,12 @@ const KidProfile = () => {
 
     return (
         <section className="SecondSliderSection ManageClassesCompnent">
+            <DeleteSubjectModal
+                id={kId}
+                isOpen={isDeleteOverlayOpen}
+                onClose={() => setIsDeleteOverlayOpen(false)}
+                onDelete={handleConfirmDelete}
+            />
             <div className="Toaster">
                 <Toaster
                     position="top-right"
@@ -531,7 +554,7 @@ const KidProfile = () => {
                     {!loading?
                         <div className="col-lg-12 FormInputCol FormInputColReg RegisterBtns">
                             <button type="submit" className="RegisterBtn">Save</button>
-                            <Link type="button" to="/manageclasses" className="CancelBtn">Close</Link>
+                            <button type="button"  className="CancelBtn" onClick={()=>setIsDeleteOverlayOpen(true)} >Delete</button>
                         </div>
                         :
                         

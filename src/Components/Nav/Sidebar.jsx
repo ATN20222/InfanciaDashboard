@@ -2,10 +2,11 @@ import React ,{useContext, useEffect} from 'react';
 import './Sidebar.css';
 import SideBarImage from '../../Assets/images/INFANCIA_LOGO.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressCard, faCashRegister, faChalkboard, faChildren, faComments, faCreditCard, faCreditCardAlt, faFileCircleCheck, faHand, faHandPointer, faHandPointUp, faHome, faNewspaper, faRightFromBracket, faUserGroup, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { faAddressCard, faBuildingUser, faCashRegister, faChalkboard, faChildren, faComments, faCreditCard, faCreditCardAlt, faFileCircleCheck, faHand, faHandPointer, faHandPointUp, faHome, faNewspaper, faRightFromBracket, faUserGroup, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthService } from '../../Service/Api';
 import { useAuth } from '../../Context/AuthContext';
+import { getIsSuperAdmin } from '../../Service/AxiosApi';
 
 function Sidebar({ isOpen, toggleSidebar }) {
     useEffect(()=>{
@@ -21,7 +22,7 @@ function Sidebar({ isOpen, toggleSidebar }) {
             console.error(error);
         }
     }
-
+    const isSuperAdmin = getIsSuperAdmin();
     const navigate = useNavigate();
     const { logout } = useAuth();
     const handleLogout = async () => {
@@ -44,14 +45,14 @@ function Sidebar({ isOpen, toggleSidebar }) {
         </div>
       </div>
       <div className="SideBarHr"/>
-
-      <ul>
+        {!isSuperAdmin?
+        <ul>
         <li>
             <Link to="/" className='nav-link'>
                 <FontAwesomeIcon icon={faHome}/> 
                 Home
             </Link>
-           
+            
         </li>
         <li>
             <Link to="/nurseryprofile" className='nav-link'>
@@ -88,7 +89,7 @@ function Sidebar({ isOpen, toggleSidebar }) {
                 <FontAwesomeIcon icon={faHandPointUp}/>
                 Parent request
             </Link>
-           
+            
         </li>
         <li>
             <Link to="/paymenthistory" className='nav-link'>
@@ -126,9 +127,9 @@ function Sidebar({ isOpen, toggleSidebar }) {
                 <FontAwesomeIcon icon={faComments}/>
                 FAQ
             </Link>
-           
+            
         </li>
-       
+        
         
         <li>
 
@@ -140,7 +141,46 @@ function Sidebar({ isOpen, toggleSidebar }) {
             
         </li>
 
-      </ul>
+        </ul>
+        :
+        <ul>
+        <li>
+            <Link to="/" className='nav-link'>
+                <FontAwesomeIcon icon={faHome}/> 
+                Home
+            </Link>
+            
+        </li>
+        {isSuperAdmin&&
+         <li>
+            <Link to="/Nurseries" className='nav-link'>
+                <FontAwesomeIcon icon={faBuildingUser}/> 
+                Nurseries
+            </Link>
+            
+        </li>
+        }
+        <li>
+            <Link to="/paymenthistory" className='nav-link'>
+                <FontAwesomeIcon icon={faCreditCard}/>
+                Payment history
+            </Link>
+            
+        </li>
+
+        <li>
+
+            <div onClick={handleLogout} className='Center Logout'>
+                
+                <FontAwesomeIcon icon={faRightFromBracket}/>
+                Logout
+            </div>
+            
+        </li>
+
+        </ul>
+        }
+        
     </div>
   );
 }

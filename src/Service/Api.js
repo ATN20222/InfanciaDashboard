@@ -1,9 +1,11 @@
 import axios from 'axios';
-import axiosInstance, { deleteNurseryId, deleteToken, setNurseryId, setToken ,getNurseryId } from './AxiosApi';
+import axiosInstance, { deleteNurseryId, deleteToken, setNurseryId, setToken ,getNurseryId, setIsSuperAdmin, deleteIsSuperAdmin } from './AxiosApi';
 
 const baseURL = 'https://infancia.app/api'; 
 
-
+const axiosReg = axios.create({
+  baseURL: baseURL,
+});
 const AuthService = {
     Login: async (email , password) =>{
       try {
@@ -12,7 +14,8 @@ const AuthService = {
         formData.append('password', password);
         const response = await axiosInstance.post(`/auth/login`, formData);
         setToken(response.data.token);
-        setNurseryId(response.data.nursery_id)
+        setNurseryId(response.data.nursery_id);
+        setIsSuperAdmin(response.data.role==="superAdmin");
         console.log(response);
         return response.data; 
 
@@ -25,12 +28,13 @@ const AuthService = {
           const response = await axiosInstance.post(`/auth/logout`);
           deleteToken();
           deleteNurseryId();
+          deleteIsSuperAdmin();
           localStorage.clear();
           return response.data;
         } catch (error) {
           throw new Error('Failed to logout'); 
         }
-      },
+    },
     
     RequestPasswordReset: async (email)=>{
         try {
@@ -59,25 +63,27 @@ const AuthService = {
             throw new Error('Failed to reset password'); 
           }
     },
-    RegisterApi:async (name, email, phone, password , city,country, address, branches_number, classes_number, kids_number, employees_number, start_fees, about , provided_services)=>{
+    RegisterApi:async (name, email, phone , city,country, address, branches_number, classes_number, kids_number, employees_number, start_fees, about , provided_services , media)=>{
       try {
+        console.log(name, email, phone , city,country, address, branches_number, classes_number, kids_number, employees_number, start_fees, about , provided_services , media);
         const formData = new FormData();
         formData.append('name', name);
         formData.append('email', email);
         formData.append('phone', phone);
-        formData.append('password', password);
         formData.append('city', city);
         formData.append('country', country);
+        formData.append('province', country);
         formData.append('address', address);
         formData.append('branches_number', branches_number);
         formData.append('classes_number', classes_number);
-        formData.append('kids_number', kids_number);
+        formData.append('children_number', kids_number);
         formData.append('employees_number', employees_number);
         formData.append('start_fees', start_fees);
         formData.append('about', about);
-        formData.append('provided_services', provided_services);
-
-        const response = await axiosInstance.post(`/nurseries`,formData);
+        formData.append('services', provided_services);
+        formData.append('media', media);
+        
+        const response = await axiosReg.post(`https://infancia.app/api/nurseries`,formData);
         return response.data; 
   
       } catch (error) {
@@ -264,6 +270,15 @@ const KidsServices = {
 
     } catch (error) {
       throw new Error('Failed to get data'); 
+    }
+  },
+  Delete:async (id)=>{
+    try {
+      const response = await axiosInstance.delete(`/kids/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to delete'); 
     }
   },
 }
@@ -462,7 +477,6 @@ const ScheduleServices = {
   },
  
 }
-
 
 const NurseryProfileService = {
   ListInfo: async ()=>{

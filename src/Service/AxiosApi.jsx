@@ -12,7 +12,7 @@ export const setToken = (token) => {
     cookie.set('token', token, { path: '/' });
 };
 // Get Token
-const getToken = () => {
+export const getToken = () => {
     return cookie.get('token');
 };
 // Delete Token
@@ -21,6 +21,19 @@ export const deleteToken = () => {
     localStorage.clear();
     sessionStorage.clear();
 };
+
+export const setIsSuperAdmin = () => {
+    cookie.set('IsSuperAdmin', 'true', { path: '/' });
+};
+export const getIsSuperAdmin = () => {
+    return cookie.get('IsSuperAdmin');
+};
+// Delete IsSuperAdmin
+export const deleteIsSuperAdmin = () => {
+    cookie.remove('IsSuperAdmin', { path: '/' });
+    localStorage.clear();
+    sessionStorage.clear();
+}
 
 
 // Set NurseryId
@@ -67,7 +80,7 @@ axiosInstance.interceptors.response.use(
     async error => {
         const originalRequest = error.config;
 
-        if (error.response.status === 401 && !originalRequest._retry) {
+        if (error.response.status === 401 && !originalRequest._retry && getToken()) {
             originalRequest._retry = true;
             try {
                 // Send the current token in the Authorization header for the refresh request
