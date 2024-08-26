@@ -722,6 +722,77 @@ const PaymentRequestServices = {
 }
 
 
+const NurseryServices = {
+  List: async (type)=>{
+    // const id = getNurseryId();
+    try {
+      const response = await axiosInstance.get(`/all-nurseries/${type}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to get data'); 
+    }
+  },
+  ListById: async (id)=>{
+    // const id = getNurseryId();
+    try {
+      const response = await axiosInstance.get(`/nurseries/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error('Failed to get data'); 
+    }
+  },
+  ApplicationAction: async (id,type)=>{
+    try {
+      const formData = new FormData();
+      formData.append('status', type  );
+      formData.append('nursery_id', id);
+      const response = await axiosInstance.post(`/nursery-approve/`,formData);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error(`Failed to ${type} application`); 
+    }
+  },
+  ListAdmins:async ()=>{
+    try {
+      const response = await axiosInstance.get(`/accounts/users`);
+      return response.data;
+    } catch (error) {
+      throw new Error(`Failed to get data`); 
+    }
+  },
+  DeleteAdmin:async (id)=>{
+    try {
+      const response = await axiosInstance.delete(`/accounts/users/${id}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(`Failed to delete`); 
+    }
+  },
+
+
+  AddAdmin: async (name,email , phone , role , password)=>{
+    try {
+      const formData = new FormData();
+      formData.append('name', name  );
+      formData.append('email', email);
+      formData.append('phone', phone);
+      formData.append('role', role);
+      formData.append('password', password);
+      formData.append('password_confirmation', password);
+      const response = await axiosInstance.post(`/accounts/users/`,formData);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error(`Failed to add`); 
+    }
+  },
+
+}
+
+
 export { 
   AuthService , ClassService ,
   KidsServices , SubjectServices , 
@@ -729,6 +800,7 @@ export {
   FAQServices,ScheduleServices,
   PolicyServices,NurseryProfileService,
   MealsServices,ParentRequestServices,
-  RolesServices,PaymentRequestServices
+  RolesServices,PaymentRequestServices,
+  NurseryServices
 };
 

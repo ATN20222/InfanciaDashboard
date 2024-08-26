@@ -4,3 +4,6 @@
 .DeleteAdmin{
     cursor: pointer;
 }
+.AdminsTableContainer{
+    max-height: 700px;
+}

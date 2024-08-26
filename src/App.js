@@ -34,6 +34,7 @@ import Nurseries from './Pages/Nurseries/Nurseries';
 import NurseryForm from './Pages/Nurseries/NurseryForm';
 import NurseryDetails from './Pages/Nurseries/NurseryDetails';
 import Applications from './Pages/Nurseries/Applications';
+import PrivacyPolicy from './Pages/Policies/PrivacyPolicy';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -51,6 +52,7 @@ function App() {
           <Route path='/Otp' element={<PasswordReset />} />
           <Route path='/Register' element={<Register />} />
           <Route path='/PasswordReset' element={<NewPassword />} />
+          <Route path='/PrivacyPolicy' element={<PrivacyPolicy />} />
           
           <Route path='/' element={
             <PrivateRoute>
@@ -67,6 +69,7 @@ function App() {
             <PrivateRoute>
               <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
               {
+                  
                   !isSuperAdmin?<Home />:
                   <HomeSuper />
                 }

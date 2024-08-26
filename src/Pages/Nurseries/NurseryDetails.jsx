@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TopImage from '../../Assets/images/HeaderLogo.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import CustomDropdown from "../../Components/DrobDown/CustomDropdown";
-import { AuthService } from "../../Service/Api";
+import { AuthService, NurseryServices } from "../../Service/Api";
 import toast, { Toaster } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const NurseryDetails = () => {
     const [loading , setLoading] = useState(false);
+    const {id} = useParams();
     const [formData, setFormData] = useState({
         nurseryName: "",
         email: "",
@@ -30,15 +31,41 @@ const NurseryDetails = () => {
         accept: false
     });
     const [image, setImage] = useState(null);
-
+    useEffect(()=>{
+        GetData();
+    },[]);
     async function GetData() {
         try {
-            
+            const response = await NurseryServices.ListById(id);
+            console.log(response);
+            setFormData({
+                nurseryName: response.content.name,
+                email: response.content.email,
+                mobileNo: response.content.phone,
+                country: response.content.country,
+                province: response.content.province,
+                city: response.content.city,
+                address: response.content.address,
+                branches: response.content.branches_number,
+                startFees: response.content.start_fees,
+                classesNo: response.content.classes_Number,
+                childrenNo: response.content.children_number,
+                employeeNo: response.content.employees_number,
+                providedServices: response.content.services,
+                aboutNursery: response.content.about,
+                StartDate:formatDate(response.content.created_at),
+                EndDate:formatDate(response.content.updated_at),
+                PackName:'Premium',
+            })
         } catch (error) {
             
         }
     }
-
+    function formatDate(isoDateString) {
+        const date = new Date(isoDateString);
+        const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+        return formattedDate;
+    }
     return (
         <div className="container">
 
@@ -68,7 +95,7 @@ const NurseryDetails = () => {
                                     </div>
                                 </div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryName">
-                                    <input
+                                    <input  disabled
                                         type="text"
                                         className="FormInput FormInputReg nurseryNameInput"
                                         name="nurseryName"
@@ -78,7 +105,7 @@ const NurseryDetails = () => {
                                 </div>
                                 <div className="col-lg-1"></div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg EmailRegisterCol">
-                                    <input
+                                    <input  disabled
                                         type="text"
                                         className="FormInput FormInputReg EmailRegisterInput"
                                         name="email"
@@ -91,7 +118,7 @@ const NurseryDetails = () => {
                                         <span>EG+20</span>
                                     </div>
                                     <div className="FormInputCol FormInputColReg ">
-                                        <input
+                                        <input  disabled
                                             type="number"
                                             className="FormInput FormInputReg"
                                             name="mobileNo"
@@ -103,7 +130,7 @@ const NurseryDetails = () => {
                                 </div>
                                 <div className="col-lg-1"></div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg AddressCol">
-                                    <input
+                                    <input  disabled
                                         type="text"
                                         className="FormInput FormInputReg"
                                         name="address"
@@ -112,7 +139,7 @@ const NurseryDetails = () => {
                                     <label className="FormLabel FormLabelReg" htmlFor="Address">country : </label>
                                 </div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg CityProfile">
-                                    <input
+                                    <input  disabled
                                         type="text"
                                         className="FormInput FormInputReg"
                                         name="address"
@@ -128,7 +155,7 @@ const NurseryDetails = () => {
                                     
                                 </div> */}
                                 <div className="col-lg-12 FormInputCol FormInputColReg AddressCol">
-                                    <input
+                                    <input  disabled
                                         type="text"
                                         className="FormInput FormInputReg"
                                         name="address"
@@ -140,7 +167,7 @@ const NurseryDetails = () => {
                                     <h5>Nursery Details</h5>
                                 </div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol BranchesCol">
-                                    <input
+                                    <input  disabled
                                         type="number"
                                         className="FormInput FormInputReg"
                                         name="branches"
@@ -150,7 +177,7 @@ const NurseryDetails = () => {
                                 </div>
                                 <div className="col-lg-1"></div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol StartFeesCol">
-                                    <input
+                                    <input  disabled
                                         type="number"
                                         className="FormInput FormInputReg"
                                         name="startFees"
@@ -159,7 +186,7 @@ const NurseryDetails = () => {
                                     <label className="FormLabel FormLabelReg" htmlFor="StartFees">Start Fees : </label>
                                 </div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol ClassesNoCol">
-                                    <input
+                                    <input  disabled
                                         type="number"
                                         className="FormInput FormInputReg"
                                         name="classesNo"
@@ -169,7 +196,7 @@ const NurseryDetails = () => {
                                 </div>
                                 <div className="col-lg-1"></div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol ChildrenNoCol">
-                                    <input
+                                    <input  disabled
                                         type="number"
                                         className="FormInput FormInputReg"
                                         name="childrenNo"
@@ -178,7 +205,7 @@ const NurseryDetails = () => {
                                     <label className="FormLabel FormLabelReg" htmlFor="ChildrenNo">Children No. : </label>
                                 </div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol EmployeeNumbers">
-                                    <input
+                                    <input  disabled
                                         type="number"
                                         className="FormInput FormInputReg"
                                         name="employeeNo"
@@ -187,7 +214,7 @@ const NurseryDetails = () => {
                                     <label className="FormLabel FormLabelReg" htmlFor="EmployeeNo">Employee No. : </label>
                                 </div>
                                 <div className="col-lg-12 FormInputCol FormInputColReg NurseryDetailsCol ProvidedServicesCol">
-                                    <input
+                                    <input  disabled
                                         type="text"
                                         className="FormInput FormInputReg"
                                         name="providedServices"
@@ -197,7 +224,7 @@ const NurseryDetails = () => {
                                 </div>
                                 <div className="col-lg-12 FormInputCol FormInputColReg NurseryDetailsCol AboutNurseryCol ">
                                     
-                                <input
+                                <input  disabled
                                     type="text"
                                     className="FormInput FormInputReg"
                                     name="aboutNursery"
@@ -212,7 +239,7 @@ const NurseryDetails = () => {
                                     <h5>Packege Details</h5>
                                 </div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol ProvidedServicesCol">
-                                    <input
+                                    <input  disabled
                                         type="text"
                                         className="FormInput FormInputReg"
                                         name="providedServices"
@@ -221,8 +248,8 @@ const NurseryDetails = () => {
                                     <label className="FormLabel FormLabelReg" htmlFor="ProvidedServices">Packege Name : </label>
                                 </div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol StartFeesCol">
-                                    <input
-                                        type="number"
+                                    <input  disabled
+                                        type="text"
                                         className="FormInput FormInputReg"
                                         name="startFees"
                                         value={formData.StartDate}
@@ -230,8 +257,8 @@ const NurseryDetails = () => {
                                     <label className="FormLabel FormLabelReg" htmlFor="StartFees">Start Date : </label>
                                 </div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol StartFeesCol">
-                                    <input
-                                        type="number"
+                                    <input  disabled
+                                        type="text"
                                         className="FormInput FormInputReg"
                                         name="startFees"
                                         value={formData.EndDate}
@@ -239,9 +266,9 @@ const NurseryDetails = () => {
                                     <label className="FormLabel FormLabelReg" htmlFor="StartFees">End Date : </label>
                                 </div>
                                 {!loading? <div className="col-lg-12 FormInputCol FormInputColReg RegisterBtns">
-                                        <button type="submit" className="RegisterBtn">
+                                        {/* <button type="button" className="RegisterBtn">
                                             Block
-                                        </button>
+                                        </button> */}
                                         {/* <Link to='/login' className="CancelBtn">
                                             Reject
                                         </Link> */}

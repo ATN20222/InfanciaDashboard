@@ -22,8 +22,8 @@ export const deleteToken = () => {
     sessionStorage.clear();
 };
 
-export const setIsSuperAdmin = () => {
-    cookie.set('IsSuperAdmin', 'true', { path: '/' });
+export const setIsSuperAdmin = (state) => {
+    cookie.set('IsSuperAdmin', state, { path: '/' });
 };
 export const getIsSuperAdmin = () => {
     return cookie.get('IsSuperAdmin');

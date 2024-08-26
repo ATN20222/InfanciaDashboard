@@ -259,6 +259,7 @@ const Register = () => {
                 );
                 // console.log("Form data submitted successfully", response);
                 toast.success('Your Application has been sent');
+                window.location.reload();
                 
             } catch (error) {
                 console.error("Registration failed", error);
