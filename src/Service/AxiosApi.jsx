@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 
 // ---------- Const Variables ---------- //
-const baseURL = 'https://infancia.app/api';
+const baseURL = 'https://dashboard.infancia.app/api';
 const cookie = new Cookies();
 
 // ---------- Functions ---------- //
@@ -55,6 +55,7 @@ export const deleteNurseryId = () => {
 // Instance From Axios
 const axiosInstance = axios.create({
     baseURL: baseURL,
+    Accept:'application/json'
 });
 
 // Axios Interceptors Request

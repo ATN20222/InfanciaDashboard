@@ -1,12 +1,25 @@
 import axios from 'axios';
 import axiosInstance, { deleteNurseryId, deleteToken, setNurseryId, setToken ,getNurseryId, setIsSuperAdmin, deleteIsSuperAdmin } from './AxiosApi';
 
-const baseURL = 'https://infancia.app/api'; 
+const baseURL = 'https://dashboard.infancia.app/api'; 
 
 const axiosReg = axios.create({
   baseURL: baseURL,
 });
 const AuthService = {
+    changeStatus:async(nursery_id , status)=>{
+      try {
+        const formData = new FormData();
+        formData.append('nursery_id', nursery_id);
+        formData.append('status', status);
+        const response = await axiosInstance.post(`/nursery-approve`, formData);
+        
+        return response.data; 
+
+      } catch (error) {
+        throw new Error('Failed to change'); 
+      }
+    },
     Login: async (email , password) =>{
       try {
         const formData = new FormData();
@@ -83,7 +96,7 @@ const AuthService = {
         formData.append('services', provided_services);
         formData.append('media', media);
         
-        const response = await axiosReg.post(`https://infancia.app/api/nurseries`,formData);
+        const response = await axiosReg.post(`https://dashboard.infancia.app/api/nurseries`,formData);
         return response.data; 
   
       } catch (error) {
@@ -549,13 +562,13 @@ const NurseryProfileService = {
   },
   UploadGalleryImage: async (album_id  , media)=>{
     try {
+      console.log(album_id  , media);
       const formData = new FormData();
       formData.append('album_id', album_id);
       formData.append('media', media);
       const response = await axiosInstance.post(`/nursery-album/add-photo/`,formData,{
         headers: {
           'Content-Type': 'multipart/form-data', 
-          
         },
         withCredentials: true,
       });

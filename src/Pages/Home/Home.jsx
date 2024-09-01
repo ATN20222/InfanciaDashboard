@@ -87,7 +87,7 @@ const Home = () => {
             </div>
             <div className="container">
                 <div className="row Center">
-                    <div className="col-lg-4">
+                    <div className="col-lg-6">
                         <HomeCard 
                             Title={"Teachers"} 
                             Text={"View Nursery teachers and manage them easy"}
@@ -95,7 +95,7 @@ const Home = () => {
                             link={'teachers'}
                         />
                     </div>
-                    <div className="col-lg-4">
+                    <div className="col-lg-6">
                         <HomeCard 
                             Title={"Admins"} 
                             Text={"View your admins and manage them easy"}
@@ -103,7 +103,7 @@ const Home = () => {
                             link={'admins'}
                         />
                     </div>
-                    <div className="col-lg-4">
+                    {/* <div className="col-lg-4">
                         <HomeCard 
                             Title={"Branches"} 
                             Text={"View your branches and manage them easy."}
@@ -111,7 +111,7 @@ const Home = () => {
                             link={'branches'}
 
                         />
-                    </div>
+                    </div> */}
                 </div>
                 <div className="container">
                     <div className="row ChartsRow">

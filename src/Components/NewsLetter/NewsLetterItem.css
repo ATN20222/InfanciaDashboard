@@ -38,8 +38,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--color-pink);
+    /* background-color: var(--color-pink); */
     
+}
+.HeartBlackOutlined svg{
+    color: grey !important;
 }
 
 .PublisherImageContainer img {

@@ -31,6 +31,11 @@ const MealsSchedule = ({ SelectedClassId, selectedMeal, updateKey }) => {
             const response = await MealsServices.List(SelectedClassId);
             console.log(response);
             const m = response.content.meals.filter(m => m.type === selectedMealType);
+            const daysOrder = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+            m.sort((a, b) => daysOrder.indexOf(a.days) - daysOrder.indexOf(b.days));
+
+            console.log(m)
             setMealsInputs(m);
         } catch (error) {
             console.error("Error fetching meals:", error);

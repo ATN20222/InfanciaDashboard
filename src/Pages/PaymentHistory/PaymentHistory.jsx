@@ -46,15 +46,14 @@ const PaymentHistory = () => {
     const handleConfirm = async () => {
         try {
             const response = await PaymentRequestServices.MarkPaid(paymentToConfirm);
-            toast.success('Role deleted successfully');
+            toast.success('Payment Confirmed successfully');
             GetData();  
             
         } catch (error) {
-            toast.error('Failed to delete role');
+            toast.error('Failed Confirm Payment');
         }
         setPaymentToConfirm(null);
     };
-
     const HandlePaid = (item)=>{
         if(!item.is_paid){
             setPaymentToConfirm(item.id);

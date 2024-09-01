@@ -15,7 +15,7 @@ const formatDate = (date) => {
 }
 
 const getDayOfWeek = (date) => {
-    const days = ['Sun', 'Mon', 'Tus', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     return days[date.getDay()];
 };
 
@@ -93,9 +93,9 @@ const Schedule = ({ SelectedClassId }) => {
                                     </div>
                                 </div>
                                 <div className="DayItem">
-                                    <div className={`DayInnerItem ${selectedDay === 'Tus' ? 'SelectedDateItem' : ''}`}
-                                        onClick={() => handleDayChange('Tus')}>
-                                        TUS
+                                    <div className={`DayInnerItem ${selectedDay === 'Tue' ? 'SelectedDateItem' : ''}`}
+                                        onClick={() => handleDayChange('Tue')}>
+                                        TUE
                                     </div>
                                     <div className={`DayInnerItem ${selectedDay === 'Wed' ? 'SelectedDateItem' : ''}`}
                                         onClick={() => handleDayChange('Wed')}>

@@ -10,7 +10,14 @@
 /* @media (prefers-reduced-motion: no-preference) {
   
 } */
-
+.toggle-button{
+  background-color: transparent;
+  outline: none;
+  border: none;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
 :root {
   --color-pink: #ED6D91;
   --color-blue: #009FE3;
@@ -73,15 +80,24 @@
 
 .toggle-button {
   display: none;
+  left: 30px;
+  top: 32px;
 }
 
 @media (max-width: 768px) {
   .toggle-button {
     display: inline-block;
+    color: var(--color-pink);
   }
-
+  .toggle-button svg{
+    width: 20px;
+    height: 20px;
+  }
   .content.shifted {
     margin-left: 0;
+  }
+  .SearchCol{
+    left: 50px;
   }
 
   

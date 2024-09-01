@@ -1,4 +1,4 @@
-import React ,{useContext, useEffect} from 'react';
+import React ,{useContext, useEffect, useState} from 'react';
 import './Sidebar.css';
 import SideBarImage from '../../Assets/images/INFANCIA_LOGO.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,8 +7,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthService } from '../../Service/Api';
 import { useAuth } from '../../Context/AuthContext';
 import { getIsSuperAdmin } from '../../Service/AxiosApi';
+import ConfirmLogoutModal from './ConfirmLogoutModal';
 
-function Sidebar({ isOpen, toggleSidebar }) {
+function Sidebar({ isOpen, toggleSidebar , openConfirmLogoutModal }) {
     useEffect(()=>{
         GetPermissions();
     },[])
@@ -23,21 +24,11 @@ function Sidebar({ isOpen, toggleSidebar }) {
         }
     }
     const isSuperAdmin = getIsSuperAdmin();
-    const navigate = useNavigate();
-    const { logout } = useAuth();
-    const handleLogout = async () => {
-        
-        try {
-          const userData = await AuthService.Logout();
-          logout();
-          navigate('/login'); 
-        } catch (error) {
-          console.error(error.message);
-        }
-      };
+
   return (
     
     <div className={`sidebar ${isOpen ? 'open' : ''}`}>
+          
       <button className="close-button" onClick={toggleSidebar}>×</button>
       <div className="SideBarImage Center">
         <div className="SideImage Center">
@@ -133,12 +124,10 @@ function Sidebar({ isOpen, toggleSidebar }) {
         
         <li>
 
-            <div onClick={handleLogout} className='Center Logout'>
-                
-                <FontAwesomeIcon icon={faRightFromBracket}/>
-                Logout
+        <div onClick={openConfirmLogoutModal} className='Center Logout'>
+            <FontAwesomeIcon icon={faRightFromBracket} />
+            Logout
             </div>
-            
         </li>
 
         </ul>
@@ -170,12 +159,10 @@ function Sidebar({ isOpen, toggleSidebar }) {
 
         <li>
 
-            <div onClick={handleLogout} className='Center Logout'>
-                
-                <FontAwesomeIcon icon={faRightFromBracket}/>
-                Logout
+        <div onClick={openConfirmLogoutModal} className='Center Logout'>
+              <FontAwesomeIcon icon={faRightFromBracket} />
+              Logout
             </div>
-            
         </li>
 
         </ul>

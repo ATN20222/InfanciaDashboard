@@ -15,7 +15,9 @@ const KidTable = ({ kids }) => {
                     <div className="row">
                         <div className="col-lg-6 col-md-6 col-sm-8 col-8 Center KidNameCol">
                             
-                            <div className="avatar"></div>
+                            <div className="avatar">
+                                <img src={kid.media[0].original_url} width="30px" alt="" />
+                            </div>
                             <span className="BranchTableSpan" data-content={kid.kid_name}>
                                 {kid.kid_name}
                             </span>

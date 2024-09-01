@@ -21,6 +21,7 @@ const KidProfile = () => {
     const [city, setCity] = useState('');
     const [classId, setClassId] = useState('');
     const [address, setAddress] = useState('');
+    const [kidImage , setKidImage] = useState(null);
     const [fatherName, setFatherName] = useState('');
     const [fatherMobile, setFatherMobile] = useState('');
     const [fatherJob, setFatherJob] = useState('');
@@ -338,6 +339,7 @@ const KidProfile = () => {
             setFatherJob(response.content.parent.father_job);
             setEmergencyPhone(response.content.parent.emergency_phone);
             setHasMedicalCase(response.content.has_medical_case);
+            setKidImage(response.content.media[0].original_url)
             // setImageFile(null);
             
             } catch (error) {
@@ -360,7 +362,10 @@ const KidProfile = () => {
             const response = await KidsServices.Delete(kidId);
             toast.success('kid deleted successfully');
             console.log(response);
-            GetData();
+            // GetData();
+            setTimeout(()=>{
+                navigate('/manageclasses');
+            },2000);
             
         } catch (error) {
             toast.error('Failed to delete kid');
@@ -399,12 +404,21 @@ const KidProfile = () => {
             <form className="SubjectsContainer FormContainer" onSubmit={handleSubmit}>
                 <div className="row AddTeacherRow">
                     <div className="col-lg-12 Center KidImageColForm mb-3">
-                        <div className="CircleInPopUp Center">
-                            <label htmlFor="Image">
-                                <FontAwesomeIcon icon={faImage} />
-                                <input type="file" id="Image" accept="image/*"
-                                    onChange={handleFileChange}/>
-                            </label>
+                        <div className="CircleInPopUp Center KidImage">
+                            
+                        <label htmlFor="Image" className="upload-label">
+            {/* <FontAwesomeIcon icon={faImage} className="upload-icon" /> */}
+            <input
+                type="file"
+                id="Image"
+                accept="image/*"
+                onChange={handleFileChange}
+                style={{ display: 'none' }} // Hide the input element
+            />
+            {kidImage && <img src={kidImage} alt="Kid" width="100%" />}
+        </label>
+                            
+
                         </div>
                         {ImageError && <span className="text-danger FormError">{ImageError}</span>}
 
@@ -423,9 +437,9 @@ const KidProfile = () => {
                     <div className="col-lg-5 FormInputCol FormInputColReg">
                         <KidProfileDropdown onChange={handleSelectedClassChange} Options={classes}  DefaultValue={selectedClass}/>
                     </div>
-                    <div className="col-lg-5 FormInputCol FormInputColReg">
+                    {/* <div className="col-lg-5 FormInputCol FormInputColReg">
                         <CustomDropdown Options={["El-Marg","Ain Shams"]} DefaultValue={"Branch: "}/>
-                    </div>
+                    </div> */}
                     <div className="col-lg-5 EmpFormCol KidDataCol">
                         <input type="text" className="EmpInput KidEmailInput" value={email} onChange={(e) => setEmail(e.target.value)} />
                         <label className="EmpLabel EmpNameLabel" htmlFor="KidEmail">Email : </label>
@@ -445,7 +459,7 @@ const KidProfile = () => {
                             <span className="text-danger ">{mobileError}</span>
 
                         </div>
-                        }
+                    }
                     </div>
                     
 

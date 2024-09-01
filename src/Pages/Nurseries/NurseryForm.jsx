@@ -5,7 +5,7 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import CustomDropdown from "../../Components/DrobDown/CustomDropdown";
 import { AuthService, NurseryServices } from "../../Service/Api";
 import toast, { Toaster } from "react-hot-toast";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import NurseryFormActionModal from "./NurseryFormActionModal";
 
 const NurseryForm = () => {
@@ -74,13 +74,18 @@ const NurseryForm = () => {
         setIsConfirmOverlayOpen(true)
         setState(state);
     }
+    const navigate = useNavigate();
     const handleSubmit = async (id , state)=>{
         const status= (state==='Accept')?'accepted':('rejected');
         try {
             console.log(id , status)
-            const response = await NurseryServices.ApplicationAction(id , status);
+            const response = await AuthService.changeStatus(id , status);
+            console.log(response);
             toast.success(`Application ${status} successfully`);
-            GetData();
+            // GetData();
+            setTimeout(()=>{
+                navigate(`/Nurseries/${id}`)
+            },1000)
             
         } catch (error) {
             toast.error(`Failed to ${state} Application`);

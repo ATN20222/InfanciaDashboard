@@ -7,7 +7,7 @@ import NewletterItem from "../../Components/NewsLetter/NewsLetterItem";
 import AddNewsLetterModal from "../../Components/NewsLetter/AddNewsLetterModal";
 import { NewsLetterServices } from "../../Service/Api";
 import toast, { Toaster } from "react-hot-toast";
-
+import InfanciaLogo from '../../Assets/images/INFANCIA_LOGO.png'
 const NewsLetter = () => {
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [newsletters, setNewsletters] = useState([]);
@@ -34,6 +34,7 @@ const NewsLetter = () => {
         try {
 
             const response = await NewsLetterServices.List();
+            console.log(response);
             setNewsletters(response.content);
 
             
@@ -124,7 +125,7 @@ const NewsLetter = () => {
                     Image={row.media.original_url}
                     Likes={row.likes_counts}
                     PublishDate={formatDate(row.created_at) }
-                    PublisherImage={row.PublisherImage}
+                    PublisherImage={InfanciaLogo}
                     PublisherName={row.title}
                     Text={row.description}
                     OnDeleteNewsletter={HandleDeleteNewsletter}

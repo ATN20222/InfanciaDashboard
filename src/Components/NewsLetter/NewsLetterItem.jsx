@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './NewsLetterItem.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { faHeart as heart } from "@fortawesome/free-regular-svg-icons";
+// import { faHeart as heart } from "@fortawesome/free-regular-svg-icons";
 import DeleteSubjectModal from "../ManageClasses/DeleteSubjectModal";
 
 const NewletterItem = ({id,PublisherImage , PublisherName, PublishDate , Image , Text , Likes ,OnDeleteNewsletter})=>{
@@ -45,7 +45,7 @@ const NewletterItem = ({id,PublisherImage , PublisherName, PublishDate , Image ,
                     <img src={Image} width="100%" alt="" />
                 </div>
                 <div className={`col-lg-12 NewletterItemCol NewsletterLikes ${Likes==0?'HeartBlackOutlined':''}`}>
-                    <FontAwesomeIcon icon={Likes==0?heart:faHeart} /> {Likes}
+                    <FontAwesomeIcon icon={Likes==0?faHeart:faHeart} /> {Likes}
                 </div>
             </div>
         </div>
