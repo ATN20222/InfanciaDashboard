@@ -97,19 +97,28 @@ const AddAdminModal = ({ isOpen, onClose, onAddAdmin }) => {
     }
 
     if (!isValid) return;
-    var temp = [];
+    var temp = {
+        classes:[]
+      };
+    
     if(isTeacher){
-        temp.push(
-        {
-          class_id:selectedClass,
-        }
-      );
         
       
-      if(selectedClass ===0)
-        temp = Classes.map(cls => ({
-          class_id: cls.id
+      // setSelectedClass(0)
+      if(selectedClass === 0){
+
+        temp.classes = Classes
+        .filter(cls => cls.id !== 0) 
+        .map(cls => ({
+            class_id: cls.id
         }));
+      }else{
+        temp.classes.push(
+          {
+            class_id:selectedClass,
+          }
+        );
+      }
     }
     
     onAddAdmin( name, selectedOption, email, phoneNumber, password , temp  );
@@ -210,7 +219,7 @@ const handleClassChanged = (id)=>{
                 <span className="text-danger PopUpValidation">{roleError}</span>
               )}
             </div>
-            {isTeacher&&
+            {!isTeacher&&
               <div className="ChooseClass mt-2">
               <ClassDropDown
                 onChange={handleClassChanged}

@@ -45,6 +45,7 @@ const Admins = () => {
         setAdminToDelete(null);
     };
     const handleAddRequest = async (name, role, email, phoneNumber, password , classes ) => {
+        console.log(name, role, email, phoneNumber, password , classes );
         try {
             const response = await AuthService.AddNewAdmin(name,email,  phoneNumber, role, password , classes );
             toast.success('Admin added successfully');
