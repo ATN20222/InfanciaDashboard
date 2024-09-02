@@ -219,7 +219,7 @@ const handleClassChanged = (id)=>{
                 <span className="text-danger PopUpValidation">{roleError}</span>
               )}
             </div>
-            {!isTeacher&&
+            {isTeacher&&
               <div className="ChooseClass mt-2">
               <ClassDropDown
                 onChange={handleClassChanged}
