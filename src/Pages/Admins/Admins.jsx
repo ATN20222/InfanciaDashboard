@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import './Admins.css'
 import AddAdminModal from "./AddAdminModal";
 import DeleteSubjectModal from "../../Components/ManageClasses/DeleteSubjectModal";
-import { NurseryServices } from "../../Service/Api";
+import { AuthService, NurseryServices } from "../../Service/Api";
 import toast, { Toaster } from "react-hot-toast";
 
 const Admins = () => {
@@ -41,13 +41,12 @@ const Admins = () => {
             
         } catch (error) {
             toast.error('Failed to delete admin');
-
         }
         setAdminToDelete(null);
     };
-    const handleAddRequest = async (name, role, email, phoneNumber, password ) => {
+    const handleAddRequest = async (name, role, email, phoneNumber, password , classes ) => {
         try {
-            const response = await NurseryServices.AddAdmin(name,email,  phoneNumber, role, password );
+            const response = await AuthService.AddNewAdmin(name,email,  phoneNumber, role, password , classes );
             toast.success('Admin added successfully');
             GetData();
             
@@ -105,24 +104,24 @@ const Admins = () => {
                                         <div className="col-lg-12 RecordEmpTable">
                                             <div className="row">
                                                 <div className="col-lg-4 col-md-4 col-sm-4 col-4 Center">
-                                                    <span className="BranchTableSpan" data-content={row.name}>
-                                                        {row.name}
+                                                    <span className="BranchTableSpan" data-content={row.user.name}>
+                                                        {row.user.name}
 
                                                     </span>
                                                     
                                                     </div>
                                                
                                                 <div className="col-lg-4 col-md-4 col-sm-4 col-4 Center">
-                                                    <span className="BranchTableSpan" data-content={row.email}>
+                                                    <span className="BranchTableSpan" data-content={row.user.email}>
 
-                                                        {row.email}
+                                                        {row.user.email}
                                                     </span>
                                                     </div>
 
                                                     <div className="col-lg-3 col-md-3 col-sm-3 col-2 Center">
-                                                    <span className="BranchTableSpan" data-content={row.phone}>
+                                                    <span className="BranchTableSpan" data-content={row.user.phone}>
 
-                                                        {row.phone}
+                                                        {row.user.phone}
                                                     </span>
                                                     </div>
 

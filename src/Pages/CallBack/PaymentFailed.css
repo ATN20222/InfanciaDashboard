@@ -1,0 +1,61 @@
+.PaymentFailed {
+    text-align: center;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .TopImage {
+    margin-bottom: 20px;
+  }
+  
+  .failed-icon {
+    color: #dc3545;
+    font-size: 80px;
+  }
+  
+  .failed-message {
+    margin-top: 20px;
+  }
+  
+  .failed-message h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+  
+  .failed-message p {
+    font-size: 18px;
+    color: #555;
+  }
+  
+  .failed-details {
+    margin-top: 20px;
+    text-align: left;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .failed-actions {
+    margin-top: 30px;
+  }
+  
+  .failed-actions .btn-primary,
+  .failed-actions .btn-secondary {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .failed-actions .btn-primary {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .failed-actions .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+  

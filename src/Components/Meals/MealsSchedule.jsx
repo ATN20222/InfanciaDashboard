@@ -21,7 +21,7 @@ const MealsSchedule = ({ SelectedClassId, selectedMeal, updateKey }) => {
     const mealTypes = {
         1: 'Breakfast',
         2: 'Lunch',
-        3: 'Snakcs',
+        3: 'Snacks',
     };
     async function GetData() {
         try {

@@ -92,7 +92,7 @@ const Home = () => {
                             Title={"Teachers"} 
                             Text={"View Nursery teachers and manage them easy"}
                             Number={"100"}
-                            link={'teachers'}
+                            link={'admins'}
                         />
                     </div>
                     <div className="col-lg-6">

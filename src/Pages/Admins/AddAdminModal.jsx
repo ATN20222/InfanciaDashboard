@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import CustomDropdown2 from '../../Components/DrobDown/CustomDropdown2';
-import { RolesServices } from '../../Service/Api';
+import { ClassService, RolesServices } from '../../Service/Api';
 import RolesDropDown from '../../Components/DrobDown/RolesDropDown';
+import ClassDropDown from '../../Components/DrobDown/ClassDropDown';
 
 const AddAdminModal = ({ isOpen, onClose, onAddAdmin }) => {
   const [name, setName] = useState('');
@@ -9,7 +10,8 @@ const AddAdminModal = ({ isOpen, onClose, onAddAdmin }) => {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
-
+  const [Classes, setClasses] = useState([]);
+  const [selectedClass , setSelectedClass] = useState('');
   const [nameError, setNameError] = useState('');
   const [roleError, setRoleError] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -17,13 +19,14 @@ const AddAdminModal = ({ isOpen, onClose, onAddAdmin }) => {
   const [passwordError, setPasswordError] = useState('');
   const [roles , setRoles] = useState([]);
   const [selectedOption , setSelectedOption] = useState('');
-
-
+  const [isTeacher , setIsTeacher] = useState(false);
+  const [classError, setClassError] = useState('');
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Reset errors
     setNameError('');
+    setClassError('');
     setRoleError('');
     setEmailError('');
     setPhoneNumberError('');
@@ -41,6 +44,12 @@ const AddAdminModal = ({ isOpen, onClose, onAddAdmin }) => {
     // Role validation
     if (selectedOption === '') {
       setRoleError('Role is required');
+      isValid = false;
+      return;
+
+    }
+    if (isTeacher&&selectedClass==='') {
+      setClassError('class is required');
       isValid = false;
       return;
 
@@ -88,14 +97,29 @@ const AddAdminModal = ({ isOpen, onClose, onAddAdmin }) => {
     }
 
     if (!isValid) return;
-
-    onAddAdmin( name, role, email, phoneNumber, password );
+    var temp = [];
+    if(isTeacher){
+        temp.push(
+        {
+          class_id:selectedClass,
+        }
+      );
+        
+      
+      if(selectedClass ===0)
+        temp = Classes.map(cls => ({
+          class_id: cls.id
+        }));
+    }
+    
+    onAddAdmin( name, selectedOption, email, phoneNumber, password , temp  );
     clearData();
     onClose();
   };
 
   useEffect(()=>{
     GetData();
+    GetClasses();
 },[]);
 function validatePassword(password) {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
@@ -124,7 +148,32 @@ async function GetData() {
     setEmailError('');
     setPhoneNumberError('');
     setPasswordError('');
+    setSelectedClass('');
+    setClassError('');
   };
+  const handleRoleChanged = (name)=>{
+    setSelectedOption(name);
+    if(name==='teacher')
+      setIsTeacher(true);
+  }
+
+
+
+  async function GetClasses() {
+    try {
+
+      const response = await ClassService.List();
+      response.content.push({id:0 , name:'All'});
+      setClasses(response.content);
+      
+    } catch (error) {
+        console.log(error)
+
+    }
+}
+const handleClassChanged = (id)=>{
+  setSelectedClass(id);
+}
 
   if (!isOpen) return null;
 
@@ -151,7 +200,7 @@ async function GetData() {
 
             <div className="ChooseAdminRole">
               <RolesDropDown
-                onChange={(id)=>setSelectedOption(id)}
+                onChange={handleRoleChanged}
                 Options={roles}
                 DefaultValue="Role :"
                 selectedValue={selectedOption}
@@ -161,7 +210,23 @@ async function GetData() {
                 <span className="text-danger PopUpValidation">{roleError}</span>
               )}
             </div>
+            {isTeacher&&
+              <div className="ChooseClass mt-2">
+              <ClassDropDown
+                onChange={handleClassChanged}
+                Options={Classes}
+                DefaultValue="Class :"
+                selectedValue={selectedClass}
+                onSelect={(value) => setSelectedClass(value)}
+              />
+              {classError && (
+                <span className="text-danger PopUpValidation">{classError}</span>
+              )}
+            </div>
 
+
+            }
+            
             <label>
               <input
                 type="text"
@@ -207,6 +272,9 @@ async function GetData() {
                 </span>
               )}
             </label>
+
+
+
 
             <div className="form-buttons">
               <button type="submit" className="RegisterBtn">

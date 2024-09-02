@@ -8,7 +8,7 @@ const RolesDropDown = ({ Options, DefaultValue, IsAddTeacher, onChange }) => {
     const toggleDropdown = () => setIsOpen(!isOpen);
     const handleOptionClick = (option) => {
         setSelectedOption(option.name); 
-        onChange(option.id)
+        onChange(option.name)
         setIsOpen(false);
     };
 

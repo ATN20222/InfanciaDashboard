@@ -87,7 +87,7 @@ const Login = () => {
                 </div>
                 <div className="Container Center">
                     {ErrorSummary&&
-                        <div className="mt-4 text-danger">
+                        <div className="mt-4 text-danger text-start">
                             {ErrorSummary}
                         </div>
                     }

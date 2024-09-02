@@ -7,6 +7,24 @@ const axiosReg = axios.create({
   baseURL: baseURL,
 });
 const AuthService = {
+    AddNewAdmin:async(name,email , phone , role , password , classes)=>{
+      try {
+        const formData = new FormData();
+        formData.append('name', name  );
+        formData.append('email', email);
+        formData.append('phone', phone);
+        formData.append('role', role);
+        formData.append('password', password);
+        formData.append('password_confirmation', password);
+        formData.append('classes', classes);
+        const response = await axiosInstance.post(`/accounts/users`, formData);
+        
+        return response.data; 
+
+      } catch (error) {
+        throw new Error('Failed to add'); 
+      }
+    },
     changeStatus:async(nursery_id , status)=>{
       try {
         const formData = new FormData();
@@ -786,22 +804,7 @@ const NurseryServices = {
   },
 
 
-  AddAdmin: async (name,email , phone , role , password)=>{
-    try {
-      const formData = new FormData();
-      formData.append('name', name  );
-      formData.append('email', email);
-      formData.append('phone', phone);
-      formData.append('role', role);
-      formData.append('password', password);
-      formData.append('password_confirmation', password);
-      const response = await axiosInstance.post(`/accounts/users/`,formData);
-      return response.data; 
 
-    } catch (error) {
-      throw new Error(`Failed to add`); 
-    }
-  },
 
 }
 

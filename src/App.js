@@ -35,6 +35,8 @@ import NurseryForm from './Pages/Nurseries/NurseryForm';
 import NurseryDetails from './Pages/Nurseries/NurseryDetails';
 import Applications from './Pages/Nurseries/Applications';
 import PrivacyPolicy from './Pages/Policies/PrivacyPolicy';
+import PaymentSuccess from './Pages/CallBack/PaymentSuccess';
+import PaymentFailed from './Pages/CallBack/PaymentFailed';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -53,6 +55,8 @@ function App() {
           <Route path='/Register' element={<Register />} />
           <Route path='/PasswordReset' element={<NewPassword />} />
           <Route path='/PrivacyPolicy' element={<PrivacyPolicy />} />
+          <Route path='/paymentsuccess' element={<PaymentSuccess />} />
+          <Route path='/paymentfailed' element={<PaymentFailed />} />
           
           <Route path='/' element={
             <PrivateRoute>

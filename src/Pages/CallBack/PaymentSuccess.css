@@ -1,0 +1,61 @@
+.payment-success-container {
+    text-align: center;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .TopImage {
+    margin-bottom: 20px;
+  }
+  
+  .success-icon {
+    color: #28a745;
+    font-size: 80px;
+  }
+  
+  .success-message {
+    margin-top: 20px;
+  }
+  
+  .success-message h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+  
+  .success-message p {
+    font-size: 18px;
+    color: #555;
+  }
+  
+  .success-details {
+    margin-top: 20px;
+    text-align: left;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .success-actions {
+    margin-top: 30px;
+  }
+  
+  .success-actions .btn-primary,
+  .success-actions .btn-secondary {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .success-actions .btn-primary {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .success-actions .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+  
