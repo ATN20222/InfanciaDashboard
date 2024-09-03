@@ -22,7 +22,8 @@ const AuthService = {
         return response.data; 
 
       } catch (error) {
-        throw new Error('Failed to add'); 
+        throw new Error(error.response.data.message); 
+//throw new Error('Failed to add'); 
       }
     },
     changeStatus:async(nursery_id , status)=>{
@@ -35,7 +36,8 @@ const AuthService = {
         return response.data; 
 
       } catch (error) {
-        throw new Error('Failed to change'); 
+        throw new Error(error.response.data.message); 
+//throw new Error('Failed to change'); 
       }
     },
     Login: async (email , password) =>{
@@ -51,7 +53,9 @@ const AuthService = {
         return response.data; 
 
       } catch (error) {
-        throw new Error('Failed to login'); 
+        console.log(error)
+        throw new Error(error.response.data.message); 
+//throw new Error(error.response.data.message); 
       }
     },
     Logout: async () =>{
@@ -63,7 +67,8 @@ const AuthService = {
           localStorage.clear();
           return response.data;
         } catch (error) {
-          throw new Error('Failed to logout'); 
+          throw new Error(error.response.data.message); 
+//throw new Error('Failed to logout'); 
         }
     },
     
@@ -75,7 +80,8 @@ const AuthService = {
             deleteToken();
             return response.data; 
           } catch (error) {
-            throw new Error('Failed to send email'); 
+            throw new Error(error.response.data.message); 
+//throw new Error('Failed to send email'); 
           }
     },
     ResetPassword:async (token, email , password, password_confirmation)=>{
@@ -91,7 +97,8 @@ const AuthService = {
             });
             return response.data; 
           } catch (error) {
-            throw new Error('Failed to reset password'); 
+            throw new Error(error.response.data.message); 
+//throw new Error('Failed to reset password'); 
           }
     },
     RegisterApi:async (name, email, phone , city,country, address, branches_number, classes_number, kids_number, employees_number, start_fees, about , provided_services , media)=>{
@@ -118,7 +125,8 @@ const AuthService = {
         return response.data; 
   
       } catch (error) {
-        throw new Error('Failed to register'); 
+        throw new Error(error.response.data.message); 
+//throw new Error('Failed to register'); 
   }
     },
     AuthRole:async ()=>{
@@ -127,7 +135,8 @@ const AuthService = {
           const response = await axiosInstance.post(`/auth/auth-role`);
           return response.data; 
         } catch (error) {
-          throw new Error('Failed to get roles'); 
+          throw new Error(error.response.data.message); 
+//throw new Error('Failed to get roles'); 
         }
   },
 }
@@ -139,7 +148,8 @@ const ClassService = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to list'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to list'); 
     }
   },
   Add: async (name , age_from , age_to)=>{
@@ -152,7 +162,8 @@ const ClassService = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to add'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to add'); 
     }
   },
 
@@ -164,7 +175,8 @@ const ClassService = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to edit'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to edit'); 
     }
   },
   Get:async (id)=>{
@@ -173,7 +185,8 @@ const ClassService = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to get'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to get'); 
     }
   },
 
@@ -185,7 +198,8 @@ const KidsServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to list'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to list'); 
     }
   },
   ListClassKids: async (class_id)=>{
@@ -194,7 +208,8 @@ const KidsServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to list'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to list'); 
     }
   },
   Add: async ( 
@@ -241,7 +256,8 @@ const KidsServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to add'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to add'); 
     }
   },
   Edit: async (
@@ -290,7 +306,8 @@ const KidsServices = {
       return response.data;
   
     } catch (error) {
-      throw new Error('Failed to edit');
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to edit');
     }
   },
   
@@ -300,7 +317,8 @@ const KidsServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to get data'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to get data'); 
     }
   },
   Delete:async (id)=>{
@@ -309,7 +327,8 @@ const KidsServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to delete'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to delete'); 
     }
   },
 }
@@ -320,7 +339,8 @@ const SubjectServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to list'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to list'); 
     }
   },
   Add: async (title , description="")=>{
@@ -333,7 +353,8 @@ const SubjectServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to add'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to add'); 
     }
   },
   Assign: async (subject_id , class_id)=>{
@@ -346,7 +367,8 @@ const SubjectServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to assign'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to assign'); 
     }
   },
   Delete:async (id)=>{
@@ -355,7 +377,8 @@ const SubjectServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to delete'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to delete'); 
     }
   },
   ListWithClassId: async (class_id)=>{
@@ -364,7 +387,8 @@ const SubjectServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to list'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to list'); 
     }
   },
   DeleteAssign:async (assign_id)=>{
@@ -373,7 +397,8 @@ const SubjectServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to list'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to list'); 
     }
   },
 }
@@ -385,7 +410,8 @@ const NewsLetterServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to list'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to list'); 
     }
   },
   Add: async (description , image)=>{
@@ -398,7 +424,8 @@ const NewsLetterServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to add'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to add'); 
     }
   },
   Delete:async (id)=>{
@@ -407,7 +434,8 @@ const NewsLetterServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to delete'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to delete'); 
     }
   },
   
@@ -423,7 +451,8 @@ const FAQServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to add'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to add'); 
     }
   },
   List: async ()=>{
@@ -432,7 +461,8 @@ const FAQServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to list'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to list'); 
     }
   },
   Delete: async (id)=>{
@@ -441,7 +471,8 @@ const FAQServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to delete'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to delete'); 
     }
   },
 }
@@ -456,7 +487,8 @@ const PolicyServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to add'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to add'); 
     }
   },
   List: async ()=>{
@@ -465,7 +497,8 @@ const PolicyServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to list'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to list'); 
     }
   },
   Delete: async (id)=>{
@@ -474,7 +507,8 @@ const PolicyServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to delete'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to delete'); 
     }
   },
 }
@@ -488,7 +522,8 @@ const ScheduleServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to load data'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to load data'); 
     }
   },
   AddScheduleContent: async (class_id,subject_id ,content , day)=>{
@@ -503,7 +538,8 @@ const ScheduleServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to Add'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to Add'); 
     }
   },
  
@@ -517,7 +553,8 @@ const NurseryProfileService = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to get data'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to get data'); 
     }
   },
   ListReviews: async ()=>{
@@ -526,7 +563,8 @@ const NurseryProfileService = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to get data'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to get data'); 
     }
   },
   ListGallery: async ()=>{
@@ -536,7 +574,8 @@ const NurseryProfileService = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to get data'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to get data'); 
     }
   },
   AddAlbum: async (title)=>{
@@ -548,7 +587,8 @@ const NurseryProfileService = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to add'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to add'); 
     }
   },
   EditAlbum: async (id , title)=>{
@@ -557,7 +597,8 @@ const NurseryProfileService = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to edit'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to edit'); 
     }
   },
   ListGalleryImages: async (id)=>{
@@ -566,7 +607,8 @@ const NurseryProfileService = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to get data'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to get data'); 
     }
   },
   DeleteGallery: async (id)=>{
@@ -575,7 +617,8 @@ const NurseryProfileService = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to delete'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to delete'); 
     }
   },
   UploadGalleryImage: async (album_id  , media)=>{
@@ -593,7 +636,8 @@ const NurseryProfileService = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to upload'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to upload'); 
     }
   },
 
@@ -607,7 +651,8 @@ const MealsServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to get data'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to get data'); 
     }
   },
   Add: async (meal , day ,type , class_id)=>{
@@ -624,7 +669,8 @@ const MealsServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to add'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to add'); 
     }
   },
   
@@ -635,7 +681,8 @@ const MealsServices = {
       const response = await axiosInstance.put(`/meals/${id}?class_id=${class_id}&type=${type}&days=${days}&description=${description}`);
       return response.data; 
     } catch (error) {
-      throw new Error('Failed to edit'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to edit'); 
     }
   },
 
@@ -645,7 +692,8 @@ const MealsServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to delete'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to delete'); 
     }
   },
 
@@ -658,7 +706,8 @@ const ParentRequestServices = {
       const response = await axiosInstance.get(`/chat/get-request/${id}`);
       return response.data;
     } catch (error) {
-      throw new Error('Failed to get data');
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to get data');
     }
   },
   ListMessages: async (id) => {
@@ -666,7 +715,8 @@ const ParentRequestServices = {
       const response = await axiosInstance.get(`/chat/${id}`);
       return response.data;
     } catch (error) {
-      throw new Error('Failed to get data');
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to get data');
     }
   },
 
@@ -685,7 +735,8 @@ const ParentRequestServices = {
     );
       return response.data;
     } catch (error) {
-      throw new Error('Failed to send');
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to send');
     }
   },
 
@@ -697,7 +748,8 @@ const RolesServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to get data'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to get data'); 
     }
   },
   Add:async (data)=>{
@@ -706,7 +758,8 @@ const RolesServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to add'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to add'); 
     }
   },
   Delete:async (id)=>{
@@ -715,7 +768,8 @@ const RolesServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to delete'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to delete'); 
     }
   },
 }
@@ -727,7 +781,8 @@ const PaymentRequestServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to get data'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to get data'); 
     }
   },
   Add:async (data)=>{
@@ -736,7 +791,8 @@ const PaymentRequestServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to add'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to add'); 
     }
   },
   MarkPaid:async (id)=>{
@@ -745,7 +801,8 @@ const PaymentRequestServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to change state'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to change state'); 
     }
   },
 
@@ -761,7 +818,8 @@ const NurseryServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to get data'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to get data'); 
     }
   },
   ListById: async (id)=>{
@@ -771,7 +829,8 @@ const NurseryServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error('Failed to get data'); 
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to get data'); 
     }
   },
   ApplicationAction: async (id,type)=>{
@@ -783,7 +842,8 @@ const NurseryServices = {
       return response.data; 
 
     } catch (error) {
-      throw new Error(`Failed to ${type} application`); 
+      throw new Error(error.response.data.message); 
+//throw new Error(`Failed to ${type} application`); 
     }
   },
   ListAdmins:async ()=>{
@@ -791,7 +851,8 @@ const NurseryServices = {
       const response = await axiosInstance.get(`/accounts/users`);
       return response.data;
     } catch (error) {
-      throw new Error(`Failed to get data`); 
+      throw new Error(error.response.data.message); 
+//throw new Error(`Failed to get data`); 
     }
   },
   DeleteAdmin:async (id)=>{
@@ -799,7 +860,8 @@ const NurseryServices = {
       const response = await axiosInstance.delete(`/accounts/users/${id}`);
       return response.data;
     } catch (error) {
-      throw new Error(`Failed to delete`); 
+      throw new Error(error.response.data.message); 
+//throw new Error(`Failed to delete`); 
     }
   },
 

@@ -2,7 +2,7 @@ import React ,{useContext, useEffect, useState} from 'react';
 import './Sidebar.css';
 import SideBarImage from '../../Assets/images/INFANCIA_LOGO.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressCard, faBuildingUser, faCashRegister, faChalkboard, faChildren, faComments, faCreditCard, faCreditCardAlt, faFileCircleCheck, faHand, faHandPointer, faHandPointUp, faHome, faNewspaper, faRightFromBracket, faUserGroup, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { faAddressCard, faBuildingUser, faCashRegister, faChalkboard, faChildren, faComments, faCreditCard, faCreditCardAlt, faFileCircleCheck, faHand, faHandPointer, faHandPointUp, faHome, faNewspaper, faRightFromBracket, faUserGroup, faUserPlus, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthService } from '../../Service/Api';
 import { useAuth } from '../../Context/AuthContext';
@@ -100,6 +100,14 @@ function Sidebar({ isOpen, toggleSidebar, openConfirmLogoutModal }) {
                             <Link to="/Nurseries" className='nav-link'>
                                 <FontAwesomeIcon icon={faBuildingUser} />
                                 Nurseries
+                            </Link>
+                        </li>
+                    )}
+                    {isSuperAdmin && (
+                        <li>
+                            <Link to="/fakeregister" className='nav-link'>
+                                <FontAwesomeIcon icon={faUserPlus} />
+                                Fake Register
                             </Link>
                         </li>
                     )}

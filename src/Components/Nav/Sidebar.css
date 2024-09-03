@@ -18,6 +18,22 @@
     list-style-type: none;
     padding: 0;
     margin-top: 20px;
+    max-height: 432px;
+    overflow-y: scroll;
+    margin-right: 5px;
+  }
+  
+  /* Custom scrollbar styles */
+  .sidebar ul::-webkit-scrollbar {
+    width: 2px;
+  }
+  
+  .sidebar ul::-webkit-scrollbar-thumb {
+    background-color: white;
+  }
+  
+  .sidebar ul::-webkit-scrollbar-track {
+    background: transparent;
   }
   
 

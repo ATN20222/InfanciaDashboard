@@ -259,11 +259,17 @@ const Register = () => {
                 );
                 // console.log("Form data submitted successfully", response);
                 toast.success('Your Application has been sent');
-                window.location.reload();
+                setTimeout(()=>{
+
+                    window.location.reload();
+                },1500);
                 
             } catch (error) {
                 console.error("Registration failed", error);
-                toast.error('Failed to send your Application');
+                // toast.error('Failed to send your Application');
+                toast.error(`${error}`);
+
+
 
             }
         } else {

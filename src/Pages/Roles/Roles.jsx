@@ -19,7 +19,9 @@ const Roles = () => {
             GetData();  
             
         } catch (error) {
-            toast.error('Failed to delete role');
+            // toast.error('Failed to delete role');
+            toast.error(`${error}`);
+
 
         }
         setRoleToDelete(null);
@@ -46,8 +48,7 @@ const Roles = () => {
                 GetData();
                 
             } catch (error) {
-                toast.error('Failed to add role');
-
+                toast.error(`${error}`);
             }
         };
 

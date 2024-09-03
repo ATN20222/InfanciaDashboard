@@ -12,6 +12,8 @@
     padding-bottom: 5px;
     border-radius: 30px;
     color: white;
+    font-size: 16px;
+    font-weight: 600;
 }
 .HeadRightItem{    
     margin-top: 5px;

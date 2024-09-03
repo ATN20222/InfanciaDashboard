@@ -102,7 +102,7 @@ const ManageClassesCompnent = ({IsMeals , ChangeClass})=>{
                         <div className="col-lg-6 col-md-6 col-sm-6 col-6">
                             <div className="HeadLeftItem">
                                 
-                                {IsMeals?"Meals":"Manage classes"}
+                                {IsMeals?"Meals":"Classes"}
                             </div>
                         </div>
                         {!IsMeals&&

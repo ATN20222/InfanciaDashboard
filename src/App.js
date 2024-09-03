@@ -37,6 +37,7 @@ import Applications from './Pages/Nurseries/Applications';
 import PrivacyPolicy from './Pages/Policies/PrivacyPolicy';
 import PaymentSuccess from './Pages/CallBack/PaymentSuccess';
 import PaymentFailed from './Pages/CallBack/PaymentFailed';
+import FakeForm from './Pages/Register/FakeForm';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -87,6 +88,14 @@ function App() {
               </MainLayout>
             </PrivateRoute>
           } />
+          <Route path='/fakeregister' element={
+            <PrivateRoute>
+              <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
+                <FakeForm />
+              </MainLayout>
+            </PrivateRoute>
+          } />
+
           <Route path='/Applications' element={
             <PrivateRoute>
               <MainLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}>
