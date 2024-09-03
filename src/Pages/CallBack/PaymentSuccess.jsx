@@ -12,9 +12,9 @@ const PaymentSuccess = () => {
 
   const transactionId = queryParams.get('id');
   const amountCents = queryParams.get('amount_cents');
-  const amountPaid = (amountCents / 100).toFixed(2);
+  const amountPaid = (amountCents / 100);
   const success = queryParams.get('success') === 'true';
-  const createdAt = new Date(queryParams.get('created_at')).toLocaleDateString('en-US', {
+  const createdAt = new Date(queryParams.get('paid_at')).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
