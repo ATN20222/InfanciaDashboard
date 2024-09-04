@@ -3,7 +3,7 @@ import AddGalleryModal from "./AddGalleryModal";
 import GalleryImages from "./GalleryImages"; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faPlus, faTrash, faUpload } from "@fortawesome/free-solid-svg-icons";
-import { NurseryProfileService } from "../../Service/Api";
+import { AuthService, NurseryProfileService } from "../../Service/Api";
 import toast, { Toaster } from "react-hot-toast";
 import GalleryTempImage from '../../Assets/images/GalleryTempImage.jpg'
 import EditGalleryModal from "./EditGalleryModal";
@@ -20,6 +20,7 @@ const Gallery = () => {
   const [currentGallery,setCurrentGallery] = useState(null);
   const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
   const [galleryIdToDelete , setGalleryIdToDelete] = useState([]);
+  const [isImage , setIsImage]= useState(false);
   useEffect(()=>{
     GetData();
   },[]);
@@ -95,7 +96,7 @@ const Gallery = () => {
         setUploadError(''); // Clear the error if the file is valid
         setUploadImage(file);
         try {
-          const response = await NurseryProfileService.UploadGalleryImage(currentGallery, file);
+          const response = await AuthService.AddImageGallery(currentGallery, file);
           toast.success('Image uploaded successfully');
           handleGalleryClick(currentGallery);
         } catch (error) {
@@ -116,17 +117,37 @@ const Gallery = () => {
   }
   
   const HandleConfirmDelete = async (id)=>{
-
-    try {
-      const response = await NurseryProfileService.DeleteGallery(id);
-      toast.success('Album deleted successfully');
-      GetData();
-    } catch (error) {
-      console.error(error);
-      toast.error('Failed to delete album');
+    if(!isImage){
+      try {
+        const response = await NurseryProfileService.DeleteGallery(id);
+        toast.success('Album deleted successfully');
+        GetData();
+      } catch (error) {
+        console.error(error);
+        toast.error('Failed to delete album');
+      }
+    }else{
+      console.log(selectedGallery);
+      try {
+        const response = await NurseryProfileService.DeleteGalleryImage( currentGallery, id);
+        toast.success('Image deleted successfully');
+        GetData();
+        // handleBackToGallery();
+        handleGalleryClick(currentGallery);
+      } catch (error) {
+        console.error(error);
+        toast.error('Failed to delete image');
+      }
     }
-    setGalleryIdToDelete(null);
 
+    setGalleryIdToDelete(null);
+    setIsImage(false);
+  }
+  const handleDeleteImage = (id)=>{
+    console.log("handleDeleteImage",id);
+    setGalleryIdToDelete(id);
+    setIsImage(true);
+    setIsDeleteOverlayOpen(true);
   }
   return (
     <div className="NurseryContainer NurseryGallery">
@@ -184,7 +205,7 @@ const Gallery = () => {
     
 
       {selectedGallery ? (
-        <GalleryImages gallery={selectedGallery} onBack={handleBackToGallery} />
+        <GalleryImages gallery={selectedGallery} onBack={handleBackToGallery} onDelete={handleDeleteImage} />
       ) : (
         <div className="GalleryContainer">
           <div className="container">
@@ -201,7 +222,6 @@ const Gallery = () => {
                   <div className="EditAlbumName" onClick={() => openEditModal(album)}>
                     <FontAwesomeIcon icon={faPen}/>
                   </div>
-
                   <div className="DeleteGallery" onClick={()=>handleDeleteGallery(album.id)}>
                     <FontAwesomeIcon icon={faTrash} />
                   </div>

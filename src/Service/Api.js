@@ -7,6 +7,22 @@ const axiosReg = axios.create({
   baseURL: baseURL,
 });
 const AuthService = {
+
+  AddImageGallery:async(album_id  , media)=>{
+    try {
+      const formData = new FormData();
+      formData.append('album_id', album_id);
+      formData.append('media', media);
+      const response = await axiosInstance.post(`nursery-album/add-photo`, formData);
+      
+      return response.data; 
+
+    } catch (error) {
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to add'); 
+    }
+  },
+
     AddNewAdmin:async(name,email , phone , role , password , classes)=>{
       try {
         const formData = new FormData();
@@ -546,6 +562,15 @@ const ScheduleServices = {
 }
 
 const NurseryProfileService = {
+  DeleteGalleryImage:async (album_id , image_id)=>{
+    console.log(`/nursery-album/delete-photo/${album_id}/${image_id}`);
+    try {
+      const response = await axiosInstance.delete(`/nursery-album/delete-photo/${album_id}/${image_id}`);
+      return response.data; 
+    } catch (error) {
+      throw new Error(error.response.data.message); 
+    }
+  },
   ListInfo: async ()=>{
     const id = getNurseryId();
     try {

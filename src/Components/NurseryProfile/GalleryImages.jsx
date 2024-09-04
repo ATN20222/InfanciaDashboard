@@ -1,8 +1,8 @@
 import React from "react";
 import image from '../../Assets/images/Breakfast.png'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-const GalleryImages = ({ gallery, onBack }) => {
+import { faChevronLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
+const GalleryImages = ({ gallery, onBack ,onDelete }) => {
   // Fetch images for the selected gallery. Here we use static images for the example.
   const images = [
     { id: 1, src: image },
@@ -25,6 +25,9 @@ const GalleryImages = ({ gallery, onBack }) => {
           <div key={image.id} className="col-lg-2 col-md-3 col-sm-4 col-6 GalleryItem">
             <div className="GalleryImage Center">
               <img src={image.original_url} alt={`Image ${image.id}`} width="100%" />
+            </div>
+            <div className="DeleteGallery" onClick={()=>onDelete(image.id)}>
+                    <FontAwesomeIcon icon={faTrash} />
             </div>
           </div>
         ))}
