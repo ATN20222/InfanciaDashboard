@@ -227,7 +227,8 @@ const KidProfile = () => {
                     fatherName,fatherMobile,fatherJob,
                     motherName,motherMobile,
                     motherJob,hasMedicalCase?'1':'0',
-                    emergencyPhone
+                    emergencyPhone,
+                    // kidImage
                 );
                 console.log(response);
                 toast.success('Kid edited successfully');

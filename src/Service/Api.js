@@ -7,6 +7,19 @@ const axiosReg = axios.create({
   baseURL: baseURL,
 });
 const AuthService = {
+  ApprovedNursery:async(transaction_id)=>{
+    try {
+      const formData = new FormData();
+      formData.append('transaction_id', transaction_id);
+      const response = await axiosInstance.post(`/nursery-approve`, formData);
+      
+      return response.data; 
+
+    } catch (error) {
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to change'); 
+    }
+  },
 
   AddImageGallery:async(album_id  , media)=>{
     try {
@@ -47,7 +60,7 @@ const AuthService = {
         const formData = new FormData();
         formData.append('nursery_id', nursery_id);
         formData.append('status', status);
-        const response = await axiosInstance.post(`/nursery-approve`, formData);
+        const response = await axiosInstance.post(`/nursery-set-status`, formData);
         
         return response.data; 
 
@@ -294,7 +307,8 @@ const KidsServices = {
     mother_mobile,
     mother_job,
     has_medical_case,
-    emergency_phone
+    emergency_phone,
+    media
   ) => {
     try {
       const queryParams = new URLSearchParams({
@@ -314,6 +328,7 @@ const KidsServices = {
         mother_mobile,
         mother_job,
         has_medical_case,
+        // media,
         // emergency_phone
       }).toString();
       console.log(`/kids/${id}?${queryParams}`)

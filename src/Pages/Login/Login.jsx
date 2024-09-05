@@ -4,6 +4,7 @@ import InfanciaLogo from '../../Assets/images/INFANCIA_LOGO.png';
 import { Link, useNavigate  } from "react-router-dom";
 import { AuthService } from '../../Service/Api';
 import { useAuth } from "../../Context/AuthContext";
+import { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -71,6 +72,12 @@ const Login = () => {
 
   return (
     <div className="LoginMain">
+      <div className="Toaster">
+        <Toaster
+            position="top-right"
+            reverseOrder={false}
+        />
+      </div>
       <div className="row">
         <div className="col-lg-6 col-md-6 col-sm-12 col-12 LoginImageContainer Center">
           <img src={InfanciaLogo} width="50%" alt="" />

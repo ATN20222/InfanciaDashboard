@@ -35,8 +35,8 @@ import NurseryForm from './Pages/Nurseries/NurseryForm';
 import NurseryDetails from './Pages/Nurseries/NurseryDetails';
 import Applications from './Pages/Nurseries/Applications';
 import PrivacyPolicy from './Pages/Policies/PrivacyPolicy';
-import PaymentSuccess from './Pages/CallBack/PaymentSuccess';
-import PaymentFailed from './Pages/CallBack/PaymentFailed';
+// import PaymentSuccess from './Pages/CallBack/PaymentSuccess';
+import Payment from './Pages/CallBack/Payment';
 import FakeForm from './Pages/Register/FakeForm';
 
 function App() {
@@ -56,8 +56,7 @@ function App() {
           <Route path='/Register' element={<Register />} />
           <Route path='/PasswordReset' element={<NewPassword />} />
           <Route path='/PrivacyPolicy' element={<PrivacyPolicy />} />
-          <Route path='/paymentsuccess' element={<PaymentSuccess />} />
-          <Route path='/paymentfailed' element={<PaymentFailed />} />
+          <Route path='/Payment' element={<Payment />} />
           
           <Route path='/' element={
             <PrivateRoute>
