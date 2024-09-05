@@ -474,8 +474,10 @@ const KidProfile = () => {
                     </div>
 
                     <div className="col-lg-5 FormInputCol FormInputColReg">
-                        <CustomDropdown Options={["El-Marg","Ain Shams"]} DefaultValue={"City: "}/>
+                        <CustomDropdown Options={Cities} DefaultValue={"City: "} onChange={setCity} />
+                        {cityError && <span className="text-danger FormError">{cityError}</span>}
                     </div>
+
                     <div className="col-lg-5 EmpFormCol KidDataCol">
                         <input type="text" className="EmpInput KidAddressInput" value={address} onChange={(e) => setAddress(e.target.value)} />
                         <label className="EmpLabel KidAddressInput" htmlFor="KidAddress">Address : </label>
@@ -483,7 +485,6 @@ const KidProfile = () => {
                     </div>
                     
                     
-
                     <div className="col-lg-12 ParentsInformationHeader">
                         <h5>Parents Information</h5>
                     </div>
