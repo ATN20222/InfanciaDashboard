@@ -3,10 +3,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url("../../Assets/images/RegisterImage.jpg");
+    /* background-image: url("../../Assets/images/RegisterImage.jpg"); */
+    background-image: url('../../Assets/images/BackImage.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-
+    
 }
 .RegisterHeaderCol{
     margin-top: 20px !important;
