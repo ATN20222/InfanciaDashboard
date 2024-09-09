@@ -115,6 +115,7 @@ const Payment = ()=>{
     month: 'long',
     day: 'numeric',
   });
+  console.log("success", success);
 
   if(success){
     return <PaymentSuccess transactionId={transactionId} amountPaid={amountPaid} createdAt={createdAt} />

@@ -11,7 +11,7 @@ const AuthService = {
     try {
       const formData = new FormData();
       formData.append('transaction_id', transaction_id);
-      const response = await axiosInstance.post(`/nursery-approve`, formData);
+      const response = await axiosInstance.post(`/nursery-approved`, formData);
       
       return response.data; 
 
