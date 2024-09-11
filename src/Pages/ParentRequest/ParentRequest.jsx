@@ -72,6 +72,7 @@ const ParentRequest = () => {
         <section className="SecondSliderSection ManageClassesCompnent ParentRequestSection">
             {SelectedRequestToReply && SelectedRequestToReply.sender && (
                 <ReplyRequest
+                    id={SelectedRequestToReply.id}
                     closedRequest={SelectedRequestToReply.closed}
                     userId={SelectedRequestToReply.sender.id}
                     userName={SelectedRequestToReply.sender.name}

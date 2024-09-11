@@ -1,0 +1,28 @@
+.PaymentInput{
+    border-radius: 30px;
+    height:50px  ;
+}
+.SubscriptionMain{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* padding: 20px; */
+    
+}
+.SubscriptionContainer{
+    /* background-image: url('../../Assets/images/Pattern_5.webp'); */
+    border-radius: 30px;
+    padding: 20px;
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+    /* margin-right: 20px; */
+    /* margin-left: 20px; */
+}
+.TextSubscriptionHeader{
+    /* font-size: ; */
+    font-weight: 700;
+}
+.TextSubscriptionSpan{
+    font-weight: 500;
+}

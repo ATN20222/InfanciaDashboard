@@ -38,6 +38,7 @@ import PrivacyPolicy from './Pages/Policies/PrivacyPolicy';
 // import PaymentSuccess from './Pages/CallBack/PaymentSuccess';
 import Payment from './Pages/CallBack/Payment';
 import FakeForm from './Pages/Register/FakeForm';
+import Pay from './Pages/Pay/Pay';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -57,6 +58,7 @@ function App() {
           <Route path='/PasswordReset' element={<NewPassword />} />
           <Route path='/PrivacyPolicy' element={<PrivacyPolicy />} />
           <Route path='/Payment' element={<Payment />} />
+          <Route path='/subscription' element={<Pay />} />
           
           <Route path='/' element={
             <PrivateRoute>

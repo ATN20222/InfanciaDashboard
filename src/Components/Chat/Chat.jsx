@@ -18,7 +18,7 @@ const echo = new Echo({
   forceTLS: true,
 });
 
-const Chat = ({ SelectedUserId, Name, close , ClosedChat }) => {
+const Chat = ({ SelectedUserId, Name, close , ClosedChat ,ChatId }) => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const messagesEndRef = useRef(null); // Reference for scrolling to bottom
@@ -28,7 +28,7 @@ const Chat = ({ SelectedUserId, Name, close , ClosedChat }) => {
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const response = await ParentRequestServices.ListMessages(SelectedUserId);
+                const response = await ParentRequestServices.ListMessages(SelectedUserId , ChatId);
                 setMessages(response.content);
             } catch (error) {
                 console.log(error);

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import ParentRequestItem from './ParentRequestItem';
 import Chat from '../Chat/Chat';
 
-const ReplyRequest = ({ userId, userName, isOpen, onClose , closedRequest }) => {
+const ReplyRequest = ({id, userId, userName, isOpen, onClose , closedRequest }) => {
   const [className, setClassName] = useState('');
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,7 +64,7 @@ const ReplyRequest = ({ userId, userName, isOpen, onClose , closedRequest }) => 
         <div className="mymodal">
             <div className="modal-content">
 
-                <Chat SelectedUserId={userId} Name={userName} ClosedChat={closedRequest} close={handleClose}/>
+                <Chat ChatId={id} SelectedUserId={userId} Name={userName} ClosedChat={closedRequest} close={handleClose}/>
             </div>
         </div>
     </div>

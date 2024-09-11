@@ -750,9 +750,9 @@ const ParentRequestServices = {
 //throw new Error('Failed to get data');
     }
   },
-  ListMessages: async (id) => {
+  ListMessages: async (reciver_id ,chat_id ) => {
     try {
-      const response = await axiosInstance.get(`/chat/${id}`);
+      const response = await axiosInstance.get(`/chat/messages/${reciver_id}/${chat_id}`);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message); 
