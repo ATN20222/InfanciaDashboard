@@ -116,11 +116,43 @@ const Payment = ()=>{
     day: 'numeric',
   });
   console.log("success", success);
-
+  const queryParamsObject = {};
+  queryParams.forEach((value, key) => {
+    queryParamsObject[key] = value;
+  });
   if(success){
-    return <PaymentSuccess transactionId={transactionId} amountPaid={amountPaid} createdAt={createdAt} />
+    return (
+    <>
+      <PaymentSuccess transactionId={transactionId} amountPaid={amountPaid} createdAt={createdAt} />
+      <div className="callbackdata">
+        <h2>Callback Data</h2>
+        <ul>
+          {Object.entries(queryParamsObject).map(([key, value]) => (
+            <li key={key}>
+              <strong>{key}:</strong> {value}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
+    );
   }else{
-    return <PaymentFailed transactionId={transactionId} amountPaid={amountPaid} createdAt={createdAt}/>
+    return(
+      <>
+        <PaymentFailed transactionId={transactionId} amountPaid={amountPaid} createdAt={createdAt}/>
+        <div className="callbackdata">
+        <h2>Callback Data</h2>
+        <ul>
+          {Object.entries(queryParamsObject).map(([key, value]) => (
+            <li key={key}>
+              <strong>{key}:</strong> {value}
+            </li>
+          ))}
+        </ul>
+      </div>
+      </>
+
+    );
   }
 
 }
