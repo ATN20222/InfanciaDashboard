@@ -326,7 +326,7 @@ const KidProfile = () => {
             setSelectedClass(response.content.class_id);
             setEmail(response.content.parent.user.email);
             setMobile(response.content.parent.user.phone);
-            setCity(response.content.parent.user.city);
+            setCity(response.content.city);
             setParentName(response.content.parent.user.name);
             setAddress(response.content.address);
             setSelectedGender(response.content.gender);
@@ -340,12 +340,12 @@ const KidProfile = () => {
             setFatherJob(response.content.parent.father_job);
             setEmergencyPhone(response.content.parent.emergency_phone);
             setHasMedicalCase(response.content.has_medical_case);
-            setKidImage(response.content.media[0].original_url)
+            setKidImage(response.content.media[0]?.original_url)
             // setImageFile(null);
             
             } catch (error) {
-            
-                toast.error('Failed to add kid');
+                console.log(error);
+                toast.error(`${error}`);   
             
 
             }
@@ -474,9 +474,12 @@ const KidProfile = () => {
                     </div>
 
                     <div className="col-lg-5 FormInputCol FormInputColReg">
-                        <CustomDropdown Options={Cities} DefaultValue={"City: "} onChange={setCity} />
+                        {/* <CustomDropdown Options={Cities} DefaultValue={"City: "} onChange={setCity} /> */}
+                        <input type="text" className="EmpInput KidEmailInput" value={city} onChange={(e) => setCity(e.target.value)} />
+                        <label className="EmpLabel EmpNameLabel KidCity" htmlFor="FathertName">City : </label>
                         {cityError && <span className="text-danger FormError">{cityError}</span>}
                     </div>
+
 
                     <div className="col-lg-5 EmpFormCol KidDataCol">
                         <input type="text" className="EmpInput KidAddressInput" value={address} onChange={(e) => setAddress(e.target.value)} />
@@ -527,7 +530,7 @@ const KidProfile = () => {
                         {emergencyPhoneError && <span className="text-danger FormError">{emergencyPhoneError}</span>}
                     </div>
                     
-                    <section className="SecondSliderSection ManageClassesCompnent">
+                    {/* <section className="SecondSliderSection ManageClassesCompnent">
              
                     <div className="col-lg-12 ParentsInformationHeader">
                         <h5>Payment History</h5>
@@ -554,7 +557,7 @@ const KidProfile = () => {
                  </div>
              </div>
              
-         </section>
+                    </section> */}
          <div className="col-lg-12 EmpFormCol HasMedicalCaseCol">
             <div className="InputSelectAll HasMedicalCase">
                 <input

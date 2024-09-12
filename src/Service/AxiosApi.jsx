@@ -78,7 +78,7 @@ axiosInstance.interceptors.request.use(
 // Axios Interceptors Response
 axiosInstance.interceptors.response.use(
     response => response,
-    async error => {
+    async error => {      
         const originalRequest = error.config;
 
         if (error.response.status === 401 && !originalRequest._retry && getToken()) {
@@ -86,17 +86,20 @@ axiosInstance.interceptors.response.use(
             try {
                 // Send the current token in the Authorization header for the refresh request
                 const response = await axiosInstance.post('auth/refresh');
-
+                // console.log(response);
+                console.log(getToken());
                 setToken(response.data.token);
+                // console.log(setToken(response.data.token));
                 
-
+    
                 originalRequest.headers.Authorization = `Bearer ${response.data.access_token}`;
 
                 // Update the authorization header and retry the original request
                 return axiosInstance(originalRequest);
 
             } catch (refreshError) {
-                console.log(refreshError);
+                console.log(getToken());
+                // console.log(refreshError);
             }
         }
         return Promise.reject(error);

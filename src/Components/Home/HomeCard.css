@@ -13,10 +13,11 @@
   
   .circle-container {
     position: relative;
-    width: 200px;
+    width: 100px;
     height: 100px;
     margin-right: 20px;
-  }
+    min-width: 50px;
+}
   
   .progress-circle {
     width: 100%;

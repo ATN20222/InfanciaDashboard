@@ -306,7 +306,8 @@ const Register = () => {
         "Sadat City",
         "Obour City",
         "6th of October City",
-        "New Cairo"
+        "New Cairo",
+        "Other"
     ];
     
     const handleCountryChange = (selectedCountry) => {
@@ -389,18 +390,25 @@ const Register = () => {
                                 </div>
                                 <div className="col-lg-1"></div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg">
-                                    <CustomDropdown Options={["Egypt"]} DefaultValue={"Country  "} onChange={handleCountryChange} />
+                                    <CustomDropdown Options={["Egypt", "Other"]} DefaultValue={"Country  "} onChange={handleCountryChange} />
                                     {errors.country && <span className="text-danger FormError">{errors.country}</span>}
 
                                 </div>
                                 {/* <div className="col-lg-5 FormInputCol FormInputColReg">
                                     <CustomDropdown Options={["Cairo"]} DefaultValue={"Province : "} />
                                 </div> */}
-                                <div className="col-lg-5 FormInputCol FormInputColReg">
+                                {/* <div className="col-lg-5 FormInputCol FormInputColReg">
                                     <CustomDropdown Options={egyptianCities} DefaultValue={"City  "} onChange={handleCityChange}/>
                                     {errors.city && <span className="text-danger FormError">{errors.city}</span>}
                                     
-                                </div>
+                                </div> */}
+                                                    <div className="col-lg-5 FormInputCol FormInputColReg">
+                                                        {/* <CustomDropdown Options={Cities} DefaultValue={"City: "} onChange={setCity} /> */}
+                                                        <input type="text" className="EmpInput KidEmailInput" value={formData.city} onChange={(e) => handleCityChange(e.target.value)} />
+                                                        <label className="EmpLabel EmpNameLabel KidCity" htmlFor="FathertName">City : </label>
+                                                        {errors.city && <span className="text-danger FormError">{errors.city}</span>}
+                                                        </div>
+                    
                                 <div className="col-lg-12 FormInputCol FormInputColReg AddressCol">
                                     <input
                                         type="text"

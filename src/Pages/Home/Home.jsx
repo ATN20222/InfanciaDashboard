@@ -1,40 +1,58 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import HomeCard from "../../Components/Home/HomeCard";
 import toast, { Toaster } from "react-hot-toast";
 import { Bar, Pie, Line } from 'react-chartjs-2';
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, ArcElement, LineElement, PointElement, Tooltip, Legend } from 'chart.js';
 import './Home.css'
+import { NurseryProfileService } from "../../Service/Api";
 ChartJS.register(BarElement, CategoryScale, LinearScale, ArcElement, LineElement, PointElement, Tooltip, Legend);
 
 const Home = () => {
+    const [employeesCount, setEmployeesCount] = useState('');
+    const [employeesTeacherCount, setEmployeesTeacherCount] = useState('');
+    const [kidsCount, setKidsCount] = useState('');
+    const [classesCount, setClassesCount] = useState('');
+
     useEffect(() => {
         const hasWelcomed = localStorage.getItem("hasWelcomed");
-
+        GetData();
         if (!hasWelcomed) {
             toast.success('Welcome');
             localStorage.setItem("hasWelcomed", "true");
         }
     }, []);
 
+    async function GetData() {
+        try {
+            const response = await NurseryProfileService.HomeInfo();
+            setClassesCount(response.content.classes_count)
+            setEmployeesCount(response.content.employees_count);
+            setKidsCount(response.content.kids_count)
+            setEmployeesTeacherCount(response.content.employees_teacher_count)
+        } catch (error) {
+            toast.error(`${error}`);
+        }
+    }
+
     // Data for the overall charts
     const barData = {
-        labels: ['Employees', 'Admins', 'Branches'],
+        labels: ['Classes', 'Kids'],
         datasets: [
             {
                 label: 'Count',
-                data: [100, 50, 10],
-                backgroundColor: ['#ED6D91', '#009FE3', '#AED065'],
+                data: [classesCount, kidsCount],
+                backgroundColor: ['#ED6D91', '#009FE3'],
             },
         ],
     };
 
     const pieData = {
-        labels: ['Teachers', 'Admins', 'Branches'],
+        labels: ['Teachers', 'Admins'],
         datasets: [
             {
                 label: 'Distribution',
-                data: [100, 50, 10],
-                backgroundColor: ['#ED6D91', '#009FE3', '#AED065'],
+                data: [employeesTeacherCount, employeesCount],
+                backgroundColor: ['#ED6D91', '#009FE3'],
                 hoverOffset: 4,
             },
         ],
@@ -42,11 +60,11 @@ const Home = () => {
 
     // Data for the Branches growth chart
     const branchGrowthData = {
-        labels: ['2019', '2020', '2021', '2022', '2023'],
+        labels: ['2024'],
         datasets: [
             {
-                label: 'Branches Growth',
-                data: [2, 3, 5, 7, 10], // Hypothetical growth data
+                label: 'Kids Count',
+                data: [kidsCount], // Hypothetical growth data
                 fill: false,
                 backgroundColor: '#ED6D91',
                 borderColor: '#ED6D91',
@@ -91,7 +109,7 @@ const Home = () => {
                         <HomeCard 
                             Title={"Teachers"} 
                             Text={"View Nursery teachers and manage them easy"}
-                            Number={"100"}
+                            Number={employeesTeacherCount}
                             link={'admins'}
                         />
                     </div>
@@ -99,7 +117,7 @@ const Home = () => {
                         <HomeCard 
                             Title={"Admins"} 
                             Text={"View your admins and manage them easy"}
-                            Number={"50"}
+                            Number={employeesCount}
                             link={'admins'}
                         />
                     </div>

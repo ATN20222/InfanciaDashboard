@@ -34,6 +34,7 @@ const NurseryDetails = () => {
     useEffect(()=>{
         GetData();
     },[]);
+
     async function GetData() {
         try {
             const response = await NurseryServices.ListById(id);
@@ -61,6 +62,7 @@ const NurseryDetails = () => {
             
         }
     }
+    
     function formatDate(isoDateString) {
         const date = new Date(isoDateString);
         const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;

@@ -67,11 +67,9 @@ const BasicInfo = () => {
                         </div>
                         <ul className="list-unstyled">
                             <li className="list-group-item">
-                                <FontAwesomeIcon icon={faCircle} /> Bus
+                                <FontAwesomeIcon icon={faCircle} /> {info.services}
                             </li>
-                            <li className="list-group-item">
-                                <FontAwesomeIcon icon={faCircle} /> Language
-                            </li>
+                            
                         </ul>
                     </div>
                 </div>

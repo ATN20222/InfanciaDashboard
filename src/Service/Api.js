@@ -36,8 +36,18 @@ const AuthService = {
     }
   },
 
+
     AddNewAdmin:async(name,email , phone , role , password , classes)=>{
       try {
+        const data = {
+          'name':name  ,
+          'email': email,
+          'phone': phone,
+          'role':role,
+          'password':password,
+          'password_confirmation':password,
+          'classes':classes['classes']
+        }
         const formData = new FormData();
         formData.append('name', name  );
         formData.append('email', email);
@@ -46,7 +56,8 @@ const AuthService = {
         formData.append('password', password);
         formData.append('password_confirmation', password);
         formData.append('classes', classes);
-        const response = await axiosInstance.post(`/accounts/users`, formData);
+        console.log("data",data)
+        const response = await axiosInstance.post(`/accounts/users`, data);
         
         return response.data; 
 
@@ -150,7 +161,7 @@ const AuthService = {
         formData.append('services', provided_services);
         formData.append('media', media);
         
-        const response = await axiosReg.post(`https://dashboard.infancia.app/api/nurseries`,formData);
+        const response = await axiosReg.post(`https://dashboard.infancia.app/api/nurseries-create`,formData);
         return response.data; 
   
       } catch (error) {
@@ -280,7 +291,11 @@ const KidsServices = {
       formData.append('mother_job', mother_job);
       formData.append('has_medical_case', has_medical_case);
       formData.append('emergency_phone', emergency_phone);
-      formData.append('media', media);
+      if(media.trim()!=''||media!=null){
+        console.log('a7a')
+        formData.append('media', media);
+      }
+      console.log("media",media)
       const response = await axiosInstance.post(`/kids` , formData);
       return response.data; 
 
@@ -447,7 +462,9 @@ const NewsLetterServices = {
   },
   Add: async (description , image)=>{
     const formData = new FormData();
+    if(image!=null )
     formData.append('media', image);
+
     formData.append('description', description);
     formData.append('title', "Test");
     try {
@@ -590,6 +607,27 @@ const NurseryProfileService = {
     const id = getNurseryId();
     try {
       const response = await axiosInstance.get(`/guest/nurseries/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to get data'); 
+    }
+  },
+  HomeInfo: async ()=>{
+    try {
+      const response = await axiosInstance.get(`/nurseies-statistics`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to get data'); 
+    }
+  },
+  ListPaymentHistory: async ()=>{
+    const id = getNurseryId();
+    try {
+      const response = await axiosInstance.get(`/nursery-payment/histories/${id}`);
       return response.data; 
 
     } catch (error) {

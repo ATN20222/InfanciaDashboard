@@ -42,6 +42,8 @@ const Roles = () => {
             permissions,
             name,
             };
+
+            console.log(result);
             try {
                 const response = await RolesServices.Add(result);
                 toast.success('Role added successfully');
@@ -56,6 +58,7 @@ const Roles = () => {
             try {
         
                 const response = await RolesServices.List();
+                console.log(response);
                 setRoles(response.content);
             
             
@@ -128,12 +131,15 @@ const Roles = () => {
                                                         </span> */}
                                                     </div>
                                                     <div className="col-lg-2 col-md-2 col-sm-2 col-2 Center ">
-                                                        <span className="DeleteAdmin" onClick={()=>{handleDeleteRole(row.id)}}>
-                                                            <FontAwesomeIcon icon={faTrash}/>
-                                                        </span>
+                                                        {row.name!=='teacher'&&
+                                                            <span className="DeleteAdmin" onClick={()=>{handleDeleteRole(row.id)}}>
+                                                                <FontAwesomeIcon icon={faTrash}/>
+                                                            </span>
+                                                            
+                                                        }
                                                     </div>
                                             </div>
-                                       
+                                    
                                     </div>
                                     ))}
                                     </div>

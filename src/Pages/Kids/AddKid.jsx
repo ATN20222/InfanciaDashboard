@@ -74,15 +74,15 @@ const AddKid = () => {
         event.preventDefault();
         let valid = true;
 
-        if (!ImageFile) {
-            setImageError("Kid image is required");
-            valid = false;
-            setLoading(false);
-            return;
+        // if (!ImageFile) {
+        //     setImageError("Kid image is required");
+        //     valid = false;
+        //     setLoading(false);
+        //     return;
 
-        } else {
-            setImageError('');
-        }
+        // } else {
+        //     setImageError('');
+        // }
         if (kidName === '') {
             setKidNameError("Kid name is required");
             valid = false;
@@ -157,75 +157,75 @@ const AddKid = () => {
 
         }
 
-        if (fatherName === '') {
-            setFatherNameError("Father name is required");
-            setLoading(false);
-            valid = false;
-            return;
+        // if (fatherName === '') {
+        //     setFatherNameError("Father name is required");
+        //     setLoading(false);
+        //     valid = false;
+        //     return;
 
-        } else {
-            setFatherNameError('');
-        }
+        // } else {
+        //     setFatherNameError('');
+        // }
 
-        if (fatherMobile === '') {
-            setFatherMobileError("Father mobile number is required");
-            setLoading(false);
-            valid = false;
-            return;
+        // if (fatherMobile === '') {
+        //     setFatherMobileError("Father mobile number is required");
+        //     setLoading(false);
+        //     valid = false;
+        //     return;
 
-        } else {
-            setFatherMobileError('');
-        }
+        // } else {
+        //     setFatherMobileError('');
+        // }
 
-        if (fatherJob === '') {
-            setFatherJobError("Father job is required");
-            setLoading(false);
-            valid = false;
-            return;
+        // if (fatherJob === '') {
+        //     setFatherJobError("Father job is required");
+        //     setLoading(false);
+        //     valid = false;
+        //     return;
 
-        } else {
-            setFatherJobError('');
-        }
+        // } else {
+        //     setFatherJobError('');
+        // }
 
-        if (motherName === '') {
-            setMotherNameError("Mother name is required");
-            setLoading(false);
-            valid = false;
-            return;
+        // if (motherName === '') {
+        //     setMotherNameError("Mother name is required");
+        //     setLoading(false);
+        //     valid = false;
+        //     return;
 
-        } else {
-            setMotherNameError('');
-        }
+        // } else {
+        //     setMotherNameError('');
+        // }
 
-        if (motherMobile === '') {
-            setLoading(false);
-            setMotherMobileError("Mother mobile number is required");
-            valid = false;
-            return;
+        // if (motherMobile === '') {
+        //     setLoading(false);
+        //     setMotherMobileError("Mother mobile number is required");
+        //     valid = false;
+        //     return;
 
-        } else {
-            setMotherMobileError('');
-        }
+        // } else {
+        //     setMotherMobileError('');
+        // }
 
-        if (motherJob === '') {
-            setLoading(false);
-            setMotherJobError("Mother job is required");
-            valid = false;
-            return;
+        // if (motherJob === '') {
+        //     setLoading(false);
+        //     setMotherJobError("Mother job is required");
+        //     valid = false;
+        //     return;
 
-        } else {
-            setMotherJobError('');
-        }
+        // } else {
+        //     setMotherJobError('');
+        // }
 
-        if (emergencyPhone === '') {
-            setEmergencyPhoneError("Emergency phone is required");
-            setLoading(false);
-            valid = false;
-            return;
+        // if (emergencyPhone === '') {
+        //     setEmergencyPhoneError("Emergency phone is required");
+        //     setLoading(false);
+        //     valid = false;
+        //     return;
 
-        } else {
-            setEmergencyPhoneError('');
-        }
+        // } else {
+        //     setEmergencyPhoneError('');
+        // }
 
         if (valid) {
             
@@ -243,9 +243,9 @@ const AddKid = () => {
                 const response = 
                 await KidsServices.Add(
                     kidName ,parentName ,
-                     email ,mobile , 
+                    email ,mobile , 
                     selectedGender?"boy":"girl",
-                    Birthdate ,Cities[city],
+                    Birthdate ,city,
                     address ,classId,
                     fatherName,fatherMobile,fatherJob,
                     motherName,motherMobile,
@@ -354,9 +354,12 @@ const AddKid = () => {
                     </div>
                     
                     <div className="col-lg-5 FormInputCol FormInputColReg">
-                        <CustomDropdown Options={Cities} DefaultValue={"City: "} onChange={setCity} />
+                        {/* <CustomDropdown Options={Cities} DefaultValue={"City: "} onChange={setCity} /> */}
+                        <input type="text" className="EmpInput KidEmailInput" value={city} onChange={(e) => setCity(e.target.value)} />
+                        <label className="EmpLabel EmpNameLabel KidCity" htmlFor="FathertName">City : </label>
                         {cityError && <span className="text-danger FormError">{cityError}</span>}
                     </div>
+                    
                     <div className="col-lg-5 EmpFormCol KidDataCol">
                         <input type="text" className="EmpInput KidAddressInput" value={address} onChange={(e) => setAddress(e.target.value)} />
                         <label className="EmpLabel KidAddressInput" htmlFor="KidAddress">Address : </label>

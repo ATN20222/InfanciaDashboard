@@ -36,17 +36,15 @@ const AddNewsLetterModal = ({ isOpen, onClose, onAddNewsLetter }) => {
     e.preventDefault();
     let valid = true;
   
-    if (!image) {
-      setImageError("Image is required");
-      valid = false;
-    }
+    // if (!image) {
+    //   setImageError("Image is required");
+    //   valid = false;
+    // }
   
     if (description === '') {
       setDescriptionError("Description is required");
       valid = false;
-    } else if (description.length < 50 || description.length > 1000) {
-      setDescriptionError("Description must be between 50 - 1000 characters");
-      valid = false;
+    
     }
   
     if (valid) {

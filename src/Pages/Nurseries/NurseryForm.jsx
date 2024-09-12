@@ -59,7 +59,8 @@ const NurseryForm = () => {
                 StartDate:formatDate(response.content.created_at),
                 EndDate:formatDate(response.content.updated_at),
                 PackName:'Premium',
-            })
+            });
+            setImage(response.content.media[0].original_url)
         } catch (error) {
             
         }
@@ -124,12 +125,13 @@ const NurseryForm = () => {
                                     <div className="UploadRegisterImage Center">
                                         <label htmlFor="NurseryImage" className="icon-label text-center">
                                             {/* <FontAwesomeIcon icon={faCamera} /> */}
-                                            <img src={image} alt="" />
+                                            <img src={image} width="100%" alt="" />
                                         </label>
                                     </div>
                                 </div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryName">
-                                    <input
+                                    <input 
+                                        disabled
                                         type="text"
                                         className="FormInput FormInputReg nurseryNameInput"
                                         name="nurseryName"
@@ -139,7 +141,8 @@ const NurseryForm = () => {
                                 </div>
                                 <div className="col-lg-1"></div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg EmailRegisterCol">
-                                    <input
+                                    <input 
+                                        disabled
                                         type="text"
                                         className="FormInput FormInputReg EmailRegisterInput"
                                         name="email"
@@ -152,7 +155,8 @@ const NurseryForm = () => {
                                         <span>EG+20</span>
                                     </div>
                                     <div className="FormInputCol FormInputColReg ">
-                                        <input
+                                        <input 
+                                        disabled
                                             type="number"
                                             className="FormInput FormInputReg"
                                             name="mobileNo"
@@ -164,7 +168,8 @@ const NurseryForm = () => {
                                 </div>
                                 <div className="col-lg-1"></div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg AddressCol">
-                                    <input
+                                    <input 
+                                        disabled 
                                         type="text"
                                         className="FormInput FormInputReg"
                                         name="address"
@@ -173,7 +178,8 @@ const NurseryForm = () => {
                                     <label className="FormLabel FormLabelReg" htmlFor="Address">country : </label>
                                 </div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg CityProfile">
-                                    <input
+                                    <input 
+                                        disabled
                                         type="text"
                                         className="FormInput FormInputReg"
                                         name="address"
@@ -189,7 +195,8 @@ const NurseryForm = () => {
                                     
                                 </div> */}
                                 <div className="col-lg-12 FormInputCol FormInputColReg AddressCol">
-                                    <input
+                                    <input 
+                                        disabled
                                         type="text"
                                         className="FormInput FormInputReg"
                                         name="address"
@@ -201,7 +208,8 @@ const NurseryForm = () => {
                                     <h5>Nursery Details</h5>
                                 </div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol BranchesCol">
-                                    <input
+                                    <input 
+                                        disabled
                                         type="number"
                                         className="FormInput FormInputReg"
                                         name="branches"
@@ -211,7 +219,8 @@ const NurseryForm = () => {
                                 </div>
                                 <div className="col-lg-1"></div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol StartFeesCol">
-                                    <input
+                                    <input 
+                                        disabled
                                         type="number"
                                         className="FormInput FormInputReg"
                                         name="startFees"
@@ -220,7 +229,8 @@ const NurseryForm = () => {
                                     <label className="FormLabel FormLabelReg" htmlFor="StartFees">Start Fees : </label>
                                 </div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol ClassesNoCol">
-                                    <input
+                                    <input 
+                                        disabled
                                         type="number"
                                         className="FormInput FormInputReg"
                                         name="classesNo"
@@ -230,7 +240,8 @@ const NurseryForm = () => {
                                 </div>
                                 <div className="col-lg-1"></div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol ChildrenNoCol">
-                                    <input
+                                    <input 
+                                        disabled
                                         type="number"
                                         className="FormInput FormInputReg"
                                         name="childrenNo"
@@ -239,7 +250,8 @@ const NurseryForm = () => {
                                     <label className="FormLabel FormLabelReg" htmlFor="ChildrenNo">Children No. : </label>
                                 </div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol EmployeeNumbers">
-                                    <input
+                                    <input 
+                                        disabled
                                         type="number"
                                         className="FormInput FormInputReg"
                                         name="employeeNo"
@@ -248,7 +260,8 @@ const NurseryForm = () => {
                                     <label className="FormLabel FormLabelReg" htmlFor="EmployeeNo">Employee No. : </label>
                                 </div>
                                 <div className="col-lg-12 FormInputCol FormInputColReg NurseryDetailsCol ProvidedServicesCol">
-                                    <input
+                                    <input 
+                                        disabled
                                         type="text"
                                         className="FormInput FormInputReg"
                                         name="providedServices"
@@ -258,7 +271,8 @@ const NurseryForm = () => {
                                 </div>
                                 <div className="col-lg-12 FormInputCol FormInputColReg NurseryDetailsCol AboutNurseryCol ">
                                     
-                                <input
+                                <input 
+                                    disabled
                                     type="text"
                                     className="FormInput FormInputReg"
                                     name="aboutNursery"
@@ -269,18 +283,19 @@ const NurseryForm = () => {
                                 
                                 </div>
 
-                                <div className="col-lg-12 FormInputCol FormInputColReg text-start NurseryDetails NurseryDetailsCol">
+                                {/* <div className="col-lg-12 FormInputCol FormInputColReg text-start NurseryDetails NurseryDetailsCol">
                                     <h5>Packege Details</h5>
                                 </div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol ProvidedServicesCol">
-                                    <input
+                                    <input 
+disabled
                                         type="text"
                                         className="FormInput FormInputReg"
                                         name="providedServices"
                                         value={formData.PackName}
                                     />
                                     <label className="FormLabel FormLabelReg" htmlFor="ProvidedServices">Packege Name : </label>
-                                </div>
+                                </div> */}
                                 
                                 {!loading? <div className="col-lg-12 FormInputCol FormInputColReg RegisterBtns">
                                         <button type="button" className="RegisterBtn" onClick={()=>handleConfirm('Accept')}>

@@ -161,7 +161,9 @@
     overflow-y: scroll;
     background-color: var(--color-light-blue);
 }
-
+.KidCity{
+    left: 30px;
+}
 .PaymentKidContainer::-webkit-scrollbar {
     width:2px;
     background-color: #ffffff;

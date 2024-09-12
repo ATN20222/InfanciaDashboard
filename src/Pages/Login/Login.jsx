@@ -52,7 +52,8 @@ const Login = () => {
       const userData = await AuthService.Login(email, password);
       localStorage.setItem("welcome" , 1);
       login();
-      navigate('/home'); 
+      // navigate('/home'); 
+      window.location.href='/home';
     } catch (error) {
         setLoading(false);
 

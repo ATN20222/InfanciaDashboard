@@ -164,6 +164,8 @@ async function GetData() {
     setSelectedOption(name);
     if(name==='teacher')
       setIsTeacher(true);
+    else
+      setIsTeacher(false);  
   }
 
 

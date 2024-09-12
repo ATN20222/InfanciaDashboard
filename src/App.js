@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -42,7 +42,11 @@ import Pay from './Pages/Pay/Pay';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const isSuperAdmin = getIsSuperAdmin();
+  const [isSuperAdmin , setIsSuperAdmin] = useState(getIsSuperAdmin());
+  useEffect(()=>{
+    setIsSuperAdmin(getIsSuperAdmin())
+
+  },[])
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };

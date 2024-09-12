@@ -54,7 +54,8 @@ const MealsSchedule = ({ SelectedClassId, selectedMeal, updateKey }) => {
         setLoading(true);
         try {
             for (const meal of MealsInput) {
-                const response = await MealsServices.Edit(meal.id,SelectedClassId , meal.type ,meal.days , meal.description);
+                console.log()
+                const response = await MealsServices.Add( meal.description, meal.days,  meal.type ,SelectedClassId );
             }
             toast.success('Meals saved successfully');
             GetData();
