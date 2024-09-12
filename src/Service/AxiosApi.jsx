@@ -101,6 +101,12 @@ axiosInstance.interceptors.response.use(
                 console.log(getToken());
                 // console.log(refreshError);
             }
+        }else if(error.response.status === 460){
+            deleteToken();
+            deleteNurseryId();
+            deleteIsSuperAdmin();
+            localStorage.clear();
+            window.location.href = '/login'
         }
         return Promise.reject(error);
     }
