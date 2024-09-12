@@ -36,7 +36,17 @@ const AuthService = {
     }
   },
 
+  SuperAdminHome:async()=>{
+    try {
+      const response = await axiosInstance.get(`/superAdmin-statistics`);
+      
+      return response.data; 
 
+    } catch (error) {
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to add'); 
+    }
+  },
     AddNewAdmin:async(name,email , phone , role , password , classes)=>{
       try {
         const data = {

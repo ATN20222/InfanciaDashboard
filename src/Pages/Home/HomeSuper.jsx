@@ -1,29 +1,45 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import HomeCard from "../../Components/Home/HomeCard";
 import toast, { Toaster } from "react-hot-toast";
 import { Bar, Pie, Line } from 'react-chartjs-2';
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, ArcElement, LineElement, PointElement, Tooltip, Legend } from 'chart.js';
 import './Home.css'
+import { AuthService } from "../../Service/Api";
 ChartJS.register(BarElement, CategoryScale, LinearScale, ArcElement, LineElement, PointElement, Tooltip, Legend);
 
 const HomeSuper = () => {
+    const [employeesCount, setEmployeesCount] = useState('');
+    const [nurseryAccepted, setNurseryAccepted] = useState('');
+    const [nurseryPending, setNurseryPending] = useState('');
     useEffect(() => {
         const hasWelcomed = localStorage.getItem("hasWelcomed");
+        GetData();
 
         if (!hasWelcomed) {
             toast.success('Welcome');
             localStorage.setItem("hasWelcomed", "true");
         }
     }, []);
+    async function GetData() {
+        try {
+            const response = await AuthService.SuperAdminHome();
+            console.log(response);
+            setEmployeesCount(response.content.employees_count);
+            setNurseryAccepted(response.content.nursery_accepted)
+            setNurseryPending(response.content.nursery_pending)
+        } catch (error) {
+            toast.error(`${error}`);
+        }
+    }
 
     // Data for the overall charts
     const barData = {
-        labels: ['Employees', 'Admins', 'Branches'],
+        labels: ['Applictions', 'Accepted Nurseries'],
         datasets: [
             {
                 label: 'Count',
-                data: [100, 50, 10],
-                backgroundColor: ['#ED6D91', '#009FE3', '#AED065'],
+                data: [nurseryPending, nurseryAccepted],
+                backgroundColor: ['#ED6D91', '#009FE3'],
             },
         ],
     };
@@ -42,11 +58,11 @@ const HomeSuper = () => {
 
     // Data for the Branches growth chart
     const branchGrowthData = {
-        labels: ['2019', '2020', '2021', '2022', '2023'],
+        labels: ['Aug 2024' ,'Sep 2024'],
         datasets: [
             {
-                label: 'Branches Growth',
-                data: [2, 3, 5, 7, 10], // Hypothetical growth data
+                label: 'Nurseries Growth',
+                data: [0,nurseryAccepted], 
                 fill: false,
                 backgroundColor: '#ED6D91',
                 borderColor: '#ED6D91',
@@ -91,7 +107,7 @@ const HomeSuper = () => {
                         <HomeCard 
                             Title={"Applications"} 
                             Text={"View nurseries registerd in our software"}
-                            Number={"100"}
+                            Number={nurseryPending}
                             link={'Applications'}
                         />
                     </div>
@@ -99,7 +115,7 @@ const HomeSuper = () => {
                         <HomeCard 
                             Title={"Admins"} 
                             Text={"View your admins and manage them easy"}
-                            Number={"50"}
+                            Number={employeesCount}
                             link={'admins'}
                         />
                     </div>
@@ -107,32 +123,31 @@ const HomeSuper = () => {
                 </div>
                 <div className="container">
                     <div className="row ChartsRow">
-                        <div className="col-lg-4 PieChartCol">
+                        {/* <div className="col-lg-4 PieChartCol">
                             <div className="ChartItem">
                                 <div className="Center" style={{ width: '100%', height: '400px' }}>
                                     <Pie data={pieData} />
                                 </div>
-                                {/* <h5>Distribution</h5> */}
                                 <span>Distribution</span>
                             </div>
                             
-                        </div>
-                        <div className="col-lg-4">
+                        </div> */}
+                        <div className="col-lg-6">
                                 <div className="ChartItem">
                                     <div style={{ width: '100%', height: '400px' }}>
                                         <Bar data={barData} options={chartOptions} />
                                     </div>
-                                <span>Employee, Admins, and Branches Count</span>
+                                <span>Accepted-Pending Nurseries</span>
                                 </div>
                             
                         </div>
-                        <div className="col-lg-4">
+                        <div className="col-lg-6">
                             <div className="ChartItem">
                                 <div style={{ width: '100%', height: '400px' }}>
                                     <Line data={branchGrowthData} options={chartOptions} />
                                 </div>
 
-                                <span>Branches Growth Over Time</span>
+                                <span>Nurseries Growth Over Time</span>
                             </div>
                             
                         </div>
