@@ -148,7 +148,7 @@ const Home = () => {
                                     <div style={{ width: '100%', height: '400px' }}>
                                         <Bar data={barData} options={chartOptions} />
                                     </div>
-                                <span>Employee, Admins, and Branches Count</span>
+                                <span>Employee and Admins Count</span>
                                 </div>
                             
                         </div>
@@ -158,7 +158,7 @@ const Home = () => {
                                     <Line data={branchGrowthData} options={chartOptions} />
                                 </div>
 
-                                <span>Branches Growth Over Time</span>
+                                <span>Kids Growth Over Time</span>
                             </div>
                             
                         </div>
