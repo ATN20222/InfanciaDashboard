@@ -28,7 +28,8 @@ const NurseryDetails = () => {
         StartDate:'',
         EndDate:'',
         PackName:'',
-        accept: false
+        accept: false,
+        currentKids:''
     });
     const [image, setImage] = useState(null);
     useEffect(()=>{
@@ -56,8 +57,10 @@ const NurseryDetails = () => {
                 aboutNursery: response.content.about,
                 StartDate:formatDate(response.content.created_at),
                 EndDate:formatDate(response.content.updated_at),
-                PackName:'Premium',
-            })
+                PackName:'Gold',
+                currentKids:response.content.kids_count,
+            });
+            setImage(response.content.media[0].original_url)
         } catch (error) {
             
         }
@@ -92,7 +95,7 @@ const NurseryDetails = () => {
                                     <div className="UploadRegisterImage Center">
                                         <label htmlFor="NurseryImage" className="icon-label text-center">
                                             {/* <FontAwesomeIcon icon={faCamera} /> */}
-                                            <img src={image} alt="" />
+                                            <img src={image} width="100%" alt="" />
                                         </label>
                                     </div>
                                 </div>
@@ -215,6 +218,17 @@ const NurseryDetails = () => {
                                     />
                                     <label className="FormLabel FormLabelReg" htmlFor="EmployeeNo">Employee No. : </label>
                                 </div>
+
+                                <div className="col-lg-5 FormInputCol FormInputColReg NurseryDetailsCol EmployeeNumbers">
+                                    <input  disabled
+                                        type="number"
+                                        className="FormInput FormInputReg"
+                                        name="employeeNo"
+                                        value={formData.kids_count}
+                                    />
+                                    <label className="FormLabel FormLabelReg" htmlFor="EmployeeNo">Current Kids : </label>
+                                </div>
+
                                 <div className="col-lg-12 FormInputCol FormInputColReg NurseryDetailsCol ProvidedServicesCol">
                                     <input  disabled
                                         type="text"
@@ -224,6 +238,7 @@ const NurseryDetails = () => {
                                     />
                                     <label className="FormLabel FormLabelReg" htmlFor="ProvidedServices">Provided Services : </label>
                                 </div>
+
                                 <div className="col-lg-12 FormInputCol FormInputColReg NurseryDetailsCol AboutNurseryCol ">
                                     
                                 <input  disabled

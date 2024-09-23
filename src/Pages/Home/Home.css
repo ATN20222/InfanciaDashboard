@@ -18,3 +18,9 @@
     justify-content: center;
     flex-direction: column;
 }
+.UploadRegisterImage label{
+    height: 100% !important;
+}
+.UploadRegisterImage label img{
+    height: 100%;
+}

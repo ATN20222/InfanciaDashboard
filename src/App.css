@@ -113,7 +113,9 @@
 }
 
 
-
+.UploadRegisterImage{
+  overflow: hidden;
+}
 /* Loader */
 
 /* HTML: <div class="loader"></div> */

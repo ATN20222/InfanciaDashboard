@@ -915,7 +915,6 @@ const NurseryServices = {
     try {
       const response = await axiosInstance.get(`/nurseries/${id}`);
       return response.data; 
-
     } catch (error) {
       throw new Error(error.response.data.message); 
 //throw new Error('Failed to get data'); 

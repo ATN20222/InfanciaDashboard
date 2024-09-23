@@ -161,6 +161,9 @@
     overflow-y: scroll;
     background-color: var(--color-light-blue);
 }
+.CircleInPopUp{
+    overflow: hidden;
+}
 .KidCity{
     left: 30px;
 }

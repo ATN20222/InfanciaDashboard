@@ -57,11 +57,7 @@ const Nurseries = () => {
                                     {nurseries.length>0?nurseries.map((row) => (
                                         <Link to={`/Nurseries/${row.id}`} className="col-lg-12 RecordEmpTable linkNursery">
                                             <div className="row">
-                                                <div className="col-lg-5 col-md-5 col-sm-5 col-5 Center">
-                                                    {row.name}
-                                                    
-                                                </div>
-                                                <div className="col-lg-2 col-md-2 col-sm-2 col-2 Center">
+                                            <div className="col-lg-1 col-md-1 col-sm-1 col-1 Center">
                                                     <span className="BranchTableSpan" data-content={row.id}>
 
                                                         {row.id}
@@ -69,11 +65,23 @@ const Nurseries = () => {
                                                     
                                                     </div>
 
+                                                <div className="col-lg-5 col-md-5 col-sm-5 col-5 Center">
+                                                    {row.name}
+                                                    
+                                                </div>
+                                                <div className="col-lg-1 col-md-1 col-sm-1 col-1 Center">
+                                                    <span className="BranchTableSpan" data-content={row.kids_count}>
+
+                                                        {row.kids_count+' kids'}
+                                                    </span>
+                                                    
+                                                    </div>
+
 
                                                 <div className="col-lg-5 col-md-5 col-sm-5 col-5 Center">
-                                                    <span className="BranchTableSpan" data-content={'Premium'}>
+                                                    <span className="BranchTableSpan" data-content={'Gold'}>
 
-                                                        {'Premium'}
+                                                        {'Gold'}
                                                     </span>
                                                     
                                                     </div>
