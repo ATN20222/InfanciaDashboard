@@ -48,9 +48,11 @@ function App() {
 
   },[])
   const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
+    if (window.innerWidth < 786) {
+      setSidebarOpen(!sidebarOpen);
+    }
   };
-
+  
   return (
     <AuthProvider>
       <Router>
