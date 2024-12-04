@@ -39,7 +39,7 @@ import PrivacyPolicy from './Pages/Policies/PrivacyPolicy';
 import Payment from './Pages/CallBack/Payment';
 import FakeForm from './Pages/Register/FakeForm';
 import Pay from './Pages/Pay/Pay';
-
+  
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isSuperAdmin , setIsSuperAdmin] = useState(getIsSuperAdmin());

@@ -65,7 +65,7 @@ function Sidebar({ isOpen, toggleSidebar, openConfirmLogoutModal }) {
             {!isSuperAdmin ? (
                 <ul>
                     <li>
-                        <Link to="/" className='nav-link'>
+                        <Link to="/" className='nav-link' onClick={toggleSidebar}>
                             <FontAwesomeIcon icon={faHome} />
                             Home
                         </Link>
@@ -74,7 +74,7 @@ function Sidebar({ isOpen, toggleSidebar, openConfirmLogoutModal }) {
                         .filter(item => item.Selected === 1)
                         .map(item => (
                             <li key={item.id}>
-                                <Link to={`/${item.Name.toLowerCase().replace(/-/g, '')}`} className='nav-link'>
+                                <Link to={`/${item.Name.toLowerCase().replace(/-/g, '')}`} className='nav-link' onClick={toggleSidebar}>
                                     <FontAwesomeIcon icon={getIcon(item.Name)} />
                                     {item.Name.replace('-', ' ')}
                                 </Link>
@@ -90,14 +90,14 @@ function Sidebar({ isOpen, toggleSidebar, openConfirmLogoutModal }) {
             ) : (
                 <ul>
                     <li>
-                        <Link to="/" className='nav-link'>
+                        <Link to="/" className='nav-link' onClick={toggleSidebar}>
                             <FontAwesomeIcon icon={faHome} />
                             Home
                         </Link>
                     </li>
                     {isSuperAdmin && (
                         <li>
-                            <Link to="/Nurseries" className='nav-link'>
+                            <Link to="/Nurseries" className='nav-link' onClick={toggleSidebar} onClick={()=>toggleSidebar}>
                                 <FontAwesomeIcon icon={faBuildingUser} />
                                 Nurseries
                             </Link>
@@ -105,14 +105,14 @@ function Sidebar({ isOpen, toggleSidebar, openConfirmLogoutModal }) {
                     )}
                     {isSuperAdmin && (
                         <li>
-                            <Link to="/fakeregister" className='nav-link'>
+                            <Link to="/fakeregister" className='nav-link' onClick={toggleSidebar}>
                                 <FontAwesomeIcon icon={faUserPlus} />
                                 Fake Register
                             </Link>
                         </li>
                     )}
                     <li>
-                        <Link to="/paymenthistory" className='nav-link'>
+                        <Link to="/paymenthistory" className='nav-link' onClick={toggleSidebar}>
                             <FontAwesomeIcon icon={faCreditCard} />
                             Payment history
                         </Link>

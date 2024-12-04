@@ -81,27 +81,29 @@ axiosInstance.interceptors.response.use(
     async error => {      
         const originalRequest = error.config;
 
-        if (error.response.status === 401 && !originalRequest._retry && getToken()) {
-            originalRequest._retry = true;
-            try {
-                // Send the current token in the Authorization header for the refresh request
-                const response = await axiosInstance.post('auth/refresh');
-                // console.log(response);
-                console.log(getToken());
-                setToken(response.data.token);
-                // console.log(setToken(response.data.token));
+        // if (error.response.status === 401 && !originalRequest._retry && getToken()) {
+        //     originalRequest._retry = true;
+        //     try {
+        //         // Send the current token in the Authorization header for the refresh request
+        //         const response = await axiosInstance.post('auth/refresh');
+        //         // console.log(response);
+        //         console.log(getToken());
+        //         setToken(response.data.token);
+        //         // console.log(setToken(response.data.token));
                 
     
-                originalRequest.headers.Authorization = `Bearer ${response.data.access_token}`;
+        //         originalRequest.headers.Authorization = `Bearer ${response.data.access_token}`;
 
-                // Update the authorization header and retry the original request
-                return axiosInstance(originalRequest);
+        //         // Update the authorization header and retry the original request
+        //         return axiosInstance(originalRequest);
 
-            } catch (refreshError) {
-                console.log(getToken());
-                // console.log(refreshError);
-            }
-        }else if(error.response.status === 460){
+        //     } catch (refreshError) {
+        //         console.log(getToken());
+        //         // console.log(refreshError);
+        //     }
+        // }else
+        
+        if(error.response.status === 460){
             deleteToken();
             deleteNurseryId();
             deleteIsSuperAdmin();

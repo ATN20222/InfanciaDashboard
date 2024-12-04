@@ -30,14 +30,13 @@ const MainLayout = ({ sidebarOpen, toggleSidebar, children }) => {
         isOpen={sidebarOpen} 
         toggleSidebar={toggleSidebar}
         openConfirmLogoutModal={() => setIsConfirmOverlayOpen(true)}
-
       />
       <ConfirmLogoutModal
                 isOpen={isConfirmOverlayOpen}
                 onClose={() => setIsConfirmOverlayOpen(false)}
                 onConfirm={handleLogout}
             />
-      <div className={`content ${sidebarOpen ? 'shifted ' : 'Shift'}`}>
+      <div className={`content ${sidebarOpen ? ' ' : 'Shift'}`}>
         <Header />
         <button className="toggle-button" onClick={toggleSidebar}>
           {sidebarOpen ? 
