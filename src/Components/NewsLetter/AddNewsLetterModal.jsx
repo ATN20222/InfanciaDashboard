@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import CustomDropdown2 from '../DrobDown/CustomDropdown2';
+import RolesDropDown from '../DrobDown/RolesDropDown';
+import SelectClassDropDown from '../DrobDown/SelectClassDropDown';
 
 const AddNewsLetterModal = ({ isOpen, onClose, onAddNewsLetter }) => {
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
   const [descriptionError, setDescriptionError] = useState('');
   const [imageError, setImageError] = useState('');
-
+  const [classes , setClasses] = useState([{id:1,name:'All'}]);
+  const [selectedClass,setSelectedClass] = useState('');
+  const [classError,setClassError] = useState('');
+  const [finalSelectedClass , setFinalSelectedClass] = useState('');
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     
@@ -33,6 +38,8 @@ const AddNewsLetterModal = ({ isOpen, onClose, onAddNewsLetter }) => {
   };
   
   const handleSubmit = (e) => {
+    setDescriptionError('');
+    setClassError('');
     e.preventDefault();
     let valid = true;
   
@@ -46,6 +53,10 @@ const AddNewsLetterModal = ({ isOpen, onClose, onAddNewsLetter }) => {
       valid = false;
     
     }
+    if(finalSelectedClass==0||finalSelectedClass ===''){
+      setClassError('Class is required');
+      valid = false;
+    }
   
     if (valid) {
       onAddNewsLetter(description, image);
@@ -55,6 +66,9 @@ const AddNewsLetterModal = ({ isOpen, onClose, onAddNewsLetter }) => {
     }
   };
   
+  const handleClassChanged = (id)=>{
+    setFinalSelectedClass(id);
+  }
 
   if (!isOpen) return null;
   const ClearData = ()=>{
@@ -62,6 +76,7 @@ const AddNewsLetterModal = ({ isOpen, onClose, onAddNewsLetter }) => {
     setImage(null);
     setDescriptionError('');
     setImageError('');
+    setClassError('');
   }
 
   return (
@@ -84,6 +99,19 @@ const AddNewsLetterModal = ({ isOpen, onClose, onAddNewsLetter }) => {
               {imageError && <span className='text-danger PopUpValidation text-center p-0 d-block mb-1'>{imageError}</span>}
             </div>
             
+
+            <div className="ChooseAdminRole">
+              <SelectClassDropDown
+                onChange={handleClassChanged}
+                Options={classes}
+                DefaultValue={{name:"Class :",id:0}}
+                selectedValue={selectedClass}
+                onSelect={(value) => setSelectedClass(value)}
+              />
+              {classError && (
+                <span className="text-danger PopUpValidation">{classError}</span>
+              )}
+            </div>            
             
               <textarea 
                 name="Newsletter" 

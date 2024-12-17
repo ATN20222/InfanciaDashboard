@@ -37,6 +37,8 @@ const ManageClasses = () => {
     return (
         <div className="LoginMain">
             <ManageClassesCompnent ChangeClass={handleChangeClass} />
+
+            
             {selectedClass && (
                 <div className="div">
                     <Kids key={`Kids-${updateKey}`} SelectedClassId={selectedClass} />

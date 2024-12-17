@@ -6,6 +6,7 @@ import AddClassModal from "./AddClassModal";
 import { ClassService } from "../../Service/Api";
 import toast, { Toaster } from "react-hot-toast";
 import EditClassModal from "./EditClassModal";
+import Classes from "./Classes";
 const ManageClassesCompnent = ({IsMeals , ChangeClass})=>{
     const [isMeals ,setIsMeals] = useState(false);
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
@@ -117,7 +118,25 @@ const ManageClassesCompnent = ({IsMeals , ChangeClass})=>{
                        
                     </div>
             </div>
-                <Slider OnEdit={HandleEditClassClick} IsMeals={isMeals} Classes={classes} HandleSelectClass={ChangeSelectedClass}/>
+                {/* <div className="container Container">
+                    <div className="row ClassCardContainerRow">
+                            <div className="m-1 ClassCard ">
+                                Class A
+                            </div>
+                        
+                            <div className="m-1 ClassCard ">
+                                Class A
+                            </div>
+                        
+                    </div>
+                </div> */}
+                <Classes
+                    OnEdit={HandleEditClassClick} 
+                    IsMeals={isMeals} 
+                    Classes={classes} 
+                    HandleSelectClass={ChangeSelectedClass}
+                />
+                {/* <Slider OnEdit={HandleEditClassClick} IsMeals={isMeals} Classes={classes} HandleSelectClass={ChangeSelectedClass}/> */}
         </section>
     );
 }

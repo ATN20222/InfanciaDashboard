@@ -301,15 +301,15 @@ const KidsServices = {
       formData.append('mother_job', mother_job);
       formData.append('has_medical_case', has_medical_case);
       formData.append('emergency_phone', emergency_phone);
-      if(media.trim()!=''||media!=null){
-        console.log('a7a')
+      if(media!=null){
         formData.append('media', media);
       }
-      console.log("media",media)
       const response = await axiosInstance.post(`/kids` , formData);
       return response.data; 
 
     } catch (error) {
+      console.log("res" , error);
+
       throw new Error(error.response.data.message); 
 //throw new Error('Failed to add'); 
     }

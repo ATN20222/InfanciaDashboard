@@ -39,8 +39,8 @@ const AddKid = () => {
     const [DateError, setDateError] = useState('');
     const [ImageError, setImageError] = useState('');
     const [ImageFile, setImageFile] = useState('');
-    const [loading , setLoading] = useState(false);
-    const Cities=["El-Marg", "Ain Shams"];
+    const [loading, setLoading] = useState(false);
+    const Cities = ["El-Marg", "Ain Shams"];
     const yearInputRef = useRef();
     const monthInputRef = useRef();
     const dayInputRef = useRef();
@@ -92,7 +92,7 @@ const AddKid = () => {
         } else {
             setKidNameError('');
         }
-        
+
         if (parentName === '') {
             setParentNameError("Parent name is required");
             valid = false;
@@ -146,13 +146,13 @@ const AddKid = () => {
         } else {
             setAddressError('');
         }
-        if(yearInputRef.current.value==''||dayInputRef.current.value==''||monthInputRef.current.value==''){
+        if (yearInputRef.current.value == '' || dayInputRef.current.value == '' || monthInputRef.current.value == '') {
             setDateError("Day , Month and Year are required");
             setLoading(false);
-            valid=false;
+            valid = false;
             return;
         }
-        else{
+        else {
             setDateError("")
 
         }
@@ -228,46 +228,44 @@ const AddKid = () => {
         // }
 
         if (valid) {
-            
+
 
             try {
                 const Birthdate = `${yearInputRef.current.value}-${monthInputRef.current.value}-${dayInputRef.current.value}`
-                console.log( kidName ,parentName ,
-                    email ,mobile , 
-                   selectedGender?"boy":"girl",
-                   Birthdate,city,
-                   address ,classId,
-                   fatherName,fatherMobile,fatherJob,
-                   motherName,motherMobile,
-                   motherJob,hasMedicalCase?'1':'0');
-                const response = 
-                await KidsServices.Add(
-                    kidName ,parentName ,
-                    email ,mobile , 
-                    selectedGender?"boy":"girl",
-                    Birthdate ,city,
-                    address ,classId,
-                    fatherName,fatherMobile,fatherJob,
-                    motherName,motherMobile,
-                    motherJob,hasMedicalCase?'1':'0',
-                    emergencyPhone,
-                    ImageFile
+                // console.log( kidName ,parentName ,
+                //     email ,mobile , 
+                //    selectedGender?"boy":"girl",
+                //    Birthdate,city,
+                //    address ,classId,
+                //    fatherName,fatherMobile,fatherJob,
+                //    motherName,motherMobile,
+                //    motherJob,hasMedicalCase?'1':'0');
+                const response =
+                    await KidsServices.Add(
+                        kidName, parentName,
+                        email, mobile,
+                        selectedGender ? "boy" : "girl",
+                        Birthdate, city,
+                        address, classId,
+                        fatherName, fatherMobile, fatherJob,
+                        motherName, motherMobile,
+                        motherJob, hasMedicalCase ? '1' : '0',
+                        emergencyPhone,
+                        ImageFile
                     );
-                console.log(response);
                 toast.success('Kid added successfully');
                 setLoading(false);
                 setTimeout(() => {
                     navigate('/manageclasses');
                 }, 2000);
-                
-                
-                
-              } catch (error) {
-                  console.log(error)
-                  toast.error('Failed to add kid');
-                  setLoading(false);
-          
-              }
+
+
+
+            } catch (error) {
+                toast.error('Failed to add kid');
+                setLoading(false);
+
+            }
 
 
         }
@@ -275,7 +273,7 @@ const AddKid = () => {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            if (file.size > 8 * 1024 * 1024) { 
+            if (file.size > 8 * 1024 * 1024) {
                 setImageError('File size must not exceed 8 MB.');
                 setImageFile(null);
                 return;
@@ -315,7 +313,7 @@ const AddKid = () => {
                             <label htmlFor="Image">
                                 <FontAwesomeIcon icon={faImage} />
                                 <input type="file" id="Image" accept="image/*"
-                                    onChange={handleFileChange}/>
+                                    onChange={handleFileChange} />
                             </label>
                         </div>
                         {ImageError && <span className="text-danger FormError">{ImageError}</span>}
@@ -337,29 +335,29 @@ const AddKid = () => {
                         {emailError && <span className="text-danger FormError">{emailError}</span>}
                     </div>
                     <div className="col-lg-5">
-                    <div className="col-lg-12 EmpFormCol EmpMobFormCol">
-                        <div className="EgEmpMob Center">
-                            <span>EG+20</span>
-                        </div>
-                        <input type="number" className="EmpInput EmpMobInput" value={mobile} onChange={(e) => setMobile(e.target.value)} />
-                        <label className="EmpLabel EmpMobLabel" htmlFor="EmpMob">Mobile No. : </label>
-                        
-                    </div>
-                    {mobileError &&
-                        <div className="FormError">
-                            <span className="text-danger ">{mobileError}</span>
+                        <div className="col-lg-12 EmpFormCol EmpMobFormCol">
+                            <div className="EgEmpMob Center">
+                                <span>EG+20</span>
+                            </div>
+                            <input type="number" className="EmpInput EmpMobInput" value={mobile} onChange={(e) => setMobile(e.target.value)} />
+                            <label className="EmpLabel EmpMobLabel" htmlFor="EmpMob">Mobile No. : </label>
 
                         </div>
+                        {mobileError &&
+                            <div className="FormError">
+                                <span className="text-danger ">{mobileError}</span>
+
+                            </div>
                         }
                     </div>
-                    
+
                     <div className="col-lg-5 FormInputCol FormInputColReg">
                         {/* <CustomDropdown Options={Cities} DefaultValue={"City: "} onChange={setCity} /> */}
                         <input type="text" className="EmpInput KidEmailInput" value={city} onChange={(e) => setCity(e.target.value)} />
                         <label className="EmpLabel EmpNameLabel KidCity" htmlFor="FathertName">City : </label>
                         {cityError && <span className="text-danger FormError">{cityError}</span>}
                     </div>
-                    
+
                     <div className="col-lg-5 EmpFormCol KidDataCol">
                         <input type="text" className="EmpInput KidAddressInput" value={address} onChange={(e) => setAddress(e.target.value)} />
                         <label className="EmpLabel KidAddressInput" htmlFor="KidAddress">Address : </label>
@@ -369,7 +367,7 @@ const AddKid = () => {
                         <div className="TopInputTitle">Gender</div>
                         <div className="GenderContainer">
                             <div className="container">
-                            <div className="row Center">
+                                <div className="row Center">
                                     <div className="col-lg-5 col-md-5 col-sm-5 col-5">
                                         <div className={`Boy ${selectedGender === true ? "SelectedGender" : ""}`} onClick={() => setSelectedGender(true)}>
                                             BOY
@@ -420,7 +418,7 @@ const AddKid = () => {
                             </div>
 
                         </div>
-                            {DateError && <span className="text-danger FormError">{DateError}</span>}
+                        {DateError && <span className="text-danger FormError">{DateError}</span>}
                     </div>
 
 
@@ -475,17 +473,17 @@ const AddKid = () => {
                             <label htmlFor="HasCase">Has Medical Case</label>
                         </div>
                     </div>
-                    {!loading?
-                    <div className="col-lg-12 FormInputCol FormInputColReg RegisterBtns">
-                        <button type="submit" className="RegisterBtn">Save</button>
-                        <button type="button" className="CancelBtn">Close</button>
-                    </div>
-                    :
-                    
-                    <div className="col-lg-12 FormInputCol Center LoginBtnContainer"><div class="loader"></div></div>
-                                        
+                    {!loading ?
+                        <div className="col-lg-12 FormInputCol FormInputColReg RegisterBtns">
+                            <button type="submit" className="RegisterBtn">Save</button>
+                            <button type="button" className="CancelBtn">Close</button>
+                        </div>
+                        :
+
+                        <div className="col-lg-12 FormInputCol Center LoginBtnContainer"><div class="loader"></div></div>
+
                     }
-                    
+
                 </div>
             </form>
         </section>

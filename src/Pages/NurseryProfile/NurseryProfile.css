@@ -19,6 +19,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
 }
 .NurseryReviewImage{
     width: 70px;
@@ -342,4 +343,84 @@
 
 .HeartBlackOutlined svg{
     color: black;
+}
+.EditNurseryProfileBtn{
+    color: white;
+    position: absolute;
+    cursor: pointer;
+    top: 20px;
+    right:20px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: all 0.15s linear;
+}
+.EditNurseryProfileBtn:hover{
+    background: white;
+    color: black;
+}
+
+
+
+/* Modal */
+.EditProfileModal{
+    background-color: rgba(0, 0, 0, 0.463);
+}
+
+.modal-header{
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+.modal-body{
+    width: 100%;
+}
+.EditProfileModal> div{
+    text-align: start;
+}
+.EditProfileModalLabel{
+    padding-left: 10px;
+    font-weight: 600;
+}
+.ProfilePreview{
+    border-radius: 50% !important;
+    min-height: 150px;
+    min-width: 150px;
+
+}
+.EditProfilePreview label{
+    position: relative !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Cam{
+    position: absolute !important;
+    z-index: 8;
+}
+.Cam svg{
+    width: 25px;
+    height:25px;
+}
+.EditProfileModalContent{
+    border-radius: 25px !important;
+}
+.AddAnotherPhone span{
+    cursor: pointer;
+}
+.EditProfileButtons button{
+    width: auto !important;
+    padding-left: 20px;
+    padding-right:20px;
+    margin: 10px;
+}
+.EditProfileButtons{
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }

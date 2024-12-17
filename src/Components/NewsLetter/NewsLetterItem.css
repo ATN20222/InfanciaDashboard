@@ -69,11 +69,14 @@
 
 }
 .NewsletterImage{
-    max-height: 400px;
+    /* max-height: 400px; */
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.NewsletterImage img{
+    max-width: 600px;
 }
 .NewsletterLikes{
     display: flex;

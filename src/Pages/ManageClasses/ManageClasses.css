@@ -217,3 +217,34 @@
   font-weight: 500;
   
 }
+.ClassCardContainerRow{
+  display: flex;
+  padding-left: 20px;
+  padding-right: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.ClassCard{
+  background-color: transparent ;
+  color: black;
+  border-radius: 25px;
+  padding: 5px;
+  border: 1px solid #ED6D91;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  max-width: 120px !important;
+  padding: 5px;
+  height: fit-content;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+}
+.ClassCard:hover{
+  background-color: #ED6D91;
+  color: white;
+}
+.ActiveClass{
+  background-color: #ED6D91;
+  color: white;
+}

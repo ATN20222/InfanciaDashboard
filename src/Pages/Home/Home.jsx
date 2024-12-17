@@ -107,10 +107,10 @@ const Home = () => {
                 <div className="row Center">
                     <div className="col-lg-6">
                         <HomeCard 
-                            Title={"Teachers"} 
-                            Text={"View Nursery teachers and manage them easy"}
+                            Title={"Roles"} 
+                            Text={"View admins roles and manage them easy"}
                             Number={employeesTeacherCount}
-                            link={'admins'}
+                            link={'roles'}
                         />
                     </div>
                     <div className="col-lg-6">
@@ -148,7 +148,7 @@ const Home = () => {
                                     <div style={{ width: '100%', height: '400px' }}>
                                         <Bar data={barData} options={chartOptions} />
                                     </div>
-                                <span>Employee and Admins Count</span>
+                                <span>Classes and Kids Count</span>
                                 </div>
                             
                         </div>

@@ -98,15 +98,15 @@
   .SearchCol{
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
   }
-  .SearchCol svg{
+  /* .SearchCol svg{
     position: absolute;
     right: 30px;
     top: 14px;
     color: var(--color-pink);
-  }
+  } */
   .RightSideHeader{
     display: flex;
     justify-content: end;
@@ -143,14 +143,33 @@
     left: 5%;
     background-color: white;
   }
+  .WelcomeText{
+    font-weight: 700;
+    font-size: 25px;
+    color: #1e1e1e;    
+  }
+  .HeaderName{
+    white-space: nowrap;
+  }
 
   @media (min-width: 769px) {
     .sidebar {
       transform: translateX(0);
     }
+    
   
     .close-button {
       display: none;
+    }
+  }
+  @media (max-width:768px) {
+    .WelcomeText{
+      font-size: 18px;
+    }
+  }
+  @media (max-width:380px) {
+    .WelcomeText{
+      font-size: 16px;
     }
   }
   

@@ -110,7 +110,7 @@ function Slider({IsMeals , Classes , HandleSelectClass ,OnEdit}) {
 
                         <FontAwesomeIcon icon={faPen}/>
                         </div>  
-                      </span>
+                      </span>   
                       
                       </span>
                 </div>

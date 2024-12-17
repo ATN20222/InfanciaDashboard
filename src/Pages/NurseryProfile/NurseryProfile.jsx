@@ -1,4 +1,4 @@
-import { faBell, faCommentDollar, faPlus, faSearch, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faCommentDollar, faPen, faPlus, faSearch, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import './NurseryProfile.css';
@@ -7,9 +7,11 @@ import Gallery from "../../Components/NurseryProfile/Gallery";
 import Reviews from "../../Components/NurseryProfile/Reviews";
 import BasicInfo from "../../Components/NurseryProfile/BasicInfo";
 import PaymentNurseryProfile from "../../Components/NurseryProfile/PaymentNurseryProfile";
+import EditProfilePopup from "../../Components/NurseryProfile/EditProfilePopup";
 
 const NurseryProfile = () => {
     const [activeTab, setActiveTab] = useState('basicInfo');
+    const [showPopup, setShowPopup] = useState(false);
     const handleTabClick = (tab) => {
         setActiveTab(tab);
     };
@@ -18,6 +20,11 @@ const NurseryProfile = () => {
         <section className="SecondSliderSection ManageClassesCompnent">
             <div className="Container">
                 <div className="NurseryProfileTopPart">
+                    <span className="EditNurseryProfileBtn" onClick={() => setShowPopup(true)}>
+                        <FontAwesomeIcon icon={faPen}/>
+                    </span>
+                    <EditProfilePopup show={showPopup} onClose={() => setShowPopup(false)} />
+
                     <div className="row">
                         <div className="col-lg-12 NurseryProfileTopPartCol Center">
                             <div className="NurseryProfileImage">
