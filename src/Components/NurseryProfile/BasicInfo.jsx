@@ -5,29 +5,31 @@ import { faCircle, faEnvelope, faHome, faPhoneVolume } from "@fortawesome/free-s
 import { NurseryProfileService } from "../../Service/Api";
 
 const BasicInfo = () => {
-  const [info, setInfo] = useState({});
-  const [loading, setLoading] = useState(true); // Loading state
+    const [info, setInfo] = useState({});
+    const [loading, setLoading] = useState(true); 
 
-  useEffect(() => {
-    GetData();
-  }, []);
+    useEffect(() => {
+        GetData();
+    }, []);
 
-  async function GetData() {
-    try {
-      const response = await NurseryProfileService.ListInfo();
-      setInfo(response.content);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false); 
+    async function GetData() {
+        try {
+            const response = await NurseryProfileService.ListInfo();
+            // console.log(response);
+
+            setInfo(response.content);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
     }
-  }
 
-  if (loading) {
-    return <div className="loading">Loading...</div>; 
-  }
+    if (loading) {
+        return <div className="loading">Loading...</div>;
+    }
 
-  return (
+    return (
         <div className="NurseryContainer NurseryGallery">
             <div className="">
                 <div className="Container">
@@ -36,15 +38,15 @@ const BasicInfo = () => {
                             <span>Contact Information</span>
                         </div>
                         <ul className="list-unstyled">
-                        <li className="list-group-item">
-                            <FontAwesomeIcon icon={faHome} /> {info.address}, {info.province}, {info.city}, {info.country}
-                        </li>
-                        <li className="list-group-item">
-                            <FontAwesomeIcon icon={faPhoneVolume} /> {info.phone}
-                        </li>
-                        <li className="list-group-item">
-                            <FontAwesomeIcon icon={faEnvelope} /> {info.email}
-                        </li>
+                            <li className="list-group-item">
+                                <FontAwesomeIcon icon={faHome} /> {info.address}
+                            </li>
+                            <li className="list-group-item">
+                                <FontAwesomeIcon icon={faPhoneVolume} /> {info.phone}
+                            </li>
+                            <li className="list-group-item">
+                                <FontAwesomeIcon icon={faEnvelope} /> {info.email}
+                            </li>
                         </ul>
                     </div>
                     <div className="InfoAbout">
@@ -55,10 +57,10 @@ const BasicInfo = () => {
                     </div>
                     <div className="StartFees">
                         <div className="AddGallery HeaderInfo">
-                            <span>Start Fees</span>
+                            <span>Branches</span>
                         </div>
                         <div className="AboutInfoText">
-                            {info.start_fees ? info.start_fees : 0} EGP
+                            {info.branches_number ? info.branches_number : 0} Branch
                         </div>
                     </div>
                     <div className="ContactInfo ProvidedServices">
@@ -67,15 +69,15 @@ const BasicInfo = () => {
                         </div>
                         <ul className="list-unstyled">
                             <li className="list-group-item">
-                                <FontAwesomeIcon icon={faCircle} /> {info.services}
+                                {/* <FontAwesomeIcon icon={faCircle} /> {info.services} */}
                             </li>
-                            
+
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-  );
+    );
 };
 
 export default BasicInfo;

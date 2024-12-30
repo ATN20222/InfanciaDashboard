@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import ManageClassesCompnent from "../../Components/ManageClasses/ManageClassesCompnent";
-import Subject from "../../Components/ManageClasses/Subject";
-import Schedule from "../../Components/ManageClasses/Schedule";
-import Kids from "../../Components/ManageClasses/Kids";
 import { ClassService } from "../../Service/Api";
-import './ManageClasses.css';
+import Schedule from "../../Components/ManageClasses/Schedule";
+import './ClassesSchedule.css'
 
-const ManageClasses = () => {
+const ClassesSchedule = () => {
     const [updateKey, setUpdateKey] = useState(0);
     const [selectedClass, setSelectedClass] = useState(null);
 
-    useEffect(() => {
+    useEffect(() => {   
         async function fetchDefaultClass() {
             try {
                 const response = await ClassService.List();
@@ -41,13 +39,13 @@ const ManageClasses = () => {
             
             {selectedClass && (
                 <div className="div">
-                    <Kids key={`Kids-${updateKey}`} SelectedClassId={selectedClass} />
+                    {/* <Kids key={`Kids-${updateKey}`} SelectedClassId={selectedClass} /> */}
                     {/* <Subject key={`Subject-${updateKey}`} SelectedClassId={selectedClass} onUpdate={updateSchedule} /> */}
-                    {/* <Schedule key={`Schedule-${updateKey}`} SelectedClassId={selectedClass} /> */}
+                    <Schedule key={`Schedule-${updateKey}`} SelectedClassId={selectedClass} />
                 </div>
             )}
         </div>
     );
 };
 
-export default ManageClasses;
+export default ClassesSchedule;

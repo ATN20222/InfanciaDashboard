@@ -15,10 +15,10 @@ const NewsLetter = () => {
     useEffect(()=>{
         GetData();
     },[]);
-    const handleAddNewsLetter = async (description , image) => {
+    const handleAddNewsLetter = async (description , image ,title , class_id) => {
         try {
           
-            const response = await NewsLetterServices.Add(description, image);
+            const response = await NewsLetterServices.Add(description,title,class_id,image);
             toast.success('newsletter added successfully');
             GetData();  
         } catch (error) {
@@ -122,12 +122,13 @@ const NewsLetter = () => {
                 <NewletterItem
                     key={row.id}
                     id={row.id}
-                    Image={row.media.original_url}
-                    Likes={row.likes_counts}
+                    Image={row.media?.original_url}
+                    Likes={row.likes_counts?row.likes_counts:0}
+                    Title={row.title}
                     PublishDate={formatDate(row.created_at) }
-                    PublisherImage={InfanciaLogo}
-                    PublisherName={row.title}
-                    Text={row.description}
+                    PublisherImage={`https://ui-avatars.com/api/?rounded=true&name=${row.class_room?.name}&background=random`}
+                    PublisherName={row.is_private?row.class_room?.name:'All Classes'}
+                    Text={row.content}
                     OnDeleteNewsletter={HandleDeleteNewsletter}
                 />
             ))}

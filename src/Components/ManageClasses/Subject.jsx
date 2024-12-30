@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Subject = ({ SelectedClassId, onUpdate }) => {
-    const [isAddOverlayOpen, setIsAddOverlayOpen] = useState(false);
+    const [isAddOverlayOpen, setIsAddOverlayOpen] = useState(false);    
     const [isSelectOverlayOpen, setIsSelectOverlayOpen] = useState(false);
     const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
     const [subjects, setSubjects] = useState([]);

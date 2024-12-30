@@ -1,5 +1,3 @@
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import ScheduleItem from "../Schedule/ScheduleItem";
 import ScheduleWithDetails from "../Schedule/ScheduleWithDetails";
@@ -12,135 +10,120 @@ const formatDate = (date) => {
     const day = ('0' + d.getDate()).slice(-2);
     const year = d.getFullYear();
     return `${year}-${month}-${day}`;
-}
-
-const getDayOfWeek = (date) => {
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    return days[date.getDay()];
 };
 
 const Schedule = ({ SelectedClassId }) => {
-    const [selectedDay, setSelectedDay] = useState('');
-    const [daysIsOpen, setDaysIsOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(formatDate(new Date()));
     const [scheduleData, setScheduleData] = useState([]);
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const today = getDayOfWeek(new Date());
-        setSelectedDay(today);
-        handleDayChange(today);
+        handleDateChange(new Date()); 
     }, []);
 
-    const handleDayChange = async (day) => {
-        setSelectedDay(day);
-        setLoading(true); 
+    const handleDateChange = async (date) => {
+        const formattedDate = formatDate(date);
+        setSelectedDate(formattedDate);
+        setLoading(true);
         try {
-            const response = await ScheduleServices.getClassSchedule(SelectedClassId, day);
+            const response = await ScheduleServices.getClassSchedule(
+                SelectedClassId,
+                formattedDate
+            );
+            console.log(response );
             setScheduleData(response.content);
-            setDaysIsOpen(false);
         } catch (error) {
             console.error(error);
         } finally {
-            setLoading(false); 
+            setLoading(false);
         }
-    }
-    const handleAddScheduleContent = async (id , content)=>{
-        console.log("handleAddScheduleContent",id , content , selectedDay);
-        setLoading(true); 
+    };
+
+    const handleAddScheduleContent = async (id, content) => {
+        setLoading(true);
         try {
-            const response = await ScheduleServices.AddScheduleContent(SelectedClassId , id , content, selectedDay);
-            
-            toast.success('content added successfully');
-            handleDayChange(selectedDay);
+            const response = await ScheduleServices.AddScheduleContent(
+                SelectedClassId,
+                id,
+                content,
+                selectedDate
+            );
+            toast.success("Content added successfully");
+            handleDateChange(selectedDate);
         } catch (error) {
             console.error(error);
         } finally {
-            setLoading(false); 
+            setLoading(false);
+        }
+    };
+    const handleDeleteContent  = async (id)=>{
+        setLoading(true);
+        try {
+            console.log("Delete");
+            console.log(id);
+            const response = await ScheduleServices.DeleteContent(id);
+            toast.success("Content deleted successfully");
+            handleDateChange(selectedDate);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
         }
     }
+
     return (
-        <section className="SecondSliderSection ManageClassesCompnent">
+        <section className="SecondSliderSection ManageClassesComponent">
             <div className="Toaster">
-                <Toaster
-                    position="top-right"
-                    reverseOrder={false}
-                />
+                <Toaster position="top-right" reverseOrder={false} />
             </div>
             <div className="Container HeadContainer">
                 <div className="row">
                     <div className="col-lg-6 col-md-6 col-sm-6 col-6">
-                        <div className="HeadLeftItem">
-                            Schedule
-                        </div>
+                        <div className="HeadLeftItem">Schedule</div>
                     </div>
-                    <div className="col-lg-6 col-md-6 col-sm-6 col-6 HeadRightCol CalenderCol">
-                        <div className={`Days ${daysIsOpen ? 'ActiveDays' : ''}`}>
-                            <div className="">
-                                <div className="DayItem">
-                                    <div className={`DayInnerItem ${selectedDay === 'Sat' ? 'SelectedDateItem' : ''}`}
-                                        onClick={() => handleDayChange('Sat')}
-                                    >
-                                        SAT
-                                    </div>
-                                    <div className={`DayInnerItem ${selectedDay === 'Sun' ? 'SelectedDateItem' : ''}`}
-                                        onClick={() => handleDayChange('Sun')}
-                                    >
-                                        SUN
-                                    </div>
-                                    <div className={`DayInnerItem ${selectedDay === 'Mon' ? 'SelectedDateItem' : ''}`}
-                                        onClick={() => handleDayChange('Mon')}>
-                                        MON
-                                    </div>
-                                </div>
-                                <div className="DayItem">
-                                    <div className={`DayInnerItem ${selectedDay === 'Tue' ? 'SelectedDateItem' : ''}`}
-                                        onClick={() => handleDayChange('Tue')}>
-                                        TUE
-                                    </div>
-                                    <div className={`DayInnerItem ${selectedDay === 'Wed' ? 'SelectedDateItem' : ''}`}
-                                        onClick={() => handleDayChange('Wed')}>
-                                        WED
-                                    </div>
-                                    <div className={`DayInnerItem ${selectedDay === 'Thu' ? 'SelectedDateItem' : ''}`}
-                                        onClick={() => handleDayChange('Thu')}>
-                                        THU
-                                    </div>
-                                </div>
-                                <div className="DayItem">
-                                    <div className={`DayInnerItem ${selectedDay === 'Fri' ? 'SelectedDateItem' : ''}`}
-                                        onClick={() => handleDayChange('Fri')}>
-                                        FRI
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="HeadRightItem">
-                            <div className="CirclePlus">
-                                <div className="Calender" onClick={() => setDaysIsOpen(!daysIsOpen)}>
-                                    <FontAwesomeIcon icon={faCalendar} />
-                                </div>
-                            </div>
-                        </div>
+                    <div className="col-lg-6 col-md-6 col-sm-6 col-6 HeadRightCol">
+                        {/* <div className="HeadRightItem"> */}
+                            <input
+                                type="date"
+                                value={selectedDate}
+                                onChange={(e) => handleDateChange(new Date(e.target.value))}
+                                className="form-control ScheduleDate"
+                            />
+                        {/* </div> */}
                     </div>
                 </div>
             </div>
-            <div className="SubjectsContainer">
+            <div className="SubjectsContainer ScheduleContainer">
                 <div className="row">
                     {loading ? (
-                        <div className="loading-indicator">Loading...</div> 
+                        <div className="loading-indicator">Loading...</div>
                     ) : scheduleData.length > 0 ? (
                         scheduleData.map((item) => (
-                            !item.subject_content ?
-                                <ScheduleItem id={item.subject.id} OnConfirmAddContent={handleAddScheduleContent} SubjectName={item.subject.title} key={item.id} /> :
-                                <ScheduleWithDetails SubjectName={item.subject.title} Content={item.subject_content.content} key={item.subject_content.id} />
+                            item.schedules.length === 0 ? (
+                                <ScheduleItem
+                                    id={item?.id}
+                                    OnConfirmAddContent={handleAddScheduleContent}
+                                    SubjectName={item?.title}
+                                    key={item.id}
+                                />
+                            ) : (
+                                <ScheduleWithDetails
+                                    id = {item.schedules[0]?.id}
+                                    SubjectName={item.title}
+                                    Content={item.schedules[0]?.content}
+                                    key={item.schedules[0]?.id}
+                                    OnConfirmDeleteContent={handleDeleteContent}
+                                />
+                                // <></>
+                            )
                         ))
                     ) : (
-                        <span>No subjects added yet</span>
+                        <span>No subjects assigned yet</span>
                     )}
                 </div>
             </div>
         </section>
     );
-}
+};
 
 export default Schedule;

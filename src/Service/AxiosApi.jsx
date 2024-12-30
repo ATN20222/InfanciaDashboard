@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 
 // ---------- Const Variables ---------- //
-const baseURL = 'https://dashboard.infancia.app/api';
+const baseURL = 'https://orchid-aardvark-632100.hostingersite.com/api';
 const cookie = new Cookies();
 
 // ---------- Functions ---------- //
@@ -44,9 +44,23 @@ export const setNurseryId = (nursery_id) => {
 export const getNurseryId = () => {
     return cookie.get('nursery_id');
 };
+
+
+export const setBranchId = (nursery_id) => {
+    cookie.set('branch_id', nursery_id, { path: '/' });
+};
+// Get NurseryId
+export const getBranchId = () => {
+    return cookie.get('branch_id');
+};
 // Delete NurseryId
 export const deleteNurseryId = () => {
     cookie.remove('nursery_id', { path: '/' });
+    localStorage.clear();
+    sessionStorage.clear();
+}
+export const deleteBranchId = () => {
+    cookie.remove('branch_id', { path: '/' });
     localStorage.clear();
     sessionStorage.clear();
 }

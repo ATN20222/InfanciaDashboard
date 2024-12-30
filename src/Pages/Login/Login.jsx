@@ -51,8 +51,10 @@ const Login = () => {
 
       const userData = await AuthService.Login(email, password);
       localStorage.setItem("welcome" , 1);
+      // localStorage.setItem('BranchId' , userData.branch_id)
       login();
       // navigate('/home'); 
+
       window.location.href='/home';
     } catch (error) {
         setLoading(false);
@@ -63,7 +65,7 @@ const Login = () => {
   };
 
   function validatePassword(password) {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    const passwordRegex = /^(?=.*[a-z]).{8,}$/;
     return passwordRegex.test(password);
   }
   const validateEmail = (email) => {

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './CustomDropdown.css';
 
-const CustomDropdown = ({Options , DefaultValue,onChange}) => {
+const SelectCityAndCountry = ({Options , DefaultValue,onChange}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(DefaultValue);
 
     const toggleDropdown = () => setIsOpen(!isOpen);
     const handleOptionClick = (option) => {
-        setSelectedOption(option);
-        onChange(option);
-        setIsOpen(false);                   
+        setSelectedOption(option.name);
+        onChange(option.id);
+        setIsOpen(false);
     };
 
     const [options,setOptions] = useState([]);
@@ -25,13 +25,13 @@ const CustomDropdown = ({Options , DefaultValue,onChange}) => {
             </div>
             {isOpen && (
                 <div className="dropdown-list">
-                    {options.map((option, index) => (
+                    {options.map((option) => (
                         <div
-                            key={index}
+                            key={option.id}
                             className="dropdown-item "
                             onClick={() => handleOptionClick(option)}
                         >
-                            {option}
+                            {option.name}
                         </div>
                     ))}
                 </div>
@@ -40,4 +40,4 @@ const CustomDropdown = ({Options , DefaultValue,onChange}) => {
     );
 };
 
-export default CustomDropdown;
+export default SelectCityAndCountry;

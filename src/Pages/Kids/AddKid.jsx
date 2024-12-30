@@ -1,4 +1,4 @@
-import { faImage } from "@fortawesome/free-solid-svg-icons";
+import { faImage, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useRef, useState } from "react";
 import './Kids.css';
@@ -6,41 +6,55 @@ import CustomDropdown from "../../Components/DrobDown/CustomDropdown";
 import { KidsServices } from "../../Service/Api";
 import toast, { Toaster } from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
+import { getBranchId, getNurseryId } from "../../Service/AxiosApi";
 
 const AddKid = () => {
     const [selectedGender, setSelectedGender] = useState(true);
     const [kidName, setKidName] = useState('');
-    const [parentName, setParentName] = useState('');
+    const [KidLastName, setKidLastName] = useState('');
     const [email, setEmail] = useState('');
-    const [mobile, setMobile] = useState('');
-    const [city, setCity] = useState('');
-    const [address, setAddress] = useState('');
     const [fatherName, setFatherName] = useState('');
     const [fatherMobile, setFatherMobile] = useState('');
     const [fatherJob, setFatherJob] = useState('');
-    const [motherName, setMotherName] = useState('');
-    const [motherMobile, setMotherMobile] = useState('');
-    const [motherJob, setMotherJob] = useState('');
     const [emergencyPhone, setEmergencyPhone] = useState('');
     const [hasMedicalCase, setHasMedicalCase] = useState(false);
     const [kidNameError, setKidNameError] = useState('');
-    const [parentNameError, setParentNameError] = useState('');
+    const [KidLastNameError, setKidLastNameError] = useState('');
     const [emailError, setEmailError] = useState('');
-    const [mobileError, setMobileError] = useState('');
-    const [cityError, setCityError] = useState('');
-    const [addressError, setAddressError] = useState('');
     const [fatherNameError, setFatherNameError] = useState('');
     const [fatherMobileError, setFatherMobileError] = useState('');
     const [fatherJobError, setFatherJobError] = useState('');
-    const [motherNameError, setMotherNameError] = useState('');
-    const [motherMobileError, setMotherMobileError] = useState('');
-    const [motherJobError, setMotherJobError] = useState('');
     const [emergencyPhoneError, setEmergencyPhoneError] = useState('');
     const [DateError, setDateError] = useState('');
     const [ImageError, setImageError] = useState('');
     const [ImageFile, setImageFile] = useState('');
+
+    const [kidsData, setKidsData] = useState([
+        {
+            selectedGender: true,
+            kidName: '',
+            kidLastName: '',
+            email: '',
+            fatherName: '',
+            fatherMobile: '',
+            fatherJob: '',
+            emergencyPhone: '',
+            hasMedicalCase: false,
+            kidNameError: '',
+            kidLastNameError: '',
+            emailError: '',
+            fatherNameError: '',
+            fatherMobileError: '',
+            fatherJobError: '',
+            emergencyPhoneError: '',
+            dateError: '',
+            imageError: '',
+            imageFile: '',
+        },
+    ]);
+
+
     const [loading, setLoading] = useState(false);
-    const Cities = ["El-Marg", "Ain Shams"];
     const yearInputRef = useRef();
     const monthInputRef = useRef();
     const dayInputRef = useRef();
@@ -69,190 +83,138 @@ const AddKid = () => {
         }
     };
 
+
+    const handleFieldChange = (index, field, value) => {
+        const updatedKidsData = [...kidsData];
+        updatedKidsData[index][field] = value;
+        setKidsData(updatedKidsData);
+    };
+    const handleGenderChange = (index, gender) => {
+        const updatedKidsData = [...kidsData];
+        updatedKidsData[index].selectedGender = gender;
+        setKidsData(updatedKidsData);
+    };
+    const handleMedicalCaseChange = (index) => {
+        const updatedKidsData = [...kidsData];
+        updatedKidsData[index].hasMedicalCase = !updatedKidsData[index].hasMedicalCase;
+        setKidsData(updatedKidsData);
+    };
+
+    const validateFields = (index) => {
+        const updatedKidsData = [...kidsData];
+        const kid = updatedKidsData[index];
+        let valid = true;
+        if (!kid.kidName) {
+            updatedKidsData[index].kidNameError = 'First name is required';
+            valid = false;
+        } else {
+            updatedKidsData[index].kidNameError = '';
+        }
+        if (!kid.kidLastName) {
+            updatedKidsData[index].kidLastNameError = 'Last name is required';
+            valid = false;
+
+        } else {
+            updatedKidsData[index].kidLastNameError = '';
+        }
+        if (!kid.birthYear || !kid.birthMonth || !kid.birthDay) {
+            updatedKidsData[index].dateError = 'All birth date fields are required';
+            valid = false;
+
+        } else {
+            updatedKidsData[index].dateError = '';
+        }
+
+        setKidsData(updatedKidsData);
+        return valid;
+    };
+
+
+
+
     const handleSubmit = async (event) => {
         setLoading(true);
         event.preventDefault();
         let valid = true;
 
-        // if (!ImageFile) {
-        //     setImageError("Kid image is required");
-        //     valid = false;
-        //     setLoading(false);
-        //     return;
-
-        // } else {
-        //     setImageError('');
-        // }
-        if (kidName === '') {
-            setKidNameError("Kid name is required");
-            valid = false;
+        if (fatherName === '') {
+            setFatherNameError("Parent name is required");
             setLoading(false);
-            return;
+            valid = false;
 
         } else {
-            setKidNameError('');
+            setFatherNameError('');
         }
 
-        if (parentName === '') {
-            setParentNameError("Parent name is required");
-            valid = false;
+        if (fatherMobile === '') {
+            setFatherMobileError("Parent mobile number is required");
             setLoading(false);
-
-            return;
+            valid = false;
 
         } else {
-            setParentNameError('');
+            setFatherMobileError('');
         }
 
-        if (email === '') {
-            setEmailError("Email is required");
-            valid = false;
+        if (fatherJob === '') {
+            setFatherJobError("Parent job is required");
             setLoading(false);
+            valid = false;
+        } else {
+            setFatherJobError('');
+        }
 
-            return;
+
+        if (emergencyPhone === '') {
+            setEmergencyPhoneError("Emergency phone is required");
+            setLoading(false);
+            valid = false;
 
         } else {
-            setEmailError('');
+            setEmergencyPhoneError('');
         }
+        let validKid = true;
+        kidsData.forEach((_, index) => {
+            validKid = validateFields(index);
+            if (validKid == false)
+                return;
+        });
 
-        if (mobile === '') {
-            setMobileError("Mobile number is required");
-            valid = false;
-            setLoading(false);
+        if (valid && validKid) {
 
-            return;
+            
+            const formattedData = kidsData.map((kid) => {
+                const birthDate = `${kid.birthYear}-${kid.birthMonth}-${kid.birthDay}`;
+                var formData = new FormData();
+                formData.append('media', kid.imageFile);
+                return {
+                    first_name: kid.kidName,
+                    last_name: kid.kidLastName,
+                    birth_date: birthDate,
+                    gender: kid.selectedGender ? "boy" : "girl",
+                    has_medical_case: kid.hasMedicalCase ? "yes" : "no",
+                    description_medical_case: kid.descriptionMedicalCase || "no",
+                    branch_id: getBranchId(),
+                    nursery_id: getNurseryId(),
+                    class_room_id: parseInt(classId),
+                    media: formData.get('media')
+                };
+            });
 
-        } else {
-            setMobileError('');
-        }
-
-        if (city === '') {
-            setCityError("City is required");
-            valid = false;
-            setLoading(false);
-
-            return;
-
-        } else {
-            setCityError('');
-        }
-
-        if (address === '') {
-            setAddressError("Address is required");
-            setLoading(false);
-            valid = false;
-            return;
-
-        } else {
-            setAddressError('');
-        }
-        if (yearInputRef.current.value == '' || dayInputRef.current.value == '' || monthInputRef.current.value == '') {
-            setDateError("Day , Month and Year are required");
-            setLoading(false);
-            valid = false;
-            return;
-        }
-        else {
-            setDateError("")
-
-        }
-
-        // if (fatherName === '') {
-        //     setFatherNameError("Father name is required");
-        //     setLoading(false);
-        //     valid = false;
-        //     return;
-
-        // } else {
-        //     setFatherNameError('');
-        // }
-
-        // if (fatherMobile === '') {
-        //     setFatherMobileError("Father mobile number is required");
-        //     setLoading(false);
-        //     valid = false;
-        //     return;
-
-        // } else {
-        //     setFatherMobileError('');
-        // }
-
-        // if (fatherJob === '') {
-        //     setFatherJobError("Father job is required");
-        //     setLoading(false);
-        //     valid = false;
-        //     return;
-
-        // } else {
-        //     setFatherJobError('');
-        // }
-
-        // if (motherName === '') {
-        //     setMotherNameError("Mother name is required");
-        //     setLoading(false);
-        //     valid = false;
-        //     return;
-
-        // } else {
-        //     setMotherNameError('');
-        // }
-
-        // if (motherMobile === '') {
-        //     setLoading(false);
-        //     setMotherMobileError("Mother mobile number is required");
-        //     valid = false;
-        //     return;
-
-        // } else {
-        //     setMotherMobileError('');
-        // }
-
-        // if (motherJob === '') {
-        //     setLoading(false);
-        //     setMotherJobError("Mother job is required");
-        //     valid = false;
-        //     return;
-
-        // } else {
-        //     setMotherJobError('');
-        // }
-
-        // if (emergencyPhone === '') {
-        //     setEmergencyPhoneError("Emergency phone is required");
-        //     setLoading(false);
-        //     valid = false;
-        //     return;
-
-        // } else {
-        //     setEmergencyPhoneError('');
-        // }
-
-        if (valid) {
 
 
             try {
-                const Birthdate = `${yearInputRef.current.value}-${monthInputRef.current.value}-${dayInputRef.current.value}`
-                // console.log( kidName ,parentName ,
-                //     email ,mobile , 
-                //    selectedGender?"boy":"girl",
-                //    Birthdate,city,
-                //    address ,classId,
-                //    fatherName,fatherMobile,fatherJob,
-                //    motherName,motherMobile,
-                //    motherJob,hasMedicalCase?'1':'0');
-                const response =
-                    await KidsServices.Add(
-                        kidName, parentName,
-                        email, mobile,
-                        selectedGender ? "boy" : "girl",
-                        Birthdate, city,
-                        address, classId,
-                        fatherName, fatherMobile, fatherJob,
-                        motherName, motherMobile,
-                        motherJob, hasMedicalCase ? '1' : '0',
-                        emergencyPhone,
-                        ImageFile
-                    );
+                
+                // console.log(formattedData);
+                
+                const response  = await KidsServices.Add(
+                    fatherName, 
+                    email,
+                    fatherMobile,
+                    fatherJob,
+                    emergencyPhone,
+                    formattedData
+                )
+
                 toast.success('Kid added successfully');
                 setLoading(false);
                 setTimeout(() => {
@@ -270,24 +232,46 @@ const AddKid = () => {
 
         }
     };
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            if (file.size > 8 * 1024 * 1024) {
-                setImageError('File size must not exceed 8 MB.');
-                setImageFile(null);
-                return;
-            }
-            if (!file.type.startsWith('image/')) {
-                setImageError('Please select a valid image file.');
-                setImageFile(null);
-                return;
-            }
-            setImageError('');
-            setImageFile(file);
-        } else {
-            setImageError('No file selected.');
-        }
+    
+    const handleFileChange = (index, e) => {
+        const updatedKidsData = [...kidsData];
+        updatedKidsData[index].imageFile = e.target.files[0];
+        setKidsData(updatedKidsData);
+    };
+
+    
+    const removeKid = (index) => {
+        const updatedKidsData = kidsData.filter((_, i) => i !== index);
+        setKidsData(updatedKidsData);
+    };
+
+    const addNewKid = (e) => {
+        e.preventDefault();
+        
+        setKidsData([
+            ...kidsData,
+            {
+                selectedGender: true,
+                kidName: '',
+                kidLastName: '',
+                email: '',
+                fatherName: '',
+                fatherMobile: '',
+                fatherJob: '',
+                emergencyPhone: '',
+                hasMedicalCase: false,
+                kidNameError: '',
+                kidLastNameError: '',
+                emailError: '',
+                fatherNameError: '',
+                fatherMobileError: '',
+                fatherJobError: '',
+                emergencyPhoneError: '',
+                dateError: '',
+                imageError: '',
+                imageFile: '',
+            },
+        ]);
     };
     return (
         <section className="SecondSliderSection ManageClassesCompnent">
@@ -308,175 +292,267 @@ const AddKid = () => {
             </div>
             <form className="SubjectsContainer FormContainer" onSubmit={handleSubmit}>
                 <div className="row AddTeacherRow">
-                    <div className="col-lg-12 Center KidImageColForm">
-                        <div className="CircleInPopUp Center">
-                            <label htmlFor="Image">
-                                <FontAwesomeIcon icon={faImage} />
-                                <input type="file" id="Image" accept="image/*"
-                                    onChange={handleFileChange} />
-                            </label>
-                        </div>
-                        {ImageError && <span className="text-danger FormError">{ImageError}</span>}
-
-                    </div>
-                    <div className="col-lg-5 EmpFormCol KidDataCol">
-                        <input type="text" className="EmpInput KidFirstNameInput" value={kidName} onChange={(e) => setKidName(e.target.value)} />
-                        <label className="EmpLabel EmpNameLabel" htmlFor="KidFirstName">Kid Name : </label>
-                        {kidNameError && <span className="text-danger FormError">{kidNameError}</span>}
-                    </div>
-                    <div className="col-lg-5 EmpFormCol KidDataCol">
-                        <input type="text" className="EmpInput KidLastNameInput" value={parentName} onChange={(e) => setParentName(e.target.value)} />
-                        <label className="EmpLabel EmpNameLabel" htmlFor="KidLastName">User Name : </label>
-                        {parentNameError && <span className="text-danger FormError">{parentNameError}</span>}
-                    </div>
-                    <div className="col-lg-5 EmpFormCol KidDataCol">
-                        <input type="email" className="EmpInput KidEmailInput" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <label className="EmpLabel EmpNameLabel" htmlFor="KidEmail">Email : </label>
-                        {emailError && <span className="text-danger FormError">{emailError}</span>}
-                    </div>
-                    <div className="col-lg-5">
-                        <div className="col-lg-12 EmpFormCol EmpMobFormCol">
-                            <div className="EgEmpMob Center">
-                                <span>EG+20</span>
-                            </div>
-                            <input type="number" className="EmpInput EmpMobInput" value={mobile} onChange={(e) => setMobile(e.target.value)} />
-                            <label className="EmpLabel EmpMobLabel" htmlFor="EmpMob">Mobile No. : </label>
-
-                        </div>
-                        {mobileError &&
-                            <div className="FormError">
-                                <span className="text-danger ">{mobileError}</span>
-
-                            </div>
-                        }
-                    </div>
-
-                    <div className="col-lg-5 FormInputCol FormInputColReg">
-                        {/* <CustomDropdown Options={Cities} DefaultValue={"City: "} onChange={setCity} /> */}
-                        <input type="text" className="EmpInput KidEmailInput" value={city} onChange={(e) => setCity(e.target.value)} />
-                        <label className="EmpLabel EmpNameLabel KidCity" htmlFor="FathertName">City : </label>
-                        {cityError && <span className="text-danger FormError">{cityError}</span>}
-                    </div>
-
-                    <div className="col-lg-5 EmpFormCol KidDataCol">
-                        <input type="text" className="EmpInput KidAddressInput" value={address} onChange={(e) => setAddress(e.target.value)} />
-                        <label className="EmpLabel KidAddressInput" htmlFor="KidAddress">Address : </label>
-                        {addressError && <span className="text-danger FormError">{addressError}</span>}
-                    </div>
-                    <div className="col-lg-5 EmpFormCol">
-                        <div className="TopInputTitle">Gender</div>
-                        <div className="GenderContainer">
-                            <div className="container">
-                                <div className="row Center">
-                                    <div className="col-lg-5 col-md-5 col-sm-5 col-5">
-                                        <div className={`Boy ${selectedGender === true ? "SelectedGender" : ""}`} onClick={() => setSelectedGender(true)}>
-                                            BOY
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-5 col-md-5 col-sm-5 col-5">
-                                        <div className={`Girl ${selectedGender === false ? "SelectedGender" : ""}`} onClick={() => setSelectedGender(false)}>
-                                            GIRL
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div className="col-lg-5 EmpFormCol">
-                        <div className="TopInputTitle">Birth Date</div>
-                        <div className="BirthDateContainer">
-                            <div className="year">
-                                <input
-                                    className="year"
-                                    type="number"
-                                    placeholder="YEAR"
-                                    ref={yearInputRef}
-                                    onChange={handleYearChange}
-                                />
-                            </div>
-                            <div className="Month">
-                                <input
-                                    className="Month"
-                                    type="number"
-                                    placeholder="MONTH"
-                                    ref={monthInputRef}
-                                    onChange={handleMonthChange}
-                                    max="12"
-                                />
-                            </div>
-                            <div className="Day">
-                                <input
-                                    className="Day"
-                                    type="number"
-                                    placeholder="DAY"
-                                    ref={dayInputRef}
-                                    onChange={handleDayChange}
-                                    max="31"
-                                />
-                            </div>
-
-                        </div>
-                        {DateError && <span className="text-danger FormError">{DateError}</span>}
-                    </div>
-
 
                     <div className="col-lg-12 ParentsInformationHeader">
                         <h5>Parents Information</h5>
                     </div>
-
-
                     <div className="col-lg-5 EmpFormCol KidParentData">
                         <input type="text" className="EmpInput FathertNameInput" value={fatherName} onChange={(e) => setFatherName(e.target.value)} />
-                        <label className="EmpLabel EmpNameLabel" htmlFor="FathertName">Father Name : </label>
+                        <label className="EmpLabel EmpNameLabel" htmlFor="FathertName">Parent Name : </label>
                         {fatherNameError && <span className="text-danger FormError">{fatherNameError}</span>}
+                    </div>
+                    <div className="col-lg-5 EmpFormCol KidDataCol">
+                        <input type="email" className="EmpInput KidEmailInput" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <label className="EmpLabel EmpNameLabel KidEmailLable" htmlFor="KidEmail">Email : </label>
+                        {emailError && <span className="text-danger FormError">{emailError}</span>}
                     </div>
                     <div className="col-lg-5 EmpFormCol KidParentData">
                         <input type="number" className="EmpInput FathertMobInput" value={fatherMobile} onChange={(e) => setFatherMobile(e.target.value)} />
-                        <label className="EmpLabel EmpNameLabel" htmlFor="FathertMob">Father Mobile : </label>
+                        <label className="EmpLabel EmpNameLabel" htmlFor="FathertMob">Parent Mobile : </label>
                         {fatherMobileError && <span className="text-danger FormError">{fatherMobileError}</span>}
-                    </div>
-                    <div className="col-lg-12 EmpFormCol KidParentData">
-                        <input type="text" className="EmpInput FathertJobInput" value={fatherJob} onChange={(e) => setFatherJob(e.target.value)} />
-                        <label className="EmpLabel EmpNameLabel" htmlFor="FathertJob">Father Job : </label>
-                        {fatherJobError && <span className="text-danger FormError">{fatherJobError}</span>}
-                    </div>
-                    <div className="col-lg-5 EmpFormCol KidParentData">
-                        <input type="text" className="EmpInput MotherNameInput" value={motherName} onChange={(e) => setMotherName(e.target.value)} />
-                        <label className="EmpLabel EmpNameLabel" htmlFor="MotherName">Mother Name : </label>
-                        {motherNameError && <span className="text-danger FormError">{motherNameError}</span>}
-                    </div>
-                    <div className="col-lg-5 EmpFormCol KidParentData">
-                        <input type="number" className="EmpInput MotherMobInput" value={motherMobile} onChange={(e) => setMotherMobile(e.target.value)} />
-                        <label className="EmpLabel EmpNameLabel" htmlFor="MotherMob">Mother Mobile : </label>
-                        {motherMobileError && <span className="text-danger FormError">{motherMobileError}</span>}
-                    </div>
-                    <div className="col-lg-12 EmpFormCol KidParentData">
-                        <input type="text" className="EmpInput MotherJobInput" value={motherJob} onChange={(e) => setMotherJob(e.target.value)} />
-                        <label className="EmpLabel EmpNameLabel" htmlFor="MotherJob">Mother Job : </label>
-                        {motherJobError && <span className="text-danger FormError">{motherJobError}</span>}
                     </div>
                     <div className="col-lg-5 EmpFormCol KidParentData">
                         <input type="number" className="EmpInput EmergencyPhoneInput" value={emergencyPhone} onChange={(e) => setEmergencyPhone(e.target.value)} />
                         <label className="EmpLabel EmpNameLabel" htmlFor="EmergencyPhone">Emergency Phone : </label>
                         {emergencyPhoneError && <span className="text-danger FormError">{emergencyPhoneError}</span>}
                     </div>
-                    <div className="col-lg-12 EmpFormCol HasMedicalCaseCol">
-                        <div className="InputSelectAll HasMedicalCase">
-                            <input
-                                type="checkbox"
-                                id="HasCase"
-                                checked={hasMedicalCase}
-                                onChange={() => setHasMedicalCase(!hasMedicalCase)}
-                            />
-                            <label htmlFor="HasCase">Has Medical Case</label>
-                        </div>
+                    <div className="col-lg-12 EmpFormCol KidParentData">
+                        <input type="text" className="EmpInput FathertJobInput" value={fatherJob} onChange={(e) => setFatherJob(e.target.value)} />
+                        <label className="EmpLabel EmpNameLabel" htmlFor="FathertJob">Parent Job : </label>
+                        {fatherJobError && <span className="text-danger FormError">{fatherJobError}</span>}
                     </div>
+
+
+
+                    {/* <div className="KidData row justify-content-between">
+
+                        <div className="col-lg-12 Center KidImageColForm">
+                            <div className="CircleInPopUp Center">
+                                <label htmlFor="Image">
+                                    <FontAwesomeIcon icon={faImage} />
+                                    <input type="file" id="Image" accept="image/*"
+                                        onChange={handleFileChange} />
+                                </label>
+                            </div>
+                            {ImageError && <span className="text-danger FormError">{ImageError}</span>}
+                        </div>
+                        <div className="col-lg-5 EmpFormCol KidDataCol">
+                            <input type="text" className="EmpInput KidFirstNameInput" value={kidName} onChange={(e) => setKidName(e.target.value)} />
+                            <label className="EmpLabel KidFirstNameLable" htmlFor="KidFirstName">First Name : </label>
+                            {kidNameError && <span className="text-danger FormError">{kidNameError}</span>}
+                        </div>
+                        <div className="col-lg-5 EmpFormCol KidDataCol">
+                            <input type="text" className="EmpInput KidLastNameInput" value={KidLastName} onChange={(e) => setKidLastName(e.target.value)} />
+                            <label className="EmpLabel EmpNameLabel" htmlFor="KidLastName">Last Name : </label>
+                            {KidLastNameError && <span className="text-danger FormError">{KidLastNameError}</span>}
+                        </div>
+                        <div className="col-lg-5 EmpFormCol">
+                            <div className="TopInputTitle">Gender</div>
+                            <div className="GenderContainer">
+                                <div className="container">
+                                    <div className="row Center">
+                                        <div className="col-lg-5 col-md-5 col-sm-5 col-5">
+                                            <div className={`Boy ${selectedGender === true ? "SelectedGender" : ""}`} onClick={() => setSelectedGender(true)}>
+                                                BOY
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-5 col-md-5 col-sm-5 col-5">
+                                            <div className={`Girl ${selectedGender === false ? "SelectedGender" : ""}`} onClick={() => setSelectedGender(false)}>
+                                                GIRL
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-5 EmpFormCol">
+                            <div className="TopInputTitle">Birth Date</div>
+                            <div className="BirthDateContainer">
+                                <div className="year">
+                                    <input
+                                        className="year"
+                                        type="number"
+                                        placeholder="YEAR"
+                                        ref={yearInputRef}
+                                        onChange={handleYearChange}
+                                    />
+                                </div>
+                                <div className="Month">
+                                    <input
+                                        className="Month"
+                                        type="number"
+                                        placeholder="MONTH"
+                                        ref={monthInputRef}
+                                        onChange={handleMonthChange}
+                                        max="12"
+                                    />
+                                </div>
+                                <div className="Day">
+                                    <input
+                                        className="Day"
+                                        type="number"
+                                        placeholder="DAY"
+                                        ref={dayInputRef}
+                                        onChange={handleDayChange}
+                                        max="31"
+                                    />
+                                </div>
+
+                            </div>
+                            {DateError && <span className="text-danger FormError">{DateError}</span>}
+                        </div>
+                        <div className="col-lg-12 EmpFormCol HasMedicalCaseCol">
+                            <div className="InputSelectAll HasMedicalCase">
+                                <input
+                                    type="checkbox"
+                                    id="HasCase"
+                                    checked={hasMedicalCase}
+                                    onChange={() => setHasMedicalCase(!hasMedicalCase)}
+                                />
+                                <label htmlFor="HasCase">Has Medical Case</label>
+                            </div>
+                        </div>
+                    </div> */}
+                    {kidsData.map((kid, index) => (
+                        <div key={index} className="KidData row justify-content-between mt-2">
+                            {kidsData.length > 1 &&
+                                <div className="col-lg-12 EmpFormCol d-flex justify-content-end">
+                                    <button className="btn btn-danger" onClick={() => removeKid(index)}>
+                                        <FontAwesomeIcon icon={faTrash} />
+                                    </button>
+                                </div>
+                            }
+                            <div className="col-lg-12 Center KidImageColForm">
+                                <div className="CircleInPopUp Center">
+                                    <label htmlFor={`Image-${index}`}>
+                                        <FontAwesomeIcon icon={faImage} />
+                                        <input
+                                            type="file"
+                                            id={`Image-${index}`}
+                                            accept="image/*"
+                                            onChange={(e) => handleFileChange(index, e)}
+                                        />
+                                    </label>
+                                </div>
+                                {kid.imageError && (
+                                    <span className="text-danger FormError">{kid.imageError}</span>
+                                )}                            </div>
+
+                            <div className="col-lg-5 EmpFormCol KidDataCol">
+                                <input
+                                    type="text"
+                                    className="EmpInput KidFirstNameInput"
+                                    value={kid.kidName}
+                                    onChange={(e) => handleFieldChange(index, 'kidName', e.target.value)}
+                                />
+                                <label className="EmpLabel KidFirstNameLable" htmlFor={`KidFirstName-${index}`}>
+                                    First Name :
+                                </label>
+                                {kid.kidNameError && <span className="text-danger FormError">{kid.kidNameError}</span>}
+                            </div>
+
+                            <div className="col-lg-5 EmpFormCol KidDataCol">
+                                <input
+                                    type="text"
+                                    className="EmpInput KidLastNameInput"
+                                    value={kid.kidLastName}
+                                    onChange={(e) => handleFieldChange(index, 'kidLastName', e.target.value)}
+                                />
+                                <label className="EmpLabel EmpNameLabel" htmlFor={`KidLastName-${index}`}>
+                                    Last Name :
+                                </label>
+                                {kid.kidLastNameError && <span className="text-danger FormError">{kid.kidLastNameError}</span>}
+                            </div>
+
+                            <div className="col-lg-5 EmpFormCol">
+                                <div className="TopInputTitle">Gender</div>
+                                <div className="GenderContainer">
+                                    <div className="container">
+                                        <div className="row Center">
+                                            <div className="col-lg-5 col-md-5 col-sm-5 col-5">
+                                                <div
+                                                    className={`Boy ${kid.selectedGender === true ? 'SelectedGender' : ''}`}
+                                                    onClick={() => handleGenderChange(index, true)}
+                                                >
+                                                    BOY
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-5 col-md-5 col-sm-5 col-5">
+                                                <div
+                                                    className={`Girl ${kid.selectedGender === false ? 'SelectedGender' : ''}`}
+                                                    onClick={() => handleGenderChange(index, false)}
+                                                >
+                                                    GIRL
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-lg-5 EmpFormCol">
+                                <div className="TopInputTitle">Birth Date</div>
+                                <div className="BirthDateContainer">
+                                    <div className="year">
+                                        <input
+                                            className="year"
+                                            type="number"
+                                            placeholder="YYYY"
+                                            onChange={(e) => handleFieldChange(index, 'birthYear', e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="Month">
+                                        <input
+                                            className="Month"
+                                            type="number"
+                                            placeholder="MM"
+                                            max="12"
+                                            onChange={(e) => handleFieldChange(index, 'birthMonth', e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="Day">
+                                        <input
+                                            className="Day"
+                                            type="number"
+                                            placeholder="DD"
+                                            max="31"
+                                            onChange={(e) => handleFieldChange(index, 'birthDay', e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                                {kid.dateError && <span className="text-danger FormError">{kid.dateError}</span>}
+                            </div>
+
+                            <div className="col-lg-12 EmpFormCol HasMedicalCaseCol">
+                                <div className="InputSelectAll HasMedicalCase">
+                                    <input
+                                        type="checkbox"
+                                        id={`HasCase-${index}`}
+                                        checked={kid.hasMedicalCase}
+                                        onChange={() => handleMedicalCaseChange(index)}
+                                    />
+                                    <label htmlFor={`HasCase-${index}`}>Has Medical Case</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    ))}
+                    <div className="col-lg-12 d-flex justify-content-center">
+                        <button className="btn btn-success text-white" onClick={addNewKid}>
+                            <FontAwesomeIcon icon={faPlus}/> 
+                            <span className="p-2">
+                                Add Another Kid
+
+                            </span>
+                        </button>
+                    </div>
+
+
+
                     {!loading ?
                         <div className="col-lg-12 FormInputCol FormInputColReg RegisterBtns">
                             <button type="submit" className="RegisterBtn">Save</button>
-                            <button type="button" className="CancelBtn">Close</button>
+                            <button type="button" className="CancelBtn" onClick={()=>navigate('/manageclasses')}>Close</button>
                         </div>
                         :
 
@@ -491,4 +567,3 @@ const AddKid = () => {
 };
 
 export default AddKid;
-

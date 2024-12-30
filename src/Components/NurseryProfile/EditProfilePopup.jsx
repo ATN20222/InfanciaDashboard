@@ -1,43 +1,149 @@
-import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { NurseryProfileService } from "../../Service/Api";
 
 const EditProfilePopup = ({ show, onClose }) => {
   const [profilePic, setProfilePic] = useState(null);
-  const [preview, setPreview] = useState(null); // For image preview
+  const [preview, setPreview] = useState(null);
   const [contactInfo, setContactInfo] = useState({
     address: "",
-    phones: [""],
-    email: "",
+    phones: [{ id: null, text: "" }],
+    emails: [{ id: null, text: "" }],
+
   });
   const [about, setAbout] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
   const [startFees, setStartFees] = useState("");
-  const [services, setServices] = useState("");
+  const [services, setServices] = useState([{ id: null, text: "" }]);
+  const [links, setLinks] = useState([{ id: null, text: "" }]);
 
+
+  useEffect(() => {
+    GetData();
+  }, []);
+  async function GetData() {
+    try {
+      const response = await NurseryProfileService.ListInfo();
+      console.log(response);
+      const serv = response.content.services.map(service => ({
+        id: service.id,
+        text: service.content
+      }));
+      const emails = response.content.contacts.filter(c => c.type === 'email').map(item => (
+        {
+          id: item.id,
+          text: item.link
+        }
+      ));
+      const phones = response.content.contacts.filter(c => c.type === 'phone').map(item => ({
+        id: item.id,
+        text: item.link
+      }
+      ));
+      const social = response.content.contacts.filter(c => c.type === 'links').map(item => ({
+        id: item.id,
+        text: item.link
+      }
+      ));
+      setContactInfo({
+        address: response.content.address,
+        emails: emails,
+        phones: phones
+      });
+      setServices(serv);
+      setAbout(response.content.about);
+      setStartFees(response.content.branches_number);
+      setLinks(social);
+      setEmail(response.content.email);
+      setPhoneNumber(response.content.phone);
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const handleAddPhone = () => {
     setContactInfo((prev) => ({
       ...prev,
-      phones: [...prev.phones, ""],
+      phones: [...prev.phones, { id: null, text: "" }],
     }));
   };
 
   const handleRemovePhone = (index) => {
-    if (contactInfo.phones.length > 1) {
+    // if (contactInfo.phones.length > 1) {
       setContactInfo((prev) => ({
         ...prev,
         phones: prev.phones.filter((_, i) => i !== index),
       }));
-    }
+    // }
   };
 
   const handlePhoneChange = (index, value) => {
     const updatedPhones = [...contactInfo.phones];
-    updatedPhones[index] = value;
+    updatedPhones[index].text = value;
     setContactInfo((prev) => ({
       ...prev,
       phones: updatedPhones,
     }));
+  };
+
+  const handleAddEmail = () => {
+    // const newId = contactInfo.emails.length + 1;
+    setContactInfo((prev) => ({
+      ...prev,
+      emails: [...prev.emails, { id: null, text: "" }],
+    }));
+  };
+
+  const handleRemoveEmail = (index) => {
+    // if (contactInfo.emails.length > 1) {
+      setContactInfo((prev) => ({
+        ...prev,
+        emails: prev.emails.filter((_, i) => i !== index),
+      }));
+    // }
+  };
+
+  const handleEmailChange = (index, value) => {
+    const updatedEmails = [...contactInfo.emails];
+    updatedEmails[index].text = value;
+    setContactInfo((prev) => ({
+      ...prev,
+      emails: updatedEmails,
+    }));
+  };
+
+  const handleAddService = () => {
+    setServices((prev) => [...prev, { id: null, text: "" }]);
+  };
+
+  const handleRemoveService = (index) => {
+    if (services.length > 1) {
+      setServices((prev) => prev.filter((_, i) => i !== index));
+    }
+  };
+
+  const handleServiceChange = (index, value) => {
+    const updatedServices = [...services];
+    updatedServices[index].text = value;
+    setServices(updatedServices);
+  };
+
+  const handleAddLink = () => {
+    setLinks((prev) => [...prev, { id: null, text: "" }]);
+  };
+
+  const handleRemoveLink = (index) => {
+    // if (links.length > 1) {
+      setLinks((prev) => prev.filter((_, i) => i !== index));
+    // }
+  };
+
+  const handleLinkChange = (index, value) => {
+    const updatedLinks = [...links];
+    updatedLinks[index].text = value;
+    setLinks(updatedLinks);
   };
 
   const handleProfilePicChange = (e) => {
@@ -50,6 +156,28 @@ const EditProfilePopup = ({ show, onClose }) => {
     }
   };
 
+  const handleSubmit = async () => {
+    console.log("profilePic", profilePic);
+    console.log("services", services);
+    console.log(
+      "links", links,
+
+    )
+    console.log(
+      "branches", startFees,
+
+    )
+    console.log(
+      "about", about,
+
+    )
+    console.log(
+
+
+      "contactInfo", contactInfo
+    );
+  };
+
   return (
     show && (
       <div className="EditProfileModal modal show d-block" tabIndex="-1">
@@ -57,31 +185,28 @@ const EditProfilePopup = ({ show, onClose }) => {
           <div className="EditProfileModalContent modal-content">
             <div className="modal-header">
               <h5 className="modal-title">Edit Profile</h5>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={onClose}
-              ></button>
+              <button type="button" className="btn-close" onClick={onClose}></button>
             </div>
             <div className="modal-body">
-              {/* Section 1: Edit Profile Picture */}
+              {/* Profile Picture */}
               <div className="mb-4">
-                {/* <label className="form-label EditProfileModalLabel">Profile Picture</label> */}
-                
-                  <div className="EditProfilePreview Center mb-4">
-                    <label htmlFor="EditImageProfile">
-                      <div className="Cam">
-                        <FontAwesomeIcon icon={faCamera}/>
-                      </div>                    
-                      <img
-                        src={preview}
-                        alt="Profile Preview"
-                        className="img-thumbnail mb-2 ProfilePreview"
-                        style={{ width: "150px", height: "150px", objectFit: "cover" }}
-                      />
-                    </label>
-                  </div>
-                
+                <div className="EditProfilePreview Center mb-4">
+                  <label htmlFor="EditImageProfile">
+                    <div className="Cam">
+                      <FontAwesomeIcon icon={faCamera} />
+                    </div>
+                    <img
+                      src={preview}
+                      alt="Profile Preview"
+                      className="img-thumbnail mb-2 ProfilePreview"
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </label>
+                </div>
                 <input
                   id="EditImageProfile"
                   type="file"
@@ -91,7 +216,7 @@ const EditProfilePopup = ({ show, onClose }) => {
                 />
               </div>
 
-              {/* Section 2: Edit Contact Info */}
+              {/* Edit Contact Info */}
               <div className="mb-4">
                 <label className="form-label EditProfileModalLabel">Address</label>
                 <input
@@ -103,60 +228,93 @@ const EditProfilePopup = ({ show, onClose }) => {
                   }
                 />
                 <label className="form-label EditProfileModalLabel mt-3">Phone Numbers</label>
+                <div className="input-group mb-2">
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                  />
+                </div>
+
+                {/* <label className="form-label EditProfileModalLabel mt-3">Phone Numbers</label> */}
                 {contactInfo.phones.map((phone, index) => (
                   <div key={index} className="input-group mb-2">
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
-                      value={phone}
+                      value={phone.text}
                       onChange={(e) => handlePhoneChange(index, e.target.value)}
                     />
                     <button
                       className="btn btn-danger"
                       type="button"
                       onClick={() => handleRemovePhone(index)}
-                      disabled={contactInfo.phones.length === 1}
+                      // disabled={contactInfo.phones.length === 1}
                     >
-                      <FontAwesomeIcon icon={faTrash}/>
+                      <FontAwesomeIcon icon={faTrash} />
                     </button>
                   </div>
                 ))}
-                <div 
-                  className="AddAnotherPhone text-end" 
-                >
-                  <span className="text-decoration-underline"
-                  onClick={handleAddPhone}
-                  
+                <div className="AddAnotherPhone text-end">
+                  <span
+                    className="text-decoration-underline"
+                    onClick={handleAddPhone}
                   >
-                  Add Phone
+                    Add Phone
                   </span>
                 </div>
-                
-                <label className="form-label EditProfileModalLabel mt-3">Email</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  value={contactInfo.email}
-                  onChange={(e) =>
-                    setContactInfo((prev) => ({ ...prev, email: e.target.value }))
-                  }
-                />
+
+                <label className="form-label EditProfileModalLabel mt-3">Emails</label>
+                <div className="input-group mb-2">
+                  <input
+                    type="email"
+                    className="form-control"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                {contactInfo.emails.map((email, index) => (
+                  <div key={index} className="input-group mb-2">
+                    <input
+                      type="email"
+                      className="form-control"
+                      value={email.text}
+                      onChange={(e) => handleEmailChange(index, e.target.value)}
+                    />
+                    <button
+                      className="btn btn-danger"
+                      type="button"
+                      onClick={() => handleRemoveEmail(index)}
+                      // disabled={contactInfo.emails.length === 1}
+                    >
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                  </div>
+                ))}
+                <div className="AddAnotherEmail text-end">
+                  <span
+                    className="text-decoration-underline"
+                    onClick={handleAddEmail}
+                  >
+                    Add Email
+                  </span>
+                </div>
               </div>
 
-              {/* Section 3: About */}
+              {/* About Section */}
               <div className="mb-4">
                 <label className="form-label EditProfileModalLabel">About</label>
                 <textarea
                   className="form-control"
-                  rows="3"
                   value={about}
                   onChange={(e) => setAbout(e.target.value)}
-                ></textarea>
+                />
               </div>
 
-              {/* Section 4: Start Fees */}
+              {/* Start Fees */}
               <div className="mb-4">
-                <label className="form-label EditProfileModalLabel">Start Fees</label>
+                <label className="form-label EditProfileModalLabel">Branches Number</label>
                 <input
                   type="number"
                   className="form-control"
@@ -165,25 +323,80 @@ const EditProfilePopup = ({ show, onClose }) => {
                 />
               </div>
 
-              {/* Section 5: Provided Services */}
+              {/* Services Section */}
               <div className="mb-4">
                 <label className="form-label EditProfileModalLabel">Provided Services</label>
-                <textarea
-                  className="form-control"
-                  rows="3"
-                  value={services}
-                  onChange={(e) => setServices(e.target.value)}
-                ></textarea>
+                {services.map((service, index) => (
+                  <div key={index} className="input-group mb-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={service.text}
+                      onChange={(e) => handleServiceChange(index, e.target.value)}
+                    />
+                    <button
+                      className="btn btn-danger"
+                      type="button"
+                      onClick={() => handleRemoveService(index)}
+                      // disabled={services.length === 1}
+                    >
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                  </div>
+                ))}
+                <div className="AddAnotherService text-end">
+                  <span
+                    className="text-decoration-underline"
+                    onClick={handleAddService}
+                  >
+                    Add Service
+                  </span>
+                </div>
+              </div>
+
+              {/* Links Section */}
+              <div className="mb-4">
+                <label className="form-label EditProfileModalLabel">Links</label>
+                {links.map((link, index) => (
+                  <div key={index} className="input-group mb-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={link.text}
+                      onChange={(e) => handleLinkChange(index, e.target.value)}
+                    />
+                    <button
+                      className="btn btn-danger"
+                      type="button"
+                      onClick={() => handleRemoveLink(index)}
+                      // disabled={links.length === 1}
+                    >
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                  </div>
+                ))}
+                <div className="AddAnotherService text-end">
+                  <span
+                    className="text-decoration-underline"
+                    onClick={handleAddLink}
+                  >
+                    Add Link
+                  </span>
+                </div>
               </div>
             </div>
+
+            {/* Form Buttons */}
             <div className="form-buttons EditProfileButtons">
-              <button type="submit" className="RegisterBtn">
+              <button type="submit" onClick={handleSubmit} className="RegisterBtn">
                 Save
               </button>
               <button
                 type="button"
                 className="CancelBtn"
-                onClick={() => { onClose();}}
+                onClick={() => {
+                  onClose();
+                }}
               >
                 Cancel
               </button>

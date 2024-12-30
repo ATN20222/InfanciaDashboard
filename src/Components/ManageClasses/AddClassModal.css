@@ -134,3 +134,10 @@
     text-align: start;
     margin-left: 10px;
 }
+.HasContainer{
+    display: flex;
+    margin-bottom: 5px;
+}
+.HasContainer input[type='checkbox']{
+    margin:5px; 
+}

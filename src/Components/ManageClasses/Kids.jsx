@@ -15,7 +15,7 @@ const Kids = ({SelectedClassId})=>{
             const response = await KidsServices.ListClassKids(SelectedClassId);
             console.log("response" , response);
             
-            setKids(response.content.kids);
+            setKids(response.content);
         
         
         } catch (error) {
@@ -42,10 +42,8 @@ const Kids = ({SelectedClassId})=>{
                         </div>
                     </div>
                 </div>
-                <div className="SubjectsContainer">
+                <div className="SubjectsContainer ManageClassesKidsContainer">
                     <KidTable kids={kids} />
-
-
                 </div>
         </section>
     );

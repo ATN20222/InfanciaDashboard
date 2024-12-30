@@ -40,8 +40,10 @@
 
 .UploadRegisterImage svg{
     color: white;
-    width: 25%;
-    height: 25%;
+    width: 25px;
+    height: 25px;
+    position: relative;
+    top: 35px;  
 }
 .FormInputReg{
     height: 35px !important;
@@ -339,4 +341,14 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .CityProfile input{
     padding-left: 55px;
+}
+.NurseryImage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.NurseryImage svg{
+    width: 80px !important;
+    height: 100px;
+    font-size: larger;
 }

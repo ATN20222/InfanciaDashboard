@@ -12,14 +12,15 @@ const AddMealSchedule = ({ isOpen, onClose, onAddMeal }) => {
     setDayError('');
 
     e.preventDefault();
+    if (selectedDay.trim() === '') {
+      setDayError('Type is required');
+      return;
+    }
     if (Subject.trim() === '') {
       setError('meal is required');
       return;
     }
-    if (selectedDay.trim() === '') {
-        setDayError('Day is required');
-        return;
-      }
+    
     onAddMeal(Subject , selectedDay);
     setSubject('');
     setError('');
@@ -41,7 +42,7 @@ const AddMealSchedule = ({ isOpen, onClose, onAddMeal }) => {
     
   }
 
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const daysOfWeek = ['Breakfast','Launch','Snacks'];
 
   return (
     <div className="overlay">
@@ -50,6 +51,12 @@ const AddMealSchedule = ({ isOpen, onClose, onAddMeal }) => {
           <h2>Add Meal</h2>
           <div className="FormHr"></div>
           <form className="add-class-form addSubjectForm" onSubmit={handleSubmit}>
+          <div className='mb-3'>
+                <SelectDayDropDown onChange={(d) => setSelectedDay(d)} DefaultValue={"Select type"} Options={daysOfWeek}/>
+                
+                {dayError && <div className="text-danger PopUpError mt-0">{dayError}</div>}
+            </div>
+            
             <label>
               <input
                 type="text"
@@ -62,11 +69,7 @@ const AddMealSchedule = ({ isOpen, onClose, onAddMeal }) => {
             {error && <div className="text-danger PopUpError mt-0">{error}</div>}
             </label>
 
-            <div className='mb-4'>
-                <SelectDayDropDown onChange={(d) => setSelectedDay(d)} DefaultValue={"Select a day"} Options={daysOfWeek}/>
-                
-                {dayError && <div className="text-danger PopUpError mt-0">{dayError}</div>}
-            </div>
+            
 
             <div className="form-buttons">
               <button className="RegisterBtn">

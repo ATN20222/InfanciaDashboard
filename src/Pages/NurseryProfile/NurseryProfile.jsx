@@ -24,7 +24,6 @@ const NurseryProfile = () => {
                         <FontAwesomeIcon icon={faPen}/>
                     </span>
                     <EditProfilePopup show={showPopup} onClose={() => setShowPopup(false)} />
-
                     <div className="row">
                         <div className="col-lg-12 NurseryProfileTopPartCol Center">
                             <div className="NurseryProfileImage">

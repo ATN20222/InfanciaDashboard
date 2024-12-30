@@ -7,7 +7,8 @@ const EditClassModal = ({ isOpen, onClose, onEditClass, Data }) => {
   const [classAgeFromToError, setClassAgeFromToError] = useState('');
   const [classAgeFrom, setClassAgeFrom] = useState('');
   const [classAgeTo, setClassAgeTo] = useState('');
-
+  const [hasMeal, setHasMeal] = useState(false);
+  const [hasSubject, setHasSubject] = useState(false);
   useEffect(() => {
     if (isOpen && Data?.id) {
       GetData();
@@ -18,8 +19,10 @@ const EditClassModal = ({ isOpen, onClose, onEditClass, Data }) => {
     try {
       const response = await ClassService.Get(Data?.id);
       setClassName(response.content.name);
-      setClassAgeTo(response.content.age_to);
-      setClassAgeFrom(response.content.age_from);
+      setClassAgeTo(response.content.to);
+      setClassAgeFrom(response.content.from);
+      setHasMeal(response.content.has_meals);
+      setHasSubject(response.content.has_subjects);
     } catch (error) {
       console.log(error);
     }
@@ -100,6 +103,30 @@ const EditClassModal = ({ isOpen, onClose, onEditClass, Data }) => {
                 {classAgeFromToError}
               </span>
             )}
+            <div className="HasContainer">
+
+<label className="checkbox-label">
+    <input
+        type="checkbox"
+        checked={hasMeal}
+        onChange={(e) => setHasMeal(e.target.checked)}
+    />
+    Has Meals
+</label>
+
+</div>
+
+<div className="HasContainer">
+
+<label className="checkbox-label">
+    <input
+        type="checkbox"
+        checked={hasSubject}
+        onChange={(e) => setHasSubject(e.target.checked)}
+    />
+    Has Subjects
+</label>
+</div>
 
             <div className="form-buttons">
               <button className="RegisterBtn">Save</button>

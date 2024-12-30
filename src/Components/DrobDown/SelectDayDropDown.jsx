@@ -7,19 +7,27 @@ const SelectDayDropDown = ({ Options, DefaultValue, IsAddTeacher, onChange }) =>
 
     const toggleDropdown = () => setIsOpen(!isOpen);
     const handleOptionClick = (option) => {
-        setSelectedOption(option); 
-        onChange(option)
+        setSelectedOption(option);
+        onChange(option);
         setIsOpen(false);
     };
 
     const [options, setOptions] = useState([]);
     useEffect(() => {
         setOptions(Options);
-    }, [Options]); 
+    }, [Options]);
+
+    // Synchronize selectedOption with DefaultValue
+    useEffect(() => {
+        setSelectedOption(DefaultValue);
+    }, [DefaultValue]);
 
     return (
         <div className="dropdown-container">
-            <div className={`dropdown-header ${IsAddTeacher ? "ClassTeacherDropDown" : 'dropdown-header2'}`} onClick={toggleDropdown}>
+            <div
+                className={`dropdown-header ${IsAddTeacher ? "ClassTeacherDropDown" : 'dropdown-header2'}`}
+                onClick={toggleDropdown}
+            >
                 {selectedOption}
                 <span className={`dropdown-arrow ${isOpen ? 'open' : ''}`}></span>
             </div>
@@ -27,11 +35,11 @@ const SelectDayDropDown = ({ Options, DefaultValue, IsAddTeacher, onChange }) =>
                 <div className="dropdown-list dropdown2 daydropdown">
                     {options.map((option, index) => (
                         <div
-                            key={index} 
+                            key={index}
                             className="dropdown-item"
                             onClick={() => handleOptionClick(option)}
                         >
-                            {option} 
+                            {option}
                         </div>
                     ))}
                 </div>

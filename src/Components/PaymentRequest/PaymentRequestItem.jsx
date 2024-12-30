@@ -7,8 +7,10 @@ import Kids from "../ManageClasses/Kids";
 import KidTable from "../Table/KidTable";
 import { KidsServices, PaymentRequestServices } from "../../Service/Api";
 import toast, { Toaster } from "react-hot-toast";
+import kidImage from '../../Assets/images/INFANCIA_LOGO.png'
+import { getBranchId, getNurseryId } from "../../Service/AxiosApi";
 
-const PaymentRequestItem = ({SelectedClassId}) => {
+const PaymentRequestItem = ({ SelectedClassId }) => {
 
     const [selectedRows, setSelectedRows] = useState([]);
 
@@ -33,18 +35,22 @@ const PaymentRequestItem = ({SelectedClassId}) => {
 
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
-    
 
-    const handleAddRequest = async (serviceName, amount) => {
+
+    const handleAddRequest = async (serviceName, amount,status ,description) => {
         try {
-            const kids = selectedRows.map(id => ({ kid_id: id }));
-            
+            const kids = selectedRows.map(id => ({ id: id }));
+
             const requestData = {
                 kids,
-                service: serviceName,
-                amount
+                title: serviceName,
+                amount:amount,
+                descirption:description,
+                status:status?'mandatory':'optional',
+                branch_id:getBranchId(),
+                nursery_id:getNurseryId()
             };
-    
+
             console.log(requestData);
             const response = await PaymentRequestServices.Add(requestData);
             toast.success('Request added successfully');
@@ -53,30 +59,36 @@ const PaymentRequestItem = ({SelectedClassId}) => {
             toast.error('Failed to add request');
         }
     };
-    
 
-      const [kids , setKids] = useState([]);
-      useEffect(()=>{
-          GetData();
-      },[]);
-      async function GetData() {
-          try {
-      
-              const response = await KidsServices.ListClassKids(SelectedClassId);
-              
-              setKids(response.content.kids);
-          
-          
-          } catch (error) {
-              console.log(error)
-      
-          }
-      }
-    
+
+    const [kids, setKids] = useState([]);
+    useEffect(() => {
+        GetData();
+    }, []);
+    async function GetData() {
+        try {
+
+            const response = await KidsServices.ListClassKids(SelectedClassId);
+
+            setKids(response.content);
+
+
+        } catch (error) {
+            console.log(error)
+
+        }
+    }
+
+    const handleAddClick = ()=>{
+        if(selectedRows.length>0)
+            setIsOverlayOpen(true);
+        else
+            toast.error('Please select kids first')
+    }
 
     return (
         <section className="SecondSliderSection ManageClassesCompnent">
-             <AddRequestModal
+            <AddRequestModal
                 isOpen={isOverlayOpen}
                 onClose={() => setIsOverlayOpen(false)}
                 onAddRequest={handleAddRequest}
@@ -96,7 +108,7 @@ const PaymentRequestItem = ({SelectedClassId}) => {
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-6 col-6 HeadRightCol">
                         <div className="HeadRightItem">
-                            <div className="CirclePlus" onClick={() => setIsOverlayOpen(true)}>
+                            <div className="CirclePlus" onClick={handleAddClick}>
                                 <FontAwesomeIcon icon={faPlus} />
                             </div>
                         </div>
@@ -111,59 +123,64 @@ const PaymentRequestItem = ({SelectedClassId}) => {
                                 type="checkbox"
                                 name=""
                                 id="SelectAll"
-                                checked={selectedRows.length === kids.length}
+                                checked={selectedRows?.length === kids?.length}
                                 onChange={handleSelectAllChange}
                             />
                             <label htmlFor="SelectAll">select all</label>
                         </div>
                     </div>
                 </div>
-            
-                
-                <div className="table-responsive TableContainer TableContainerEmployees BranchesTable">
-                    
-                    <div className="container">
-                        <div className="row">
-                        {kids.map((kid) => (
-                            <div className="col-lg-12 RecordEmpTable" key={kid.id}>
-                                <div to={`/kidprofile?kidId=${kid.id}`} className='nav-link'>
-                                <div className="row">
 
-                                <div className="col-lg-4 col-md-4 col-sm-4 col-2 Center KidNameCol SelectKidToRequest">
-                                    <input
+
+                <div className="table-responsive ">
+                    <table className="table table table-bordered table-hover">
+                        <thead className="thead-dark">
+                            <tr>
+                                <th scope="col">Select</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Photo</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Gender</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {kids?.length > 0 ? kids.map((kid) => (
+                                <tr key={kid.id}>
+                                    <td>
+                                        <input
                                             type="checkbox"
                                             checked={selectedRows.includes(kid.id)}
                                             onChange={() => handleRowChange(kid.id)}
                                         />
-                                    </div>
-
-                                    <div className="col-lg-6 col-md-6 col-sm-6 col-5 Center KidNameCol">
-                                        
-                                        <span className="BranchTableSpan" data-content={kid.kid_name}>
-                                            {kid.kid_name}
-                                        </span>
-                                        
-                                    </div>
-                                    <div className="col-lg-2 col-md-2 col-sm-2 col-3 KidIdCol">
-                                        <span className="BranchTableSpan" data-content={kid.id}>
-
-                                            {kid.id}
-                                        </span>
-                                        
-                                        </div>
-                                    
-
-                                </div>
-                                </div>
-                        
-                        </div>
-                        ))}
-                        </div>
-                    </div>
-                        
+                                    </td>
+                                    <td>{kid.id}</td>
+                                    <td className="text-center">
+                                        <img
+                                            src={kid.media ? kid?.media[0]?.original_url : kidImage}
+                                            width="30px"
+                                            alt={`${kid.kid_name} avatar`}
+                                            className="avatar"
+                                        />
+                                    </td>
+                                    <td>
+                                        {/* <Link to={`/kidprofile?kidId=${kid.id}`} className="nav-link"> */}
+                                        {kid.first_name + " " + kid.last_name}
+                                        {/* </Link> */}
+                                    </td>
+                                    <td>{kid.gender}</td>
 
 
-                    </div>
+                                </tr>
+                            )) :
+                                <tr>
+                                    <td colSpan="5">
+                                        No Data
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
     );

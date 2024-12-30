@@ -12,10 +12,12 @@ const AddContentModal = ({ isOpen, onClose, onAddContent }) => {
     if (!content.trim()) {
       setContentError('Subject content is required.');
       isValid = false;
-    }else if(content.length<50 || content.length>1000){
-        setContentError('content must be between 50 - 1000 characters');
-        isValid = false;
-    } else {
+    }
+    // else if(content.length<50 || content.length>1000){
+    //     setContentError('content must be between 50 - 1000 characters');
+    //     isValid = false;
+    // }
+     else {
       setContentError('');
     }
     return isValid;

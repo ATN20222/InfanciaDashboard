@@ -1,14 +1,28 @@
 .KidFirstNameInput{
-    padding-left: 99px;
+    padding-left: 107px;
 }
 .KidDataCol label{
     padding-left: 10px;
 }
+.KidData{
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 25px;
+}
+.BirthDateContainer>div input{
+    background-color: transparent !important;
+}
 .KidLastNameInput{
-    padding-left: 125px;
+    padding-left: 107px;
 }
 .KidEmailInput{
-    padding-left: 70px;
+    padding-left: 70px;  
+    border-color: var(--color-blue);  
+}
+.KidEmailLable{
+    color: var(--color-blue);
 }
 .KidAddressInput{
     padding-left: 90px;
@@ -214,6 +228,10 @@
   }
   .CancelBtn{
     text-decoration: none;
+  }
+
+  .ManageClassesKidsContainer{
+    max-height: 600px !important;
   }
 @media (max-width:480px) {
     .BirthDateContainer>div input{

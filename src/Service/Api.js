@@ -1,7 +1,7 @@
 import axios from 'axios';
-import axiosInstance, { deleteNurseryId, deleteToken, setNurseryId, setToken ,getNurseryId, setIsSuperAdmin, deleteIsSuperAdmin } from './AxiosApi';
+import axiosInstance, { deleteNurseryId, deleteToken, setNurseryId, setToken ,getNurseryId, setIsSuperAdmin, deleteIsSuperAdmin, setBranchId, getBranchId } from './AxiosApi';
 
-const baseURL = 'https://dashboard.infancia.app/api'; 
+const baseURL = 'https://orchid-aardvark-632100.hostingersite.com/api'; 
 
 const axiosReg = axios.create({
   baseURL: baseURL,
@@ -98,6 +98,7 @@ const AuthService = {
         const response = await axiosInstance.post(`/auth/login`, formData);
         setToken(response.data.token);
         setNurseryId(response.data.nursery_id);
+        setBranchId(response.data.branch_id);
         setIsSuperAdmin(response.data.role==="superAdmin");
         console.log(response);
         return response.data; 
@@ -151,27 +152,21 @@ const AuthService = {
 //throw new Error('Failed to reset password'); 
           }
     },
-    RegisterApi:async (name, email, phone , city,country, address, branches_number, classes_number, kids_number, employees_number, start_fees, about , provided_services , media)=>{
+    RegisterApi:async (name, email, phone , city,country, address, branches_number,about ,media,generate_branch)=>{
       try {
-        console.log(name, email, phone , city,country, address, branches_number, classes_number, kids_number, employees_number, start_fees, about , provided_services , media);
         const formData = new FormData();
         formData.append('name', name);
         formData.append('email', email);
         formData.append('phone', phone);
-        formData.append('city', city);
-        formData.append('country', country);
-        formData.append('province', country);
+        formData.append('city_id', city);
+        formData.append('country_id', country);
         formData.append('address', address);
         formData.append('branches_number', branches_number);
-        formData.append('classes_number', classes_number);
-        formData.append('children_number', kids_number);
-        formData.append('employees_number', employees_number);
-        formData.append('start_fees', start_fees);
         formData.append('about', about);
-        formData.append('services', provided_services);
         formData.append('media', media);
+        formData.append('generate_branch', generate_branch?1:0);
         
-        const response = await axiosReg.post(`https://dashboard.infancia.app/api/nurseries-create`,formData);
+        const response = await axiosReg.post(`/auth/register`,formData);
         return response.data; 
   
       } catch (error) {
@@ -194,44 +189,40 @@ const AuthService = {
 const ClassService = {
   List: async ()=>{
     try {
-      const response = await axiosInstance.get(`/classes`);
+      const response = await axiosInstance.get(`/classrooms?branch_id=${getBranchId()}`);
       return response.data; 
-
     } catch (error) {
       throw new Error(error.response.data.message); 
-//throw new Error('Failed to list'); 
     }
   },
-  Add: async (name , age_from , age_to)=>{
+  Add: async (name , age_from , age_to , hasMeal , hasSubject)=>{
     try {
       const formData = new FormData();
       formData.append('name', name);
-      formData.append('age_from', age_from);
-      formData.append('age_to', age_to);
-      const response = await axiosInstance.post(`/classes` , formData);
+      formData.append('from', age_from);
+      formData.append('to', age_to);
+      formData.append('has_meals', hasMeal);
+      formData.append('has_subjects', hasSubject);
+      formData.append('branch_id',getBranchId() );
+      formData.append('nursery_id', getNurseryId());
+      const response = await axiosInstance.post(`/classrooms` , formData);
       return response.data; 
 
     } catch (error) {
       throw new Error(error.response.data.message); 
-//throw new Error('Failed to add'); 
     }
   },
-
-  Edit: async ( id , name , age_from , age_to)=>{
+  Edit: async ( id , name , age_from , age_to , has_meals,has_subjects)=>{
     try {
-
-
-      const response = await axiosInstance.put(`/classes/${id}?name=${name}&age_from=${age_from}&age_to=${age_to}`);
+      const response = await axiosInstance.put(`/classrooms/${id}?name=${name}&from=${age_from}&to=${age_to}&has_meals=${has_meals}&has_subjects=${has_subjects}&branch_id=${getBranchId()}&nursery_id=${getNurseryId()}`);
       return response.data; 
-
     } catch (error) {
       throw new Error(error.response.data.message); 
-//throw new Error('Failed to edit'); 
     }
   },
   Get:async (id)=>{
     try {
-      const response = await axiosInstance.get(`/classes/${id}`);
+      const response = await axiosInstance.get(`/classrooms/${id}`);
       return response.data; 
 
     } catch (error) {
@@ -239,72 +230,63 @@ const ClassService = {
 //throw new Error('Failed to get'); 
     }
   },
+  AssignSubject:async (class_id , subjects)=>{
+    try {
+      var subjects = {
+        "subjects":subjects
+      }
+      const response = await axiosInstance.post(`/classrooms/assign/subject/${class_id}`,subjects);
+      return response.data; 
 
+    } catch (error) {
+      throw new Error(error.response.data.message); 
+    }
+  },
 }
+
 const KidsServices = {
   List: async ()=>{
     try {
-      const response = await axiosInstance.get(`/kids`);
+      const response = await axiosInstance.get(`/kids?branch_id=${getBranchId()}`);
       return response.data; 
-
     } catch (error) {
       throw new Error(error.response.data.message); 
 //throw new Error('Failed to list'); 
     }
   },
   ListClassKids: async (class_id)=>{
-    try {
-      const response = await axiosInstance.get(`/classes/${class_id}`);
+    try { 
+      const response = await axiosInstance.get(`/kids?class_room_id=${class_id}`);
       return response.data; 
-
     } catch (error) {
       throw new Error(error.response.data.message); 
-//throw new Error('Failed to list'); 
     }
   },
   Add: async ( 
-    kid_name,
     name,
     email,
     phone,
-    gender,
-    birthdate,
-    city,
-    address,
-    class_id,
-    father_name,
-    father_mobile,
-    father_job,
-    mother_name,
-    mother_mobile,
-    mother_job,
-    has_medical_case,
+    job,
     emergency_phone,
-    media
+    kids
+    
   )=>{
     try {
-      const formData = new FormData();
-      formData.append('kid_name', kid_name);
-      formData.append('name', name);
-      formData.append('email', email);
-      formData.append('phone', phone);
-      formData.append('gender', gender);
-      formData.append('birthdate', birthdate);
-      formData.append('city', city);
-      formData.append('address', address);
-      formData.append('class_id', class_id);
-      formData.append('father_name', father_name);
-      formData.append('father_mobile', father_mobile);
-      formData.append('father_job', father_job);
-      formData.append('mother_name', mother_name);
-      formData.append('mother_mobile', mother_mobile);
-      formData.append('mother_job', mother_job);
-      formData.append('has_medical_case', has_medical_case);
-      formData.append('emergency_phone', emergency_phone);
-      if(media!=null){
-        formData.append('media', media);
-      }
-      const response = await axiosInstance.post(`/kids` , formData);
+      console.log(kids);
+      const data = {
+        name:name ,
+        email:email , 
+        phone:phone,
+        branch_id:getBranchId(),
+        nursery_id:getNurseryId(),
+        job:job,
+        emergency_phone:emergency_phone,
+        kids:kids
+      } 
+      console.log("data data datadata",data);
+      // return;
+  
+      const response = await axiosInstance.post(`/kids` , data);
       return response.data; 
 
     } catch (error) {
@@ -391,9 +373,8 @@ const KidsServices = {
 const SubjectServices = {
   List: async ()=>{
     try {
-      const response = await axiosInstance.get(`/subjects`);
+      const response = await axiosInstance.get(`/subjects?branch_id=${getBranchId()}`);
       return response.data; 
-
     } catch (error) {
       throw new Error(error.response.data.message); 
 //throw new Error('Failed to list'); 
@@ -403,6 +384,8 @@ const SubjectServices = {
     try {
       const formData = new FormData();
       formData.append('title', title);
+      formData.append('nursery_id', getNurseryId());
+      formData.append('branch_id', getBranchId());
       formData.append('description', "description");
  
       const response = await axiosInstance.post(`/subjects` , formData);
@@ -462,7 +445,7 @@ const SubjectServices = {
 const NewsLetterServices = {
   List: async ()=>{
     try {
-      const response = await axiosInstance.get(`/newsletters`);
+      const response = await axiosInstance.get(`/newsletters?branch_id=${getBranchId()}`);
       return response.data; 
 
     } catch (error) {
@@ -470,13 +453,21 @@ const NewsLetterServices = {
 //throw new Error('Failed to list'); 
     }
   },
-  Add: async (description , image)=>{
+  Add: async (content ,title,class_room_id, image)=>{
     const formData = new FormData();
     if(image!=null )
     formData.append('media', image);
+    formData.append('content', content);
+    formData.append('title', title);
+    formData.append('nursery_id', getNurseryId());
+    formData.append('branch_id', getBranchId());
+    formData.append('is_private', class_room_id!==-1?1:0);
 
-    formData.append('description', description);
-    formData.append('title', "Test");
+    if(class_room_id !==-1){
+      formData.append('class_room_id', class_room_id);
+    }
+
+
     try {
       const response = await axiosInstance.post(`/newsletters`, formData);
       return response.data; 
@@ -575,29 +566,37 @@ const ScheduleServices = {
   getClassSchedule: async (class_id,day)=>{
     try {
       
-      
-      const response = await axiosInstance.get(`/schedules/${class_id}/${day}`);
-      return response.data; 
-
+      const response = await axiosInstance.get(`/schedules?class_room_id=${class_id}&date=${day}`);
+      return response.data;
     } catch (error) {
       throw new Error(error.response.data.message); 
-//throw new Error('Failed to load data'); 
+    //throw new Error('Failed to load data'); 
     }
   },
+
   AddScheduleContent: async (class_id,subject_id ,content , day)=>{
     try {
       const formData = new FormData();
-      formData.append('class_id', class_id);
+      // formData.append('class_id', class_id);
       formData.append('subject_id', subject_id);
       formData.append('content', content);
-      formData.append('days', day);
+      formData.append('date', day);
       
-      const response = await axiosInstance.post(`/schedules`,formData);
+      const response = await axiosInstance.post(`/schedules/${class_id}`,formData);
+      return response.data; 
+    } catch (error) {
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to Add'); 
+    }
+  },
+  DeleteContent:async (id)=>{
+    try {
+      const response = await axiosInstance.delete(`/schedules/${id}`);
       return response.data; 
 
     } catch (error) {
       throw new Error(error.response.data.message); 
-//throw new Error('Failed to Add'); 
+//throw new Error('Failed to delete'); 
     }
   },
  
@@ -616,7 +615,7 @@ const NurseryProfileService = {
   ListInfo: async ()=>{
     const id = getNurseryId();
     try {
-      const response = await axiosInstance.get(`/guest/nurseries/${id}`);
+      const response = await axiosInstance.get(`/nurseries/${id}`);
       return response.data; 
 
     } catch (error) {
@@ -733,9 +732,9 @@ const NurseryProfileService = {
 
 }
 const MealsServices = {
-  List: async (id)=>{
+  List: async ()=>{
     try {
-      const response = await axiosInstance.get(`/meals/${id}`);
+      const response = await axiosInstance.get(`/meals?branch_id=${getBranchId()}`);
       return response.data; 
 
     } catch (error) {
@@ -743,17 +742,14 @@ const MealsServices = {
 //throw new Error('Failed to get data'); 
     }
   },
-  Add: async (meal , day ,type , class_id)=>{
-    const data = {
-      "meals": [
-          { "days": day, "type":type, "description": meal, "class_id" : class_id},
-      ],
-      
-      "class_id":class_id
-  }
+  Add: async (meal  ,type )=>{
+    const formData = new FormData();
+    formData.append('type', type  );
+    formData.append('meal', meal  );
+    formData.append('branch_id', getBranchId()  );
+    formData.append('nursery_id', getNurseryId()  );
     try {
-
-      const response = await axiosInstance.post(`/meals` , data);
+      const response = await axiosInstance.post(`/meals` , formData);
       return response.data; 
 
     } catch (error) {
@@ -762,15 +758,12 @@ const MealsServices = {
     }
   },
   
-  Edit: async ( id , class_id , type , days, description)=>{
+  Edit: async (id,meal , type)=>{
     try {
-
-
-      const response = await axiosInstance.put(`/meals/${id}?class_id=${class_id}&type=${type}&days=${days}&description=${description}`);
+      const response = await axiosInstance.put(`/meals/${id}?&type=${type}&meal=${meal}&branch_id=${getBranchId()}&nursery_id=${getNurseryId()}`);
       return response.data; 
     } catch (error) {
       throw new Error(error.response.data.message); 
-//throw new Error('Failed to edit'); 
     }
   },
 
@@ -865,7 +858,7 @@ const RolesServices = {
 const PaymentRequestServices = {
   List: async ()=>{
     try {
-      const response = await axiosInstance.get(`/payment-request`);
+      const response = await axiosInstance.get(`/payemntbills?branch_id=${getBranchId()}`);
       return response.data; 
 
     } catch (error) {
@@ -875,7 +868,7 @@ const PaymentRequestServices = {
   },
   Add:async (data)=>{
     try {
-      const response = await axiosInstance.post(`/payment-request`,data);
+      const response = await axiosInstance.post(`/payemntbills`,data);
       return response.data; 
 
     } catch (error) {
@@ -885,7 +878,7 @@ const PaymentRequestServices = {
   },
   MarkPaid:async (id)=>{
     try {
-      const response = await axiosInstance.post(`payment-request/paid/${id}`);
+      const response = await axiosInstance.post(`payemntbills/paid/${id}`);
       return response.data; 
 
     } catch (error) {
@@ -957,6 +950,43 @@ const NurseryServices = {
 
 }
 
+const BranchesServices = {
+  List: async ()=>{
+    try {
+      const response = await axiosInstance.get(`/branches`);
+      return response.data; 
+    } catch (error) {
+      throw new Error(error.response.data.message); 
+    }
+  },
+  Add: async (description , image)=>{
+    const formData = new FormData();
+    if(image!=null )
+    formData.append('media', image);
+
+    formData.append('description', description);
+    formData.append('title', "Test");
+    try {
+      const response = await axiosInstance.post(`/branches`, formData);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to add'); 
+    }
+  },
+  Delete:async (id)=>{
+    try {
+      const response = await axiosInstance.delete(`/branches/${id}`);
+      return response.data; 
+
+    } catch (error) {
+      throw new Error(error.response.data.message); 
+//throw new Error('Failed to delete'); 
+    }
+  },
+  
+}
 
 export { 
   AuthService , ClassService ,
@@ -966,6 +996,6 @@ export {
   PolicyServices,NurseryProfileService,
   MealsServices,ParentRequestServices,
   RolesServices,PaymentRequestServices,
-  NurseryServices
+  NurseryServices,BranchesServices
 };
 

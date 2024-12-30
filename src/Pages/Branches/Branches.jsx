@@ -1,17 +1,41 @@
 import { faBell, faCommentDollar, faPlus, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './Branches.css'
 import AddBranchModal from "./AddBranchModal";
+import { useSearchParams } from "react-router-dom";
+import { BranchesServices } from "../../Service/Api";
 
 const Branches = () => {
     const tableData = [
         { id: 1, name: "Ahmed hamed", Adress: "15st abas elakad , nasr city", PhoneNumber:"+201200835855",},
         { id: 2, name: "Ahmed hamed", Adress: "15st abas elakad , nasr city", PhoneNumber:"+201200835855",}
     ];
+    const [Branches , setBranches ] = useState([]);
+    const [searchParams] = useSearchParams();
+
+    useEffect(()=>{
+        GetData();
+    },[]);
+    async function GetData() {
+        try {
+            const response = await BranchesServices.List();            
+            setBranches(response.content);
+        
+        
+        } catch (error) {
+            console.log(error)
+    
+        }
+    }
+
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
-    
+    useEffect(() => {
+        if (searchParams.get("new") === "true") {
+            setIsOverlayOpen(true);
+        }
+    }, [searchParams]);
 
     const handleAddRequest = (className) => {
         
@@ -44,46 +68,41 @@ const Branches = () => {
                 </div>
             </div>
             <div className="SubjectsContainer">
+
+                <div className="table-responsive ">
+                            <table className="table table table-bordered table-hover">
+                                <thead className="thead-dark">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">address</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {Branches.length>0?Branches.map((branch) => (
+                                        <tr key={branch.id}>
+                                            <td>{branch.id}</td>
+                                            
+                                            <td>
+                                                    {branch.name}
+                                                
+                                            </td>
+                                            <td>{branch.PhoneNumber}</td>
+                
+                                        </tr>
+                                    )):
+                                    <tr>
+                                        <td colSpan="3">
+                                            No Data
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                
-                <div className="table-responsive TableContainer TableContainerEmployees BranchesTable">
-                    
-                                <div className="container">
-                                    <div className="row">
-                                    {tableData.map((row) => (
-                                        <div className="col-lg-12 RecordEmpTable">
-                                            <div className="row">
-                                                <div className="col-lg-3 col-md-3 col-sm-3 col-3 Center">
-                                                    <div className="avatar"></div>
-                                                    {row.name}
-                                                    
-                                                    </div>
-                                                <div className="col-lg-3 col-md-3 col-sm-3 col-3 Center">
-                                                    <span className="BranchTableSpan" data-content={row.Adress}>
-
-                                                        {row.Adress}
-                                                    </span>
-                                                    
-                                                    </div>
-                                                <div className="col-lg-3 col-md-3 col-sm-3 col-3 Center">
-                                                    <span className="BranchTableSpan" data-content={row.PhoneNumber}>
-
-                                                        {row.PhoneNumber}
-                                                    </span>
-                                                    </div>
-
-                                                    <div className="col-lg-3 col-md-3 col-sm-3 col-3 Center">
-                                                        <FontAwesomeIcon icon={faTrash}/>
-                                                    </div>
-                                            </div>
-                                       
-                                    </div>
-                                    ))}
-                                    </div>
-                                </div>
-                                    
-                            
-                       
-                </div>
             </div>
            
         </section>
