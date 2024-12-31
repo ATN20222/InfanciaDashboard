@@ -6,62 +6,77 @@ import AddAdminModal from "./AddAdminModal";
 import DeleteSubjectModal from "../../Components/ManageClasses/DeleteSubjectModal";
 import { AuthService, NurseryServices } from "../../Service/Api";
 import toast, { Toaster } from "react-hot-toast";
+import { getBranchId, getNurseryId } from "../../Service/AxiosApi";
 
 const Admins = () => {
     const tableData = [
-        { id: 1, name: "Ahmed hamed", Role: "Top Admin"},
-        { id: 2, name: "Ahmed hamed", Role: "Top Admin"}
+        { id: 1, name: "Ahmed hamed", Role: "Top Admin" },
+        { id: 2, name: "Ahmed hamed", Role: "Top Admin" }
     ];
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [adminToDelete, setAdminToDelete] = useState(false);
 
     const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
-    const [admins , setAdmins] = useState([]);
+    const [admins, setAdmins] = useState([]);
 
-    useEffect(()=>{
+    useEffect(() => {
         GetData();
-    },[]);
+    }, []);
     async function GetData() {
         try {
-    
+
             const response = await NurseryServices.ListAdmins();
-            console.log('admins',response);
+            console.log('admins', response);
             setAdmins(response.content);
-        
+
         } catch (error) {
             console.log(error)
-    
+
         }
     }
     const handleDelete = async () => {
         try {
             const response = await NurseryServices.DeleteAdmin(adminToDelete);
             toast.success('Admin deleted successfully');
-            GetData();  
-            
+            GetData();
+
         } catch (error) {
             toast.error('Failed to delete admin');
         }
         setAdminToDelete(null);
     };
-    const handleAddRequest = async (name, role, email, phoneNumber, password , classes ) => {
-        console.log(name, role, email, phoneNumber, password , classes);
+    const handleAddRequest = async (name, role, email, phoneNumber, roleItems) => {
+        // console.log(name, role, email, phoneNumber, password , classes);
         try {
             // const formattedClasses = classes.map(c => ({ class_id: c.id })); 
             // console.log(classes['classes']);
-            const response = await AuthService.AddNewAdmin(name,email,  phoneNumber, role, password , classes );
+
+            const permissions = roleItems
+                .filter(item => item.Selected === 1)
+                .map(item => (item.Name));
+            const data = {};
+            data.name = name;
+            data.role = role;
+            data.email = email;
+            data.phone = phoneNumber;
+            data.managments = permissions;
+            data.nursery_id = getNurseryId();
+            data.branch_id = getBranchId();
+            console.log(data);
+
+            const response = await AuthService.AddNewAdmin(data);
             toast.success('Admin added successfully');
             GetData();
-            
+
         } catch (error) {
-            toast.error('Failed to add admin');
+            toast.error(`${error}`);
 
         }
     };
 
     return (
         <section className="SecondSliderSection ManageClassesCompnent">
-             <AddAdminModal
+            <AddAdminModal
                 isOpen={isOverlayOpen}
                 onClose={() => setIsOverlayOpen(false)}
                 onAddAdmin={handleAddRequest}
@@ -86,11 +101,11 @@ const Admins = () => {
                         </div>
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-6 col-6 HeadRightCol">
-                            {/* <div className="SearchPayment SearchCol">
+                        {/* <div className="SearchPayment SearchCol">
                                 <input type="text" className="FormInput" name="" id="" placeholder="Search..."/>
                             </div> */}
                         <div className="HeadRightItem">
-                            <div className="CirclePlus" onClick={()=>setIsOverlayOpen(true)}>
+                            <div className="CirclePlus" onClick={() => setIsOverlayOpen(true)}>
                                 <FontAwesomeIcon icon={faPlus} />
                             </div>
                         </div>
@@ -98,53 +113,52 @@ const Admins = () => {
                 </div>
             </div>
             <div className="SubjectsContainer AdminsTableContainer">
-               
-                <div className="table-responsive TableContainer TableContainerEmployees BranchesTable">
-                    
-                                <div className="container">
-                                    <div className="row">
-                                    {admins.map((row) => (
-                                        <div className="col-lg-12 RecordEmpTable">
-                                            <div className="row">
-                                                <div className="col-lg-4 col-md-4 col-sm-4 col-4 Center">
-                                                    <span className="BranchTableSpan" data-content={row.user.name}>
-                                                        {row.user.name}
 
-                                                    </span>
-                                                    
-                                                    </div>
-                                               
-                                                <div className="col-lg-4 col-md-4 col-sm-4 col-4 Center">
-                                                    <span className="BranchTableSpan" data-content={row.user.email}>
+                <div className="table-responsive ">
+                    <table className="table table table-bordered table-hover">
+                        <thead className="thead-dark">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">email</th>
+                                {/* <th scope="col">Role</th> */}
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            {admins.length > 0 ? admins.map((admin) => (
+                                <tr key={admin.id}>
+                                    <td>{admin.id}</td>
 
-                                                        {row.user.email}
-                                                    </span>
-                                                    </div>
+                                    <td>
+                                        {admin.name}
 
-                                                    <div className="col-lg-3 col-md-3 col-sm-3 col-2 Center">
-                                                    <span className="BranchTableSpan" data-content={row.user.phone}>
+                                    </td>
+                                    <td>{admin.phone}</td>
+                                    <td>{admin.email}</td>
+                                    {/* <td>{admin.role}</td> */}
+                                    <td>
+                                        <span>
+                                            <FontAwesomeIcon icon={faTrash}
+                                                onClick={() => { setIsDeleteOverlayOpen(true); setAdminToDelete(admin.id) }} />
+                                        </span>
+                                    </td>
 
-                                                        {row.user.phone}
-                                                    </span>
-                                                    </div>
-
-                                                    <div className="col-lg-1 col-md-1 col-sm-1 col-1 Center " onClick={()=>{setIsDeleteOverlayOpen(true); setAdminToDelete(row.id)}}>
-                                                        <span className="DeleteAdmin">
-                                                            <FontAwesomeIcon icon={faTrash}/>
-                                                        </span>
-                                                    </div>
-                                            </div>
-                                       
-                                    </div>
-                                    ))}
-                                    </div>
-                                </div>
-                                    
-                            
-                       
+                                </tr>
+                            )) :
+                                <tr>
+                                    <td colSpan="6">
+                                        No Data
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
+
             </div>
-           
+
         </section>
     );
 };

@@ -46,7 +46,7 @@ const NurseryProfile = () => {
                         </div>
                         <div className="col-lg-12 NuseryProfileTabbing">
                             <div className="container">
-                                <div className="row">
+                                <div className="row Center">
                                     <div className="col-lg-3 col-md-3 col-sm-3 col-3 NuseryProfileTabbingCol">
                                         <span 
                                             className={activeTab === 'basicInfo' ? 'ProfileActive' : ''}
@@ -71,14 +71,14 @@ const NurseryProfile = () => {
                                             Reviews
                                         </span>
                                     </div>
-                                    <div className="col-lg-3 col-md-3 col-sm-3 col-3 NuseryProfileTabbingCol">
+                                    {/* <div className="col-lg-3 col-md-3 col-sm-3 col-3 NuseryProfileTabbingCol">
                                         <span 
                                             className={activeTab === 'payment' ? 'ProfileActive' : ''}
                                             onClick={() => handleTabClick('payment')}
                                         >
                                             Payment
                                         </span>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -89,7 +89,7 @@ const NurseryProfile = () => {
             {activeTab === 'basicInfo' && <BasicInfo />}
             {activeTab === 'gallery' && <Gallery />}
             {activeTab === 'reviews' && <Reviews />}
-            {activeTab === 'payment' && <PaymentNurseryProfile />}
+            {/* {activeTab === 'payment' && <PaymentNurseryProfile />} */}
         </section>
     );
 };

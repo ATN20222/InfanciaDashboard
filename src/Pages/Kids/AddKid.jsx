@@ -175,8 +175,10 @@ const AddKid = () => {
         let validKid = true;
         kidsData.forEach((_, index) => {
             validKid = validateFields(index);
-            if (validKid == false)
+            if (validKid == false){
+                setLoading(false)
                 return;
+            }
         });
 
         if (valid && validKid) {
@@ -191,7 +193,7 @@ const AddKid = () => {
                     last_name: kid.kidLastName,
                     birth_date: birthDate,
                     gender: kid.selectedGender ? "boy" : "girl",
-                    has_medical_case: kid.hasMedicalCase ? "yes" : "no",
+                    has_medical_case: kid.hasMedicalCase ? 1 : 0,
                     description_medical_case: kid.descriptionMedicalCase || "no",
                     branch_id: getBranchId(),
                     nursery_id: getNurseryId(),
@@ -204,7 +206,12 @@ const AddKid = () => {
 
             try {
                 
-                // console.log(formattedData);
+                console.log("all data",fatherName, 
+                    email,
+                    fatherMobile,
+                    fatherJob,
+                    emergencyPhone,
+                    formattedData);
                 
                 const response  = await KidsServices.Add(
                     fatherName, 
@@ -423,7 +430,7 @@ const AddKid = () => {
                                 </div>
                             }
                             <div className="col-lg-12 Center KidImageColForm">
-                                <div className="CircleInPopUp Center">
+                                {/* <div className="CircleInPopUp Center">
                                     <label htmlFor={`Image-${index}`}>
                                         <FontAwesomeIcon icon={faImage} />
                                         <input
@@ -436,7 +443,9 @@ const AddKid = () => {
                                 </div>
                                 {kid.imageError && (
                                     <span className="text-danger FormError">{kid.imageError}</span>
-                                )}                            </div>
+                                )}                             */}
+                                
+                                </div>
 
                             <div className="col-lg-5 EmpFormCol KidDataCol">
                                 <input

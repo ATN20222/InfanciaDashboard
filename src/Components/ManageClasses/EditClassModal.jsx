@@ -9,6 +9,9 @@ const EditClassModal = ({ isOpen, onClose, onEditClass, Data }) => {
   const [classAgeTo, setClassAgeTo] = useState('');
   const [hasMeal, setHasMeal] = useState(false);
   const [hasSubject, setHasSubject] = useState(false);
+  const [hasNap, setHasNap] = useState(false);
+  const [hasToilet, setHasToilet] = useState(false);
+  const [checkboxError, setCheckboxError] = useState('');
   useEffect(() => {
     if (isOpen && Data?.id) {
       GetData();
@@ -18,11 +21,14 @@ const EditClassModal = ({ isOpen, onClose, onEditClass, Data }) => {
   async function GetData() {
     try {
       const response = await ClassService.Get(Data?.id);
+      console.log(response);
       setClassName(response.content.name);
       setClassAgeTo(response.content.to);
       setClassAgeFrom(response.content.from);
       setHasMeal(response.content.has_meals);
       setHasSubject(response.content.has_subjects);
+      setHasNap(response.content.has_nap);
+      setHasToilet(response.content.has_toilet);
     } catch (error) {
       console.log(error);
     }
@@ -32,7 +38,7 @@ const EditClassModal = ({ isOpen, onClose, onEditClass, Data }) => {
     e.preventDefault();
     setClassNameError('');
     setClassAgeFromToError('');
-
+    setCheckboxError('');
     if (className === '') {
       setClassNameError('Class name is required');
       return;
@@ -42,23 +48,35 @@ const EditClassModal = ({ isOpen, onClose, onEditClass, Data }) => {
     if (classAgeFrom === '' || classAgeTo === '') {
       setClassAgeFromToError('Age from-to is required');
       return;
-    }else if(ageFromNum>=ageToNum){
-        
+    } else if (ageFromNum >= ageToNum) {
+
       setClassAgeFromToError("age-to must be greater than age-from")
       return;
-  }
-    onEditClass(Data.id, className, classAgeFrom, classAgeTo);
+    }
+
+    if (!(hasMeal || hasNap || hasToilet || hasSubject)) {
+      setCheckboxError('You must choose one at least');
+      return;
+    }
+
+    onEditClass(Data.id, className, classAgeFrom, classAgeTo, hasMeal, hasSubject, hasNap, hasToilet);
     onClose();
   };
 
   if (!isOpen) return null;
 
-  const ClearData = ()=>{
+  const ClearData = () => {
     setClassName('');
     setClassAgeFrom('');
     setClassAgeTo('');
+    setCheckboxError('')
     setClassNameError('');
     setClassAgeFromToError('');
+    setHasMeal(false);
+    setHasSubject(false);
+    setHasMeal(false);
+    setHasNap(false);
+
   }
   return (
     <div className="overlay">
@@ -105,32 +123,60 @@ const EditClassModal = ({ isOpen, onClose, onEditClass, Data }) => {
             )}
             <div className="HasContainer">
 
-<label className="checkbox-label">
-    <input
-        type="checkbox"
-        checked={hasMeal}
-        onChange={(e) => setHasMeal(e.target.checked)}
-    />
-    Has Meals
-</label>
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={hasMeal}
+                  onChange={(e) => setHasMeal(e.target.checked)}
+                />
+                Has Meals
+              </label>
 
-</div>
+            </div>
 
-<div className="HasContainer">
+            <div className="HasContainer">
 
-<label className="checkbox-label">
-    <input
-        type="checkbox"
-        checked={hasSubject}
-        onChange={(e) => setHasSubject(e.target.checked)}
-    />
-    Has Subjects
-</label>
-</div>
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={hasSubject}
+                  onChange={(e) => setHasSubject(e.target.checked)}
+                />
+                Has Subjects
+              </label>
+            </div>
+
+            <div className="HasContainer">
+
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={hasNap}
+                  onChange={(e) => setHasNap(e.target.checked)}
+                />
+                Has Nap
+              </label>
+
+            </div>
+            <div className="HasContainer">
+
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={hasToilet}
+                  onChange={(e) => setHasToilet(e.target.checked)}
+                />
+                Has Toilet
+              </label>
+
+            </div>
+            {checkboxError && (
+              <span className='text-danger PopUpValidation mb-3'>{checkboxError}</span>
+            )}
 
             <div className="form-buttons">
               <button className="RegisterBtn">Save</button>
-              <button className="CancelBtn" onClick={()=>{onClose(); ClearData();}}>
+              <button className="CancelBtn" onClick={() => { onClose(); ClearData(); }}>
                 Cancel
               </button>
             </div>

@@ -9,18 +9,31 @@ const AddAdminModal = ({ isOpen, onClose, onAddAdmin }) => {
   const [role, setRole] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
   const [Classes, setClasses] = useState([]);
-  const [selectedClass , setSelectedClass] = useState('');
+  const [selectedClass, setSelectedClass] = useState('');
   const [nameError, setNameError] = useState('');
   const [roleError, setRoleError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [phoneNumberError, setPhoneNumberError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [roles , setRoles] = useState([]);
-  const [selectedOption , setSelectedOption] = useState('');
-  const [isTeacher , setIsTeacher] = useState(false);
+  const [roles, setRoles] = useState([{ id: 1, name: 'teacher' }, { id: 2, name: 'admin' }]);
+  const [selectedOption, setSelectedOption] = useState('');
+  const [isTeacher, setIsTeacher] = useState(false);
   const [classError, setClassError] = useState('');
+  const [roleItems, setRoleItems] = useState([
+    { id: 1, Selected: 0, Name: "Manage-Classes" },
+    { id: 2, Selected: 0, Name: "Nursery-Profile" },
+    { id: 3, Selected: 0, Name: "Meals" },
+    { id: 4, Selected: 0, Name: "Newsletter" },
+    { id: 5, Selected: 0, Name: "Nursery-Policy" },
+    { id: 6, Selected: 0, Name: "Faq" },
+    { id: 7, Selected: 0, Name: "Payment-Bills" },
+    { id: 8, Selected: 0, Name: "Payment-Request" },
+    { id: 9, Selected: 0, Name: "Admins" },
+    { id: 10, Selected: 0, Name: "Subjects" },
+    { id: 11, Selected: 0, Name: "Schedule" },
+    { id: 12, Selected: 0, Name: "Chats" }
+  ]);
+  const [roleItemsError, setRoleItemsError] = useState('');
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -30,7 +43,7 @@ const AddAdminModal = ({ isOpen, onClose, onAddAdmin }) => {
     setRoleError('');
     setEmailError('');
     setPhoneNumberError('');
-    setPasswordError('');
+    setRoleItemsError('');
 
     let isValid = true;
 
@@ -42,14 +55,9 @@ const AddAdminModal = ({ isOpen, onClose, onAddAdmin }) => {
     }
 
     // Role validation
+    console.log(selectedOption)
     if (selectedOption === '') {
       setRoleError('Role is required');
-      isValid = false;
-      return;
-
-    }
-    if (isTeacher&&selectedClass==='') {
-      setClassError('class is required');
       isValid = false;
       return;
 
@@ -83,89 +91,71 @@ const AddAdminModal = ({ isOpen, onClose, onAddAdmin }) => {
 
     }
 
-    // Password validation
-    if (password.trim() === '') {
-      setPasswordError('Password is required');
-      isValid = false;
+    if (roleItems.every(item => item.Selected === 0)) {
+      setRoleItemsError('At least one role item must be selected');
       return;
-
-    } else if (!validatePassword(password)) {
-      setPasswordError('Password must be at least 8 characters and Aa-Zz Characters');
-      isValid = false;
-      return;
-
     }
+
 
     if (!isValid) return;
     var temp = {
-        classes:[]
-      };
-    
-    if(isTeacher){
-        
-      
-      // setSelectedClass(0)
-      if(selectedClass === 0){
-
-        temp.classes = Classes
-        .filter(cls => cls.id !== 0) 
-        .map(cls => ({
-            class_id: cls.id
-        }));
-      }else{
-        temp.classes.push(
-          {
-            class_id:selectedClass,
-          }
-        );
-      }
-    }
-    
-    onAddAdmin( name, selectedOption, email, phoneNumber, password , temp  );
+      classes: []
+    };
+    console.log(name, selectedOption, email, phoneNumber);
+    onAddAdmin(name, selectedOption, email, phoneNumber , roleItems);
     clearData();
     onClose();
   };
 
-  useEffect(()=>{
-    GetData();
+  useEffect(() => {
     GetClasses();
-},[]);
-function validatePassword(password) {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    return passwordRegex.test(password);
-  }
-async function GetData() {
-    try {
+  }, []);
 
-        const response = await RolesServices.List();
-        setRoles(response.content);
-    
-        console.log(response.content)
-    } catch (error) {
-        console.log(error)
 
-    }
-}
   const clearData = () => {
     setName('');
     setRole('');
     setEmail('');
     setPhoneNumber('');
-    setPassword('');
     setNameError('');
     setRoleError('');
     setEmailError('');
     setPhoneNumberError('');
-    setPasswordError('');
     setSelectedClass('');
     setClassError('');
+    setSelectedOption('');
+    setRoleItems([
+      { id: 1, Selected: 0, Name: "Manage-Classes" },
+      { id: 2, Selected: 0, Name: "Nursery-Profile" },
+      { id: 3, Selected: 0, Name: "Meals" },
+      { id: 4, Selected: 0, Name: "Newsletter" },
+      { id: 5, Selected: 0, Name: "Nursery-Policy" },
+      { id: 6, Selected: 0, Name: "Faq" },
+      { id: 7, Selected: 0, Name: "Payment-Bills" },
+      { id: 8, Selected: 0, Name: "Payment-Request" },
+      { id: 9, Selected: 0, Name: "Admins" },
+      { id: 10, Selected: 0, Name: "Subjects" },
+      { id: 11, Selected: 0, Name: "Schedule" },
+      { id: 12, Selected: 0, Name: "Chats" }
+    ]);
+    setRoleItemsError('');
   };
-  const handleRoleChanged = (name)=>{
+
+  const handleCheckboxChange = (id) => {
+    setRoleItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, Selected: item.Selected === 0 ? 1 : 0 } : item
+      )
+    );
+    setRoleItemsError('');
+  };
+
+  const handleRoleChanged = (name) => {
     setSelectedOption(name);
-    if(name==='teacher')
+    if (name === 'teacher')
       setIsTeacher(true);
     else
-      setIsTeacher(false);  
+      setIsTeacher(false);
   }
 
 
@@ -174,17 +164,15 @@ async function GetData() {
     try {
 
       const response = await ClassService.List();
-      response.content.push({id:0 , name:'All'});
+      response.content.push({ id: 0, name: 'All' });
       setClasses(response.content);
-      
+
     } catch (error) {
-        console.log(error)
+      console.log(error)
 
     }
-}
-const handleClassChanged = (id)=>{
-  setSelectedClass(id);
-}
+  }
+
 
   if (!isOpen) return null;
 
@@ -213,7 +201,7 @@ const handleClassChanged = (id)=>{
               <RolesDropDown
                 onChange={handleRoleChanged}
                 Options={roles}
-                DefaultValue="Role :"
+                DefaultValue={selectedOption?selectedOption:'Role : '}
                 selectedValue={selectedOption}
                 onSelect={(value) => setRole(value)}
               />
@@ -221,23 +209,9 @@ const handleClassChanged = (id)=>{
                 <span className="text-danger PopUpValidation">{roleError}</span>
               )}
             </div>
-            {isTeacher&&
-              <div className="ChooseClass mt-2">
-              <ClassDropDown
-                onChange={handleClassChanged}
-                Options={Classes}
-                DefaultValue="Class :"
-                selectedValue={selectedClass}
-                onSelect={(value) => setSelectedClass(value)}
-              />
-              {classError && (
-                <span className="text-danger PopUpValidation">{classError}</span>
-              )}
-            </div>
 
 
-            }
-            
+
             <label>
               <input
                 type="text"
@@ -268,26 +242,25 @@ const handleClassChanged = (id)=>{
               )}
             </label>
 
-            <label>
-              <input
-                type="password"
-                name="password"
-                className={`ClassNameInput mt-2 ${passwordError?'':' mb-4'}`}
-                placeholder="Password :"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {passwordError && (
-                <span className="text-danger PopUpValidation mb-4">
-                  {passwordError}
-                </span>
-              )}
-            </label>
+            
+                <div className={`ChooseRoleItems ${roleItemsError ? '' : 'mb-1'} `}>
+                  {roleItems.map((item) => (
+                    <div className="RoleItem" key={item.id}>
+                      <input
+                        type="checkbox"
+                        value={item.id}
+                        id={item.Name}
+                        checked={item.Selected === 1}
+                        onChange={() => handleCheckboxChange(item.id)}
+                      />
+                      <label htmlFor={item.Name}>{item.Name}</label>
+                    </div>
+                  ))}
+                </div>
+                {roleItemsError && <span className="text-danger PopUpError mt-0 mb-4">{roleItemsError}</span>}
+              
 
-
-
-
-            <div className="form-buttons">
+            <div className="form-buttons mt-4">
               <button type="submit" className="RegisterBtn">
                 Save
               </button>

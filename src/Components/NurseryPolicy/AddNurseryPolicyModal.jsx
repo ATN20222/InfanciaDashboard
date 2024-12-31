@@ -20,10 +20,10 @@ const AddNurseryPolicyModal = ({ isOpen, onClose, onAddNurseryPolicy }) => {
       setDescriptionError('description is required');
       return;
     }
-    if(description.length<50 || description.length>1000){
-        setDescriptionError('description must be between 50 - 1000 characters');
-        return;
-    }
+    // if(description.length<50 || description.length>1000){
+    //     setDescriptionError('description must be between 50 - 1000 characters');
+    //     return;
+    // }
 
     onAddNurseryPolicy(title, description );
     clearData();

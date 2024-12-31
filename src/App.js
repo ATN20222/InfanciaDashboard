@@ -41,6 +41,7 @@ import FakeForm from "./Pages/Register/FakeForm";
 import Pay from "./Pages/Pay/Pay";
 import Subjects from "./Pages/Subjects/Subjects";
 import ClassesSchedule from "./Pages/Schedule/ClassesSchedule";
+import PaymentBillDetails from "./Pages/PaymentHistory/PaymentBillDetails";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -202,7 +203,7 @@ function App() {
             }
           />
           <Route
-            path="/paymenthistory"
+            path="/paymentbills"
             element={
               <PrivateRoute>
                 <MainLayout
@@ -210,6 +211,19 @@ function App() {
                   toggleSidebar={toggleSidebar}
                 >
                   <PaymentHistory />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/paymentbills/:id"
+            element={
+              <PrivateRoute>
+                <MainLayout
+                  sidebarOpen={sidebarOpen}
+                  toggleSidebar={toggleSidebar}
+                >
+                  <PaymentBillDetails />
                 </MainLayout>
               </PrivateRoute>
             }
@@ -319,7 +333,7 @@ function App() {
             }
           />
           <Route
-            path="/parentrequest"
+            path="/chats"
             element={
               <PrivateRoute>
                 <MainLayout

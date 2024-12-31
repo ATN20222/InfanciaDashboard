@@ -5,7 +5,7 @@ import DeleteSubjectModal from '../ManageClasses/DeleteSubjectModal';
 import './NurseryPolicyItem.css'
 import { PolicyServices } from '../../Service/Api';
 import toast, { Toaster } from 'react-hot-toast';
-const NurseryPolicyItem = ({id,Title , Description , DeletePolicy}) => {
+const NurseryPolicyItem = ({ id, Title, Description, DeletePolicy }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
 
@@ -30,26 +30,26 @@ const NurseryPolicyItem = ({id,Title , Description , DeletePolicy}) => {
                 <div className="col-lg-12 FAQItem">
                     <div className="FAQItemInnerContainer">
                         <div className="row">
-                           <div className="col-lg-12 PolicyHeader">
+                            <div className="col-lg-12 PolicyHeader">
                                 <div>
-                                <span>
-                                    {Title}
-                                </span>
+                                    <span>
+                                        {Title}
+                                    </span>
                                 </div>
-                                <div className='DeletePolicy' onClick={()=>setIsDeleteOverlayOpen(true)}>
-                                    <FontAwesomeIcon icon={faTrash}/>
+                                <div className='DeletePolicy Center' onClick={() => setIsDeleteOverlayOpen(true)}>
+                                    <FontAwesomeIcon icon={faTrash} />
                                 </div>
-                                
-                           </div>
-                           <div className="col-lg-12 PolicyDescription">
+
+                            </div>
+                            <div className="col-lg-12 PolicyDescription">
                                 <span>{Description}</span>
-                           </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-               
+
             </div>
-           
+
         </div>
     );
 };

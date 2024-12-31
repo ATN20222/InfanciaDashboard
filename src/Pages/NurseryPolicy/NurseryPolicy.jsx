@@ -101,7 +101,7 @@ const NurseryPolicy = () => {
                         id={row.id}
                         key={row.id}
                         Title={row.title}
-                        Description={row.description}
+                        Description={row.content}
                         DeletePolicy={handleDeletePolicy}
                     />
                 )):

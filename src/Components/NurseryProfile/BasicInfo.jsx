@@ -68,9 +68,14 @@ const BasicInfo = () => {
                             <span>Provided Services</span>
                         </div>
                         <ul className="list-unstyled">
-                            <li className="list-group-item">
-                                {/* <FontAwesomeIcon icon={faCircle} /> {info.services} */}
-                            </li>
+                            {info.services.length>0&&info.services.map((serv)=>(
+
+                                <li className="list-group-item">
+                                    <span>
+                                        {serv.type} : {serv.content}
+                                    </span>
+                                </li>
+                            ))}
 
                         </ul>
                     </div>

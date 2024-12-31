@@ -7,6 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { ClassService, KidsServices } from "../../Service/Api";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import KidProfileDropdown from "../../Components/DrobDown/KidProfileDropdown";
+import DemoImage from '../../Assets/images/INFANCIA_LOGO.png'
 import DeleteSubjectModal from '../../Components/ManageClasses/DeleteSubjectModal'
 const KidProfile = () => {
     const [birthdate, setBirthdate] = useState('');
@@ -47,10 +48,7 @@ const KidProfile = () => {
     const [ImageError, setImageError] = useState('');
     const [ImageFile, setImageFile] = useState('');
     const [loading, setLoading] = useState(false);
-    const Cities = ["El-Marg", "Ain Shams"];
-    const yearInputRef = useRef();
-    const monthInputRef = useRef();
-    const dayInputRef = useRef();
+    const [kidCurrentImage, setKidCurrentImage] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
@@ -60,9 +58,9 @@ const KidProfile = () => {
     const [kidLastName, setKidLastName] = useState('');
     const [kidLastNameError, setKidLastNameError] = useState('');
 
-    const [month , setMonth]  = useState('');
-    const [year  , setYear] = useState('');
-    const [day , setDay] = useState('');
+    const [month, setMonth] = useState('');
+    const [year, setYear] = useState('');
+    const [day, setDay] = useState('');
 
 
     useEffect(() => {
@@ -81,21 +79,13 @@ const KidProfile = () => {
         setLoading(true);
         event.preventDefault();
         let valid = true;
-
-
-        if (kidName === '') {
-            setKidNameError("Kid first name is required");
-            valid = false;
+        if (fatherName === '') {
+            setFatherNameError("Father name is required");
             setLoading(false);
-        } else {
-            setKidNameError('');
-        }
-        if (kidLastName === '') {
-            setKidLastNameError("Kid last name is required");
             valid = false;
-            setLoading(false);
+            return;
         } else {
-            setKidLastNameError('');
+            setFatherNameError('');
         }
 
         if (email === '') {
@@ -109,23 +99,6 @@ const KidProfile = () => {
             } else
                 setEmailError('email is invalid');
         }
-        if (ImageFile === null) {
-            setImageError("Kid image is required");
-            valid = false;
-            setLoading(false);
-            return;
-
-        } else {
-            setKidNameError('');
-        }
-        if (fatherName === '') {
-            setFatherNameError("Father name is required");
-            setLoading(false);
-            valid = false;
-            return;
-        } else {
-            setFatherNameError('');
-        }
         if (fatherMobile === '') {
             setFatherMobileError("Father mobile number is required");
             setLoading(false);
@@ -135,7 +108,6 @@ const KidProfile = () => {
         } else {
             setFatherMobileError('');
         }
-
         if (fatherJob === '') {
             setFatherJobError("Father job is required");
             setLoading(false);
@@ -145,8 +117,6 @@ const KidProfile = () => {
         } else {
             setFatherJobError('');
         }
-
-
         if (emergencyPhone === '') {
             setEmergencyPhoneError("Emergency phone is required");
             setLoading(false);
@@ -156,22 +126,46 @@ const KidProfile = () => {
         } else {
             setEmergencyPhoneError('');
         }
+        if (kidName === '') {
+            setKidNameError("Kid first name is required");
+            valid = false;
+            setLoading(false);
+        } else {
+            setKidNameError('');
+        }
+        if (kidLastName === '') {
+            setKidLastNameError("Kid last name is required");
+            valid = false;
+            setLoading(false);
+            return;
+        } else {
+            setKidLastNameError('');
+        }
+        if (!year || !month || !day) {
+            setDateError ('All birth date fields are required');
+            valid = false;
+            setLoading(false);
+            return;
+        }else {
+            setDateError('');
+        }
+        
+
 
 
         try {
+            const BirthDate = `${year}-${month}-${day}`;
             const response =
                 await KidsServices.Edit(
                     kidId,
-                    kidName, parentName,
-                    email, mobile,
-                    selectedGender,
-                    birthdate, city,
-                    address, selectedClass,
-                    fatherName, fatherMobile, fatherJob,
-                    motherName, motherMobile,
-                    motherJob, hasMedicalCase ? '1' : '0',
-                    emergencyPhone,
-                    // kidImage
+                    kidName,
+                    kidLastName,
+                    BirthDate,
+                    hasMedicalCase?1:0,
+                    'no',
+                    selectedClass,
+                    selectedGender?'boy':'girl',
+                    kidImage
                 );
             console.log(response);
             toast.success('Kid edited successfully');
@@ -179,8 +173,6 @@ const KidProfile = () => {
             setTimeout(() => {
                 navigate('/manageclasses');
             }, 2000);
-
-
 
         } catch (error) {
             console.log(error)
@@ -205,6 +197,9 @@ const KidProfile = () => {
             }
             setImageError('');
             setImageFile(file);
+            const reader = new FileReader();
+            reader.onloadend = () => setKidCurrentImage(reader.result);
+            reader.readAsDataURL(file);
         } else {
             setImageError('No file selected.');
         }
@@ -228,36 +223,27 @@ const KidProfile = () => {
         try {
 
             const response = await KidsServices.profile(kidId);
-            console.log(response);
+            // parent data 
+            setFatherName(response.content.parent.user.name);
+            setEmail(response.content.parent.user.email);
+            setFatherJob(response.content.parent.job);
+            setFatherMobile(response.content.parent.user.phone);
+            setEmergencyPhone(response.content.parent.emergency_phone);
+
+
+            // kid data 
+            setKId(response.content.id);
             setKidName(response.content.first_name);
             setKidLastName(response.content.last_name);
             setSelectedClass(response.content.class_room_id);
-            setKId(response.content.id);
-            // setParentName(response.content.parent.user.name);
-            // setEmail(response.content.parent.user.email);
-            // setFatherMobile(response.content.)
-            var birth_date = response.content.birth_date.split('-');
-            console.log("birth_date",response.content.birth_date);
-            setYear(birth_date[0])
-            setMonth(birth_date[1])
-            setDay(birth_date[2])
 
-            
-            setMobile(response.content.parent.user.phone);
-            setCity(response.content.city);
-            setAddress(response.content.address);
-            setSelectedGender(response.content.gender);
-            setClassId(response.content.class_id);
-            setFatherMobile(response.content.parent.father_mobile);
-            setFatherName(response.content.parent.father_name);
-            setMotherName(response.content.parent.mother_name);
-            setMotherMobile(response.content.parent.mother_mobile);
-            setMotherJob(response.content.parent.mother_job);
-            setFatherJob(response.content.parent.father_job);
-            setEmergencyPhone(response.content.parent.emergency_phone);
+            var birth_date = response.content.birth_date.split('-');
+            setYear(birth_date[0]);
+            setMonth(birth_date[1]);
+            setDay(birth_date[2]);
+            setSelectedGender(response.content.gender === 'boy' ? true : false);
             setHasMedicalCase(response.content.has_medical_case);
-            setKidImage(response.content.media[0]?.original_url)
-            // setImageFile(null);
+            setKidCurrentImage(response.content?.media ? response.content?.media[0]?.original_url : '');
 
         } catch (error) {
             console.log(error);
@@ -290,10 +276,6 @@ const KidProfile = () => {
         }
     }
 
-    const tableData = [
-        { id: 1, name: "Ahmed hamed", paymentId: 201, amount: "20$", class: "Class A", date: "20-8-2024", service: "Travel" },
-        { id: 2, name: "Ahmed hamed", paymentId: 204, amount: "20$", class: "Class B", date: "20-8-2024", service: "Travel" }
-    ];
 
     const handleBirthChange = (type, value) => {
         if (type === 'birthYear') {
@@ -307,9 +289,7 @@ const KidProfile = () => {
 
         }
     }
-    const handleGenderChange = () => {
 
-    }
 
     return (
         <section className="SecondSliderSection ManageClassesCompnent">
@@ -337,42 +317,32 @@ const KidProfile = () => {
             <form className="SubjectsContainer FormContainer" onSubmit={handleSubmit}>
                 <div className="row AddTeacherRow">
 
-                    <div className="col-lg-12 ParentsInformationHeader">
-                        <h5>Parent Information</h5>
-                    </div>
-                    <div className="col-lg-5 EmpFormCol KidParentData">
-                        <input type="text" className="EmpInput FathertNameInput" value={fatherName} onChange={(e) => setFatherName(e.target.value)} />
-                        <label className="EmpLabel EmpNameLabel" htmlFor="FathertName">Parent Name : </label>
-                        {fatherNameError && <span className="text-danger FormError">{fatherNameError}</span>}
-                    </div>
-                    <div className="col-lg-5 EmpFormCol KidDataCol">
-                        <input type="email" className="EmpInput KidEmailInput" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <label className="EmpLabel EmpNameLabel KidEmailLable" htmlFor="KidEmail">Email : </label>
-                        {emailError && <span className="text-danger FormError">{emailError}</span>}
-                    </div>
-                    <div className="col-lg-5 EmpFormCol KidParentData">
-                        <input type="number" className="EmpInput FathertMobInput" value={fatherMobile} onChange={(e) => setFatherMobile(e.target.value)} />
-                        <label className="EmpLabel EmpNameLabel" htmlFor="FathertMob">Parent Mobile : </label>
-                        {fatherMobileError && <span className="text-danger FormError">{fatherMobileError}</span>}
-                    </div>
-                    <div className="col-lg-5 EmpFormCol KidParentData">
-                        <input type="number" className="EmpInput EmergencyPhoneInput" value={emergencyPhone} onChange={(e) => setEmergencyPhone(e.target.value)} />
-                        <label className="EmpLabel EmpNameLabel" htmlFor="EmergencyPhone">Emergency Phone : </label>
-                        {emergencyPhoneError && <span className="text-danger FormError">{emergencyPhoneError}</span>}
-                    </div>
-                    <div className="col-lg-12 EmpFormCol KidParentData">
-                        <input type="text" className="EmpInput FathertJobInput" value={fatherJob} onChange={(e) => setFatherJob(e.target.value)} />
-                        <label className="EmpLabel EmpNameLabel" htmlFor="FathertJob">Parent Job : </label>
-                        {fatherJobError && <span className="text-danger FormError">{fatherJobError}</span>}
-                    </div>
 
-
-
-
+                    <div className="col-lg-12 KidInformationHeader">
+                        <h5>Kid Information</h5>
+                    </div>
                     <div className="col-lg-12 Center KidImageColForm mb-3">
                         <div className="CircleInPopUp Center KidImage">
+                            {/* <img src={kidImage} alt="" /> */}
 
-                            <label htmlFor="Image" className="upload-label">
+                            <label htmlFor="Image" className="upload-label Center">
+                                <div className="Cam">
+                                    <FontAwesomeIcon icon={faImage} />
+                                </div>
+                                <img
+                                    src={kidCurrentImage}
+                                    alt=""
+                                    className="ProfilePreview"
+                                    style={{
+                                        width: "150px",
+                                        height: "150px",
+                                        background: '#009fe3',
+                                        objectFit: "cover",
+                                        padding: '0',
+
+                                    }}
+                                />
+
                                 {/* <FontAwesomeIcon icon={faImage} className="upload-icon" /> */}
                                 <input
                                     type="file"
@@ -381,6 +351,7 @@ const KidProfile = () => {
                                     onChange={handleFileChange}
                                     style={{ display: 'none' }} // Hide the input element
                                 />
+
                                 {kidImage && <img src={kidImage} alt="Kid" width="100%" />}
                             </label>
 
@@ -420,15 +391,9 @@ const KidProfile = () => {
                         {kidLastNameError && <span className="text-danger FormError">{kidLastNameError}</span>}
                     </div>
 
-
-
                     <div className="col-lg-5 FormInputCol FormInputColReg">
                         <KidProfileDropdown onChange={handleSelectedClassChange} Options={classes} DefaultValue={selectedClass} />
                     </div>
-                    {/* <div className="col-lg-5 FormInputCol FormInputColReg">
-                        <CustomDropdown Options={["El-Marg","Ain Shams"]} DefaultValue={"Branch: "}/>
-                    </div> */}
-
 
                     <div className="col-lg-5 EmpFormCol">
                         <div className="TopInputTitle">Gender</div>
@@ -492,37 +457,6 @@ const KidProfile = () => {
                         {dateError && <span className="text-danger FormError">{dateError}</span>}
                     </div>
 
-
-
-
-                    {/* <section className="SecondSliderSection ManageClassesCompnent">
-             
-                    <div className="col-lg-12 ParentsInformationHeader">
-                        <h5>Payment History</h5>
-                    </div>
-             <div className="PaymentKidContainer">
-                 
-                 <div className="table-responsive TableContainer TableContainerHistoryPayment">
-                     <table className="table">
-                         <tbody>
-                             {tableData.map((row) => (
-                                 <tr key={row.id}>
-                                    
-                                     <td className="NamePayment" data-content={row.name}>{row.name}</td>
-                                     <td className="NamePayment" data-content={row.paymentId} >{row.paymentId}</td>
-                                     <td  className="NamePayment" data-content={row.class} >{row.class}</td>
-                                     <td>{row.amount}</td>
-                                     <td className="NamePayment" data-content={row.date}>{row.date}</td>
-                                     <td className="NamePayment" data-content={row.service}>{row.service}</td>
-                                     
-                                 </tr>
-                             ))}
-                         </tbody>
-                     </table>
-                 </div>
-             </div>
-             
-                    </section> */}
                     <div className="col-lg-12 EmpFormCol HasMedicalCaseCol">
                         <div className="InputSelectAll HasMedicalCase">
                             <input
@@ -534,6 +468,49 @@ const KidProfile = () => {
                             <label htmlFor="HasCase">Has Medical Case</label>
                         </div>
                     </div>
+
+
+                    <div className="col-lg-12 ParentsInformationHeader mt-4">
+                        <h5>Parent Information</h5>
+                    </div>
+                    <div className="col-lg-5 EmpFormCol KidParentData">
+                        <input disabled type="text" className="EmpInput FathertNameInput" value={fatherName}
+                        // onChange={(e) => setFatherName(e.target.value)} 
+
+                        />
+                        <label className="EmpLabel EmpNameLabel" htmlFor="FathertName">Parent Name : </label>
+                        {fatherNameError && <span className="text-danger FormError">{fatherNameError}</span>}
+                    </div>
+                    <div className="col-lg-5 EmpFormCol KidDataCol">
+                        <input disabled type="email" className="EmpInput KidEmailInput" value={email}
+                        // onChange={(e) => setEmail(e.target.value)} 
+                        />
+                        <label className="EmpLabel EmpNameLabel KidEmailLable" htmlFor="KidEmail">Email : </label>
+                        {emailError && <span className="text-danger FormError">{emailError}</span>}
+                    </div>
+                    <div className="col-lg-5 EmpFormCol KidParentData">
+                        <input disabled type="number" className="EmpInput FathertMobInput" value={fatherMobile}
+                        // onChange={(e) => setFatherMobile(e.target.value)} 
+                        />
+                        <label className="EmpLabel EmpNameLabel" htmlFor="FathertMob">Parent Mobile : </label>
+                        {fatherMobileError && <span className="text-danger FormError">{fatherMobileError}</span>}
+                    </div>
+                    <div className="col-lg-5 EmpFormCol KidParentData">
+                        <input disabled type="number" className="EmpInput EmergencyPhoneInput" value={emergencyPhone}
+                        // onChange={(e) => setEmergencyPhone(e.target.value)}
+                        />
+                        <label className="EmpLabel EmpNameLabel" htmlFor="EmergencyPhone">Emergency Phone : </label>
+                        {emergencyPhoneError && <span className="text-danger FormError">{emergencyPhoneError}</span>}
+                    </div>
+                    <div className="col-lg-12 EmpFormCol KidParentData">
+                        <input disabled type="text" className="EmpInput FathertJobInput" value={fatherJob}
+                        // onChange={(e) => setFatherJob(e.target.value)}
+                        />
+                        <label className="EmpLabel EmpNameLabel" htmlFor="FathertJob">Parent Job : </label>
+                        {fatherJobError && <span className="text-danger FormError">{fatherJobError}</span>}
+                    </div>
+
+
 
                     {!loading ?
                         <div className="col-lg-12 FormInputCol FormInputColReg RegisterBtns">

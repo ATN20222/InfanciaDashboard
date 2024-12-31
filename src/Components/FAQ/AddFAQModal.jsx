@@ -20,10 +20,10 @@ const AddFAQModal = ({ isOpen, onClose, onAddFAQ }) => {
         return;
 
     }
-    if(answer.length<50 || answer.length>1000){
-        setAnswerError('answer must be between 50 - 1000 characters');
-        return;
-    }
+    // if(answer.length<10 || answer.length>1000){
+    //     setAnswerError('answer must be between 10 - 1000 characters');
+    //     return;
+    // }
     onAddFAQ(question ,answer );
     ClearData();
     

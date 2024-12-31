@@ -26,6 +26,7 @@ const Gallery = () => {
   },[]);
 
   const handleAddGallery = async (albumName) => {
+    console.log(albumName);
     try {
       const response = await NurseryProfileService.AddAlbum(albumName);
       toast.success('Album added successfully');
@@ -49,7 +50,7 @@ const Gallery = () => {
   const handleGalleryClick = async (id) => {
     try {
       const response = await NurseryProfileService.ListGalleryImages(id);
-      setSelectedGallery(response.content)
+      setSelectedGallery(response.content.media)
     } catch (error) {
         console.error('Error:', error);
     }
@@ -158,7 +159,7 @@ const Gallery = () => {
       />
       <EditGalleryModal
         id={galleryToEdit?.id}
-        title={galleryToEdit?.title}
+        title={galleryToEdit?.name}
         isOpen={isEditOverlayOpen}
         onClose={() => setIsEditOverlayOpen(false)}
         onEditGallery={handleEditGallery}
@@ -218,7 +219,7 @@ const Gallery = () => {
                   <div className="GalleryImage Center" onClick={() => {handleGalleryClick(album.id); setCurrentGallery(album.id) }}>
                     <img src={GalleryTempImage} width="100%"  alt="" />
                   </div>
-                  <span className="AlbumName">{album.title}</span>
+                  <span className="AlbumName">{album.name}</span>
                   <div className="EditAlbumName" onClick={() => openEditModal(album)}>
                     <FontAwesomeIcon icon={faPen}/>
                   </div>

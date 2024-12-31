@@ -2,16 +2,25 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { NurseryProfileService } from "../../Service/Api";
+import { getNurseryId } from "../../Service/AxiosApi";
+import { icon } from "@fortawesome/fontawesome-svg-core";
+import toast, { Toaster } from "react-hot-toast";
 
 const EditProfilePopup = ({ show, onClose }) => {
   const [profilePic, setProfilePic] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [name , setName] = useState('');
   const [contactInfo, setContactInfo] = useState({
     address: "",
     phones: [{ id: null, text: "" }],
     emails: [{ id: null, text: "" }],
 
   });
+  const [notChangedData , setNotChangedData] = useState({
+    generate_branch:'',
+    city_id:'',
+    country_id:''
+  })
   const [about, setAbout] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -58,6 +67,12 @@ const EditProfilePopup = ({ show, onClose }) => {
       setLinks(social);
       setEmail(response.content.email);
       setPhoneNumber(response.content.phone);
+      setName(response.content.name);
+      setNotChangedData({
+        city_id:response.content.city_id,
+        country_id:response.content.country_id,
+        generate_branch:response.content.generate_branch
+      })
 
     } catch (error) {
       console.log(error)
@@ -157,30 +172,85 @@ const EditProfilePopup = ({ show, onClose }) => {
   };
 
   const handleSubmit = async () => {
-    console.log("profilePic", profilePic);
-    console.log("services", services);
-    console.log(
-      "links", links,
+    const data = {}
+    const serv = services.map(service => ({
+      id: service.id,
+      content: service.text,
+      nursery_id:getNurseryId()
+    }));
+    const emails = contactInfo.emails.map(em =>({
+      id:em.id,
+      link:em.text,
+      type:'email',
+      icon:'noIcon'
+    }));
+    const phones = contactInfo.phones.map(ph=>({
+      id:ph.id,
+      link:ph.text,
+      type:'phone',
+      icon:'noIcon'
+    }));
+    const allLinks = links.map(l=>({
+      id:l.id,
+      link:l.text,
+      type:'social',
+      icon:'noIcon'
+    }));
+    const contacts = [...emails, ...phones, ...allLinks];
+    data.services = serv;
+    data.contacts = contacts;
+    data.branches_number = startFees;
+    data.about = about;
+    data.address = contactInfo.address;
+    data.email = email;
+    data.phone = phoneNumber;
+    data.generate_branch = notChangedData.generate_branch;
+    data.city_id = notChangedData.city_id;
+    data.country_id = notChangedData.country_id;
+    data.name = name;
 
-    )
-    console.log(
-      "branches", startFees,
+    console.log(data);
+    // console.log(
+    //   "links", links,
 
-    )
-    console.log(
-      "about", about,
+    // )
+    // console.log(
+    //   "branches", startFees,
 
-    )
-    console.log(
+    // )
+    // console.log(
+    //   "about", about,
+
+    // )
+    // console.log(
 
 
-      "contactInfo", contactInfo
-    );
+    //   "contactInfo", contactInfo
+    // );
+    try {
+            
+      const response = await NurseryProfileService.UpdateNurseryProfile(data);
+      console.log(response);
+      toast.success('Profile edited successfully');
+
+      GetData();
+      
+  } catch (error) {
+      toast.error('Failed to edit profile');
+  }
+
+
   };
 
   return (
     show && (
       <div className="EditProfileModal modal show d-block" tabIndex="-1">
+        <div className="Toaster">
+                <Toaster
+                    position="top-right"
+                    reverseOrder={false}
+                />
+            </div>
         <div className="modal-dialog modal-lg">
           <div className="EditProfileModalContent modal-content">
             <div className="modal-header">
@@ -214,6 +284,15 @@ const EditProfilePopup = ({ show, onClose }) => {
                   accept="image/*"
                   onChange={handleProfilePicChange}
                 />
+              </div>
+              <div className="mb-4">
+              <label className="form-label EditProfileModalLabel">Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={name}
+                  onChange={(e) =>setName(e.target.value)}
+                  />
               </div>
 
               {/* Edit Contact Info */}

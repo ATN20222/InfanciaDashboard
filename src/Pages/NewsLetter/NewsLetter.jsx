@@ -122,12 +122,12 @@ const NewsLetter = () => {
                 <NewletterItem
                     key={row.id}
                     id={row.id}
-                    Image={row.media?.original_url}
+                    Image={row.media[0]?.original_url}
                     Likes={row.likes_counts?row.likes_counts:0}
                     Title={row.title}
                     PublishDate={formatDate(row.created_at) }
-                    PublisherImage={`https://ui-avatars.com/api/?rounded=true&name=${row.class_room?.name}&background=random`}
-                    PublisherName={row.is_private?row.class_room?.name:'All Classes'}
+                    PublisherImage={`https://ui-avatars.com/api/?rounded=true&name=${row.class_room?row.class_room?.name:'All Classes'}&background=random`}
+                    PublisherName={(row.is_private&&row.class_room )?row.class_room?.name:'All Classes'}
                     Text={row.content}
                     OnDeleteNewsletter={HandleDeleteNewsletter}
                 />

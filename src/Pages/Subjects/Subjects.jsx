@@ -166,7 +166,7 @@ const Subjects = () => {
                 <div className="SubjectsContainer ClassesAllToAssignContainer">
                     <div className="ClassesToAssignContainer">
                         {classes?.length > 0
-                            ? classes.map((cls, index) => (
+                            ? classes.filter(c=>c.has_subjects===1).map((cls, index) => (
                                 <ClassCard key={index} cls={cls} onDropSubject={handleDropSubject} />
                             ))
                             : <span>No classes added yet</span>}

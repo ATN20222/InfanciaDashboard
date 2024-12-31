@@ -22,14 +22,11 @@ const ManageClassesCompnent = ({ IsMeals, ChangeClass }) => {
     }, []);
 
 
-    const handleEditClass = async (id, className, classAgeFrom, classAgeTo, hasMeal, hasSubject) => {
+    const handleEditClass = async (id, className, classAgeFrom, classAgeTo, hasMeal, hasSubject,has_nap ,has_toilet) => {
 
         try {
-
-            console.log(id, className, classAgeFrom, classAgeTo);
-            const response = await ClassService.Edit(id, className, classAgeFrom, classAgeTo, hasMeal ? 1 : 0, hasSubject ? 1 : 0);
+            const response = await ClassService.Edit(id, className, classAgeFrom, classAgeTo, hasMeal ? 1 : 0, hasSubject ? 1 : 0, has_nap?1:0,has_toilet?1:0);
             toast.success('Class edited successfully');
-
             GetData();
         } catch (error) {
             console.log(error)
@@ -43,10 +40,10 @@ const ManageClassesCompnent = ({ IsMeals, ChangeClass }) => {
         setIsEditOverlayOpen(true);
     }
 
-    const handleAddClass = async (className, ClassAgeFrom, ClassAgeTo, hasMeal, hasSubjects) => {
+    const handleAddClass = async (className, ClassAgeFrom, ClassAgeTo, hasMeal, hasSubjects , has_nap ,has_toilet) => {
         try {
 
-            const response = await ClassService.Add(className, ClassAgeFrom, ClassAgeTo, hasMeal ? 1 : 0, hasSubjects ? 1 : 0);
+            const response = await ClassService.Add(className, ClassAgeFrom, ClassAgeTo, hasMeal ? 1 : 0, hasSubjects ? 1 : 0 , has_nap?1:0,has_toilet?1:0);
             console.log(response);
             toast.success('Class added successfully');
             GetData();

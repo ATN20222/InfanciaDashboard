@@ -9,7 +9,7 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, ArcElement, LineElement
 
 const Home = () => {
     const [employeesCount, setEmployeesCount] = useState('');
-    const [employeesTeacherCount, setEmployeesTeacherCount] = useState('');
+    const [parentsCounts, setParentsCounts] = useState('');
     const [kidsCount, setKidsCount] = useState('');
     const [classesCount, setClassesCount] = useState('');
 
@@ -25,10 +25,10 @@ const Home = () => {
     async function GetData() {
         try {
             const response = await NurseryProfileService.HomeInfo();
-            setClassesCount(response.content.classes_count)
-            setEmployeesCount(response.content.employees_count);
-            setKidsCount(response.content.kids_count)
-            setEmployeesTeacherCount(response.content.employees_teacher_count)
+            setClassesCount(response.content.classRooms_counts)
+            setEmployeesCount(response.content.users_counts);
+            setKidsCount(response.content.kids_counts)
+            setParentsCounts(response.content.parent_counts)
         } catch (error) {
             toast.error(`${error}`);
         }
@@ -47,11 +47,11 @@ const Home = () => {
     };
 
     const pieData = {
-        labels: ['Teachers', 'Admins'],
+        labels: ['Parents', 'Kids'],
         datasets: [
             {
                 label: 'Distribution',
-                data: [employeesTeacherCount, employeesCount],
+                data: [parentsCounts, kidsCount],
                 backgroundColor: ['#ED6D91', '#009FE3'],
                 hoverOffset: 4,
             },
@@ -109,7 +109,7 @@ const Home = () => {
                         <HomeCard 
                             Title={"Roles"} 
                             Text={"View admins roles and manage them easy"}
-                            Number={employeesTeacherCount}
+                            Number={parentsCounts}
                             link={'roles'}
                         />
                     </div>

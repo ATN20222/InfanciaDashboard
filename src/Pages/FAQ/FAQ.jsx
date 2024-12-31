@@ -7,60 +7,56 @@ import AddFAQModal from "../../Components/FAQ/AddFAQModal";
 import { FAQServices } from "../../Service/Api";
 import toast, { Toaster } from "react-hot-toast";
 const FAQ = () => {
-    const [faq , setFaq] = useState([]);
-    useEffect(()=>{
+    const [faq, setFaq] = useState([]);
+    useEffect(() => {
         GetData();
-    },[]);
-    
+    }, []);
+
 
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
-    
 
-    const handleAddFAQ = async (question , answer) => {
+
+    const handleAddFAQ = async (question, answer) => {
         try {
-    
-            const response = await FAQServices.Add(question , answer);
-            
+            const response = await FAQServices.Add(question, answer);
             toast.success('FAQ added successfully');
             GetData();
-            
-          } catch (error) {
+        } catch (error) {
             toast.error('failed to add FAQ');
-      
-          }
-      };
+        }
+    };
 
     async function GetData() {
-        
+
         try {
-    
-        const response = await FAQServices.List();
-        console.log(response)
-        setFaq(response.content)
-      } catch (error) {
-        toast.error('failed to get data');
-  
-      }
-        
+
+            const response = await FAQServices.List();
+            console.log(response)
+            setFaq(response.content)
+        } catch (error) {
+            toast.error('failed to get data');
+
+        }
+
     }
     const handleDeleteFaq = async (id) => {
         try {
-    
+
             const response = await FAQServices.Delete(id);
             toast.success('FAQ deleted successfully');
             GetData();
-            
-          } catch (error) {
+
+        } catch (error) {
             toast.error('failed to delete FAQ');
-      
-          }
+
+        }
     };
-      
+
 
     return (
         <section className="SecondSliderSection ManageClassesCompnent">
-             <AddFAQModal
+            <AddFAQModal
                 isOpen={isOverlayOpen}
                 onClose={() => setIsOverlayOpen(false)}
                 onAddFAQ={handleAddFAQ}
@@ -90,20 +86,17 @@ const FAQ = () => {
             <div className="DropDownContainer">
 
                 <div className="row">
-                {faq.map((row) => (
-                    <FAQItem 
-                        key={row.id}
-                        id={row.id}
-                        Question={row.questions}
-                        Answer={row.answer}
-                        handleDalete={handleDeleteFaq}
-                    />
-                ))}
+                    {faq.map((row) => (
+                        <FAQItem
+                            key={row.id}
+                            id={row.id}
+                            Question={row.question}
+                            Answer={row.answer}
+                            handleDalete={handleDeleteFaq}
+                        />
+                    ))}
                 </div>
             </div>
-            
-                
-           
         </section>
     );
 };

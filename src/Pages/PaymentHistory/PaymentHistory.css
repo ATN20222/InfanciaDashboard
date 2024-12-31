@@ -140,6 +140,24 @@
 .PaymentHistoryCol:nth-child(8){
     padding-right: 5px !important;
 }
+.PaymentStatus{
+    cursor: pointer;
+    text-decoration: underline;
+}
+.pending{
+    color: orange  !important;
+}
+.review{
+    color: var(--color-pink)  !important;
+
+}
+.accepted{
+    color: green  !important;
+
+}
+.PaymentImage img{
+    border-radius: 25px;
+}
 @media (max-width:1062px) {
     .TableContainer .NamePayment::after {
         content: attr(data-content);

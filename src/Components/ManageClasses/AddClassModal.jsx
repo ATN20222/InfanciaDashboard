@@ -8,12 +8,16 @@ const AddClassModal = ({ isOpen, onClose, onAddClass }) => {
     const [classAgeFrom, setClassAgeFrom] = useState('');
     const [classAgeTo, setClassAgeTo] = useState('');
     const [hasMeal, setHasMeal] = useState(false);
+    const [hasNap, setHasNap] = useState(false);
+    const [hasToilet, setHasToilet] = useState(false);
+    const [checkboxError, setCheckboxError] = useState('');
     const [hasSubject, setHasSubject] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setClassNameError("");
         setClassAgeFromToError("");
+        setCheckboxError('');
 
         if (className === '') {
             setClassNameError("Class name is required");
@@ -29,10 +33,17 @@ const AddClassModal = ({ isOpen, onClose, onAddClass }) => {
             return;
         }
 
-        onAddClass(className, classAgeFrom, classAgeTo, hasMeal, hasSubject);
+        if (!(hasMeal || hasNap || hasToilet || hasSubject)) {
+            setCheckboxError('You must choose one at least');
+            return;
+        }
+
+        onAddClass(className, classAgeFrom, classAgeTo, hasMeal, hasSubject, hasNap, hasToilet);
         setClassName('');
         setClassAgeFrom('');
         setClassAgeTo('');
+        setHasNap(false);
+        setHasToilet(false);
         setHasMeal(false);
         setHasSubject(false);
         onClose();
@@ -44,10 +55,13 @@ const AddClassModal = ({ isOpen, onClose, onAddClass }) => {
         setClassName('');
         setClassAgeFrom('');
         setClassAgeTo('');
+        setCheckboxError('')
         setClassNameError('');
         setClassAgeFromToError('');
         setHasMeal(false);
         setHasSubject(false);
+        setHasMeal(false);
+        setHasNap(false);
     };
 
     return (
@@ -104,21 +118,48 @@ const AddClassModal = ({ isOpen, onClose, onAddClass }) => {
                             </label>
 
                         </div>
+                        
 
 
+                        <div className="HasContainer">
 
+                            <label className="checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    checked={hasSubject}
+                                    onChange={(e) => setHasSubject(e.target.checked)}
+                                />
+                                Has Subjects
+                            </label>
+                        </div>
 
-                            <div className="HasContainer">
+                        <div className="HasContainer">
 
-                                <label className="checkbox-label">
-                                    <input
-                                        type="checkbox"
-                                        checked={hasSubject}
-                                        onChange={(e) => setHasSubject(e.target.checked)}
-                                    />
-                                    Has Subjects
-                                </label>
-                            </div>
+                            <label className="checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    checked={hasNap}
+                                    onChange={(e) => setHasNap(e.target.checked)}
+                                />
+                                Has Nap
+                            </label>
+
+                        </div>
+                        <div className="HasContainer">
+
+                            <label className="checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    checked={hasToilet}
+                                    onChange={(e) => setHasToilet(e.target.checked)}
+                                />
+                                Has Toilet
+                            </label>
+
+                        </div>
+                        {checkboxError && (
+                            <span className='text-danger PopUpValidation mb-3'>{checkboxError}</span>
+                        )}
 
 
                         <div className="form-buttons mt-3">

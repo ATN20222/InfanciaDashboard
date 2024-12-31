@@ -32,7 +32,6 @@ const FAQItem = ({id ,Question , Answer , handleDalete}) => {
                                 <span className='Quest'>{Question}</span>
                                 <div className="DeleteFAQ" onClick={()=>setIsDeleteOverlayOpen(true)}>
                                     <span>
-
                                         <FontAwesomeIcon icon={faTrash}/>
                                     </span>
                                 </div>

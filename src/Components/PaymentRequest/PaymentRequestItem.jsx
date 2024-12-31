@@ -45,7 +45,7 @@ const PaymentRequestItem = ({ SelectedClassId }) => {
                 kids,
                 title: serviceName,
                 amount:amount,
-                descirption:description,
+                description:description,
                 status:status?'mandatory':'optional',
                 branch_id:getBranchId(),
                 nursery_id:getNurseryId()
@@ -156,7 +156,7 @@ const PaymentRequestItem = ({ SelectedClassId }) => {
                                     <td>{kid.id}</td>
                                     <td className="text-center">
                                         <img
-                                            src={kid.media ? kid?.media[0]?.original_url : kidImage}
+                                            src={(kid.media&& kid?.media[0]?.original_url) ? kid?.media[0]?.original_url : kidImage}
                                             width="30px"
                                             alt={`${kid.kid_name} avatar`}
                                             className="avatar"
