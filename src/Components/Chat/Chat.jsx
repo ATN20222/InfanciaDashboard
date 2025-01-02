@@ -7,57 +7,51 @@ import Message from "./Message";
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import { ParentRequestServices } from "../../Service/Api";
-import { getNurseryId } from "../../Service/AxiosApi";
+import { getBranchId, getToken } from "../../Service/AxiosApi";
 
 window.Pusher = Pusher;
-
 const echo = new Echo({
-  broadcaster: 'pusher',
-  key: '9dcc0082ae400746d639',
-  cluster: 'ap2',
-  forceTLS: true,
+    broadcaster: 'pusher',
+    key: '81c558fbfd3ec3d7f363',
+    cluster: 'eu',
+    forceTLS: true,
+    authEndpoint: 'https://orchid-aardvark-632100.hostingersite.com/broadcasting/auth',
+    auth: {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        },
+    },
 });
 
-const Chat = ({ SelectedUserId, Name, close , ClosedChat ,ChatId }) => {
+const Chat = ({ SelectedUserId, Name, close, ClosedChat, ChatId }) => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
-    const messagesEndRef = useRef(null); // Reference for scrolling to bottom
-    console.log("ClosedChat", ClosedChat)
-    const currentUserId = getNurseryId();
+    const messagesEndRef = useRef(null);
+    const currentUserId = getBranchId();
 
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const response = await ParentRequestServices.ListMessages(SelectedUserId , ChatId);
-                setMessages(response.content);
+                const response = await ParentRequestServices.ListMessages(ChatId);
+                setMessages(response.content.messages);
+                // console.log
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         };
 
         fetchMessages();
-    }, [SelectedUserId]);
+    }, [ChatId]);
 
     useEffect(() => {
-        const pusher = new Pusher('616758b3b6d8b0296845', {
-            cluster: 'eu',
-            encrypted: true,
+        const channel = echo.private(`chat.${ChatId}`);
+        channel.listen('MessageSent', (data) => {
+            setMessages((prevMessages) => [...prevMessages, data.content]);
         });
-
-        const senderId = getNurseryId();
-        const receiverId = SelectedUserId;
-        const channelName = `chat.${Math.min(senderId, receiverId)}.${Math.max(senderId, receiverId)}`;
-        const channel = pusher.subscribe(channelName);
-        channel.bind('chatMessage', function (data) {
-            let obj = JSON.parse(data.content);
-            setMessages((prevMessages) => [...prevMessages, obj]);
-        });
-
         return () => {
-            channel.unbind_all();
-            channel.unsubscribe();
+            echo.leave(`chat.${ChatId}`);
         };
-    }, [SelectedUserId]);
+    }, [ChatId]);
 
     useEffect(() => {
         if (messagesEndRef.current) {
@@ -69,10 +63,11 @@ const Chat = ({ SelectedUserId, Name, close , ClosedChat ,ChatId }) => {
         const msg = newMessage;
         setNewMessage('');
         try {
-            await ParentRequestServices.SendMessages(SelectedUserId, msg);
+            await ParentRequestServices.SendMessages(ChatId, msg);
             setNewMessage('');
+
         } catch (error) {
-            setNewMessage(msg)
+            setNewMessage(msg);
             console.error('Send Message Error:', error);
         }
     };
@@ -91,13 +86,6 @@ const Chat = ({ SelectedUserId, Name, close , ClosedChat ,ChatId }) => {
                             </div>
                         </div>
                     </div>
-                    {!ClosedChat&&
-                      <div className="col-lg-1 col-md-1 col-sm-1 col-1 Center p-1 CloseRequest">
-                          <FontAwesomeIcon icon={faBan} />
-                          <span className="tooltip-text"><div className="text">Close Request</div></span>
-                      </div>
-                    }
-                  
                 </div>
             </div>
 
@@ -105,26 +93,25 @@ const Chat = ({ SelectedUserId, Name, close , ClosedChat ,ChatId }) => {
                 <div className="row EditMailRow">
                     <div className="col-lg-12 col-md-12 ChatArea">
                         {messages.map((message) => (
-                            <Message key={message.id} msg={message} sent={SelectedUserId === message.sender} />
+                            <Message key={message?.id} msg={message} sent={currentUserId !== message?.sender_id} />
                         ))}
                         <div ref={messagesEndRef} /> {/* Scroll target */}
                     </div>
-                    {!ClosedChat&&
-                      <div className="col-lg-12 col-md-12 BottomChatBar">
-                      <input
-                          className="col-lg-12 form-control EmailInput MessageInput"
-                          dir="rtl"
-                          placeholder={'Write your message'}
-                          type="text"
-                          value={newMessage}
-                          onChange={(e) => setNewMessage(e.target.value)}
-                      />
-                      <button className="Send" onClick={sendMessage}>
-                          <FontAwesomeIcon icon={faPaperPlane} />
-                      </button>
-                  </div>
+                    {!ClosedChat &&
+                        <div className="col-lg-12 col-md-12 BottomChatBar">
+                            <input
+                                className="col-lg-12 form-control EmailInput MessageInput"
+                                dir="rtl"
+                                placeholder="Write your message"
+                                type="text"
+                                value={newMessage}
+                                onChange={(e) => setNewMessage(e.target.value)}
+                            />
+                            <button className="Send" onClick={sendMessage}>
+                                <FontAwesomeIcon icon={faPaperPlane} />
+                            </button>
+                        </div>
                     }
-                    
                 </div>
             </li>
         </ul>

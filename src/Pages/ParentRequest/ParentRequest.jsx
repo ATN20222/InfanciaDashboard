@@ -8,12 +8,13 @@ import ReplyRequest from "../../Components/ParentRequest/ReplyRequest";
 import ClosedRequestItem from "../../Components/ParentRequest/ClosedRequestItem";
 import axios from "axios";
 import { ParentRequestServices } from "../../Service/Api";
+import AddChatModal from "./AddChatModal";
+import toast, { Toaster } from "react-hot-toast";
 
 const ParentRequest = () => {
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
-    const [SelectedTab, setSelectedTab] = useState(1);
-    const [opendRequests, setOpendRequests] = useState([]);
-    const [closedRequests, setClosedRequests] = useState([]);
+    const [isAddOverlayOpen, setIsAddOverlayOpen] = useState(false);
+    const [chats, setchats] = useState([]);
     const [SelectedRequestToReply, setSelectedRequestToReply] = useState(null);
 
     useEffect(() => {
@@ -24,10 +25,9 @@ const ParentRequest = () => {
         try {
             const response = await ParentRequestServices.ListRequests();
             console.log(response.content);
-            const o = response.content.filter(i => i.closed === 0);
-            const m = response.content.filter(i => i.closed === 1);
-            setOpendRequests(o);
-            setClosedRequests(m);
+
+            setchats(response.content);
+            // setClosedRequests(m);
         } catch (error) {
             console.error(error);
         }
@@ -40,11 +40,11 @@ const ParentRequest = () => {
     const handleCloseChat = () => {
         setIsOverlayOpen(false);
     };
-    
+
     function formatDate(isoDateString) {
         const date = new Date(isoDateString);
         const now = new Date();
-    
+
         const diffInMilliseconds = now - date;
         const diffInSeconds = Math.floor(diffInMilliseconds / 1000);
         const diffInMinutes = Math.floor(diffInSeconds / 60);
@@ -52,7 +52,7 @@ const ParentRequest = () => {
         const diffInDays = Math.floor(diffInHours / 24);
         const diffInMonths = Math.floor(diffInDays / 30);
         const diffInYears = Math.floor(diffInMonths / 12);
-    
+
         if (diffInSeconds < 60) {
             return diffInSeconds === 1 ? "1 second ago" : `${diffInSeconds} seconds ago`;
         } else if (diffInMinutes < 60) {
@@ -67,60 +67,77 @@ const ParentRequest = () => {
             return diffInYears === 1 ? "1 year ago" : `${diffInYears} years ago`;
         }
     }
-    
+    const handleAddChat = async (id) => {
+        try {
+            const response = await ParentRequestServices.AddChat(id);
+            toast.success('Chat added successfully');
+            GetData();
+
+        } catch (error) {
+            toast.error(`${error}`);
+        }
+    }
+
     return (
         <section className="SecondSliderSection ManageClassesCompnent ParentRequestSection">
-            {SelectedRequestToReply && SelectedRequestToReply.sender && (
+            {isAddOverlayOpen &&
+                <AddChatModal
+                    isOpen={isAddOverlayOpen}
+                    onAddChat={handleAddChat}
+                    onClose={() => setIsAddOverlayOpen(false)}
+                />
+            }
+            <div className="Toaster">
+                <Toaster
+                    position="top-right"
+                    reverseOrder={false}
+                />
+            </div>
+
+            <div className="Container HeadContainer">
+                <div className="row">
+                    <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+                        <div className="HeadLeftItem">
+                            Chats
+                        </div>
+                    </div>
+                    <div className="col-lg-6 col-md-6 col-sm-6 col-6 HeadRightCol">
+                        {/* <div className="SearchPayment SearchCol">
+                                <input type="text" className="FormInput" name="" id="" placeholder="Search..."/>
+                            </div> */}
+                        <div className="HeadRightItem">
+                            <div className="CirclePlus" onClick={() => setIsAddOverlayOpen(true)}>
+                                <FontAwesomeIcon icon={faPlus} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {SelectedRequestToReply && (
                 <ReplyRequest
                     id={SelectedRequestToReply.id}
-                    closedRequest={SelectedRequestToReply.closed}
-                    userId={SelectedRequestToReply.sender.id}
-                    userName={SelectedRequestToReply.sender.name}
+                    userId={SelectedRequestToReply.user?.id}
+                    userName={SelectedRequestToReply.user?.name}
                     isOpen={isOverlayOpen}
                     onClose={handleCloseChat}
                     onReply={handleReply}
                 />
             )}
 
-            <div className="Container HeadContainer">
-                <div className="row ParentRequestRow">
-                    <div
-                        className={`col-lg-6 col-md-6 col-sm-6 col-6 Center OpenRequestCol ${SelectedTab === 1 ? "SelectedRequest" : ""}`}
-                        onClick={() => setSelectedTab(1)}
-                    >
-                        Open Request
-                    </div>
-                    <div
-                        className={`col-lg-6 col-md-6 col-sm-6 col-6 Center ClosedRequestCol ${SelectedTab === 2 ? "SelectedRequest" : ""}`}
-                        onClick={() => setSelectedTab(2)}
-                    >
-                        Closed Request
-                    </div>
-                </div>
-            </div>
 
-            {SelectedTab === 1 ? opendRequests.map((row) => (
+
+            {chats.map((row) => (
                 <div className="RequestItemContainer" key={row.id} onClick={() => { setSelectedRequestToReply(row); setIsOverlayOpen(true); }}>
                     <ParentRequestItem
-                        PublishDate={formatDate(row.message.created_at)}
+                        PublishDate={row.messages[0]?formatDate(row.messages[0]?.created_at):''}
                         PublisherImage={row.PublisherImage}
-                        PublisherName={row.sender.name}
-                        Text={row.message.message}
+                        PublisherName={row.user?.name}
+                        Text={row.messages[0]?.message}
                         IsPopUp={false}
                     />
                 </div>
-            )) :
-                closedRequests.map((row) => (
-                    <div className="RequestItemContainer" key={row.id} onClick={() => { setSelectedRequestToReply(row); setIsOverlayOpen(true); }}>
-                        <ParentRequestItem
-                            PublishDate={row.PublishDate}
-                            PublisherImage={row.PublisherImage}
-                            PublisherName={row.sender.name}
-                            Text={row.Text}
-                            IsPopUp={false}
-                        />
-                    </div>
-                ))}
+            ))}
         </section>
     );
 };

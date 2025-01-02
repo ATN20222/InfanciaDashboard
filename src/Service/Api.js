@@ -158,8 +158,8 @@ const AuthService = {
       formData.append("name", name);
       formData.append("email", email);
       formData.append("phone", phone);
-      formData.append("city_id", city);
-      formData.append("country_id", country);
+      formData.append("city", city);
+      formData.append("country", country);
       formData.append("address", address);
       formData.append("branches_number", branches_number);
       formData.append("about", about);
@@ -772,19 +772,25 @@ const MealsServices = {
 const ParentRequestServices = {
   ListRequests: async () => {
     try {
-      const id = getNurseryId();
-      const response = await axiosInstance.get(`/chat/get-request/${id}`);
+      const response = await axiosInstance.get(`/chats?branch_id=${getBranchId()}`);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
       //throw new Error('Failed to get data');
     }
   },
-  ListMessages: async (reciver_id, chat_id) => {
+  ListParents: async () => {
     try {
-      const response = await axiosInstance.get(
-        `/chat/messages/${reciver_id}/${chat_id}`
-      );
+      const response = await axiosInstance.get(`/parents?branch_id=${getBranchId()}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+      //throw new Error('Failed to get data');
+    }
+  },
+  ListMessages: async (chat_id) => {
+    try {
+      const response = await axiosInstance.get(`/chats/${chat_id}`);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -792,20 +798,25 @@ const ParentRequestServices = {
     }
   },
 
-  SendMessages: async (receiver, message) => {
+  SendMessages: async (chat_id, message) => {
     try {
-      const response = await axiosInstance.post(
-        `/chat/send-message`,
-        {
-          receiver: receiver,
-          message: message,
-        }
-        // , {
-        //   headers: {
-        //     Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2xpZ2h0c2t5Ymx1ZS1wb3Jwb2lzZS05MDMyNzEuaG9zdGluZ2Vyc2l0ZS5jb20vYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MjQxODYzNTMsImV4cCI6MTcyNDM2OTk1MywibmJmIjoxNzI0MTg2MzUzLCJqdGkiOiI1djVrMTk5VUNqdTRUcktzIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.teF8h9rW1xUPvs2GkZ1xU7Ot2a-NOimIQMqeyELUmuk`,
-        //   },
-        // }
-      );
+      const formData = new FormData();
+      formData.append('chat_id', chat_id);
+      formData.append('sender_id',getBranchId());
+      formData.append('message',message);
+      const response = await axiosInstance.post(`/chats/send/message`,formData);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+      //throw new Error('Failed to send');
+    }
+  },
+  AddChat: async (id) => {
+    try {
+      const formData = new FormData();
+      formData.append('branch_id',getBranchId());
+      formData.append('user_id',id);
+      const response = await axiosInstance.post(`/chats`,formData);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -952,13 +963,13 @@ const BranchesServices = {
       throw new Error(error.response.data.message);
     }
   },
-  Add: async (name, phone, email, city_id, country_id, address) => {
+  Add: async (name, phone, email, city, country, address) => {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("phone", phone);
     formData.append("email", email);
-    formData.append("city_id", city_id);
-    formData.append("country_id", country_id);
+    formData.append("city", city);
+    formData.append("country", country);
     formData.append("address", address);
     formData.append("nursery_id", getNurseryId());
 

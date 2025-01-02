@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
 
-const ParentRequestItem = ({PublisherImage , PublisherName, PublishDate , Text , IsPopUp })=>{
+const ParentRequestItem = ({ PublisherImage, PublisherName, PublishDate, Text, IsPopUp }) => {
 
-    
-    return(
-        <div className={`ParentRequestItem ${IsPopUp?"ParentRequestItemPopUp":""}`}>
-             
-            
+
+    return (
+        <div className={`ParentRequestItem ${IsPopUp ? "ParentRequestItemPopUp" : ""}`}>
+
+
             <div className="row">
                 <div className="col-lg-12 PostHeader">
                     <div className="PostTopLeft">
@@ -19,15 +19,15 @@ const ParentRequestItem = ({PublisherImage , PublisherName, PublishDate , Text ,
                             <span className="PublishDate">{PublishDate}</span>
                         </div>
                     </div>
-                    
+
 
 
                 </div>
                 <div className="col-lg-12 NewletterItemCol">
                     <span>{Text}</span>
                 </div>
-                
-               
+
+
             </div>
         </div>
 

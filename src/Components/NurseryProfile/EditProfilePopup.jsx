@@ -18,8 +18,8 @@ const EditProfilePopup = ({ show, onClose }) => {
   });
   const [notChangedData , setNotChangedData] = useState({
     generate_branch:'',
-    city_id:'',
-    country_id:''
+    city:'',
+    country:''
   })
   const [about, setAbout] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -51,7 +51,7 @@ const EditProfilePopup = ({ show, onClose }) => {
         text: item.link
       }
       ));
-      const social = response.content.contacts.filter(c => c.type === 'links').map(item => ({
+      const social = response.content.contacts.filter(c => c.type === 'social').map(item => ({
         id: item.id,
         text: item.link
       }
@@ -69,8 +69,8 @@ const EditProfilePopup = ({ show, onClose }) => {
       setPhoneNumber(response.content.phone);
       setName(response.content.name);
       setNotChangedData({
-        city_id:response.content.city_id,
-        country_id:response.content.country_id,
+        city:response.content.city,
+        country:response.content.country,
         generate_branch:response.content.generate_branch
       })
 
@@ -174,24 +174,24 @@ const EditProfilePopup = ({ show, onClose }) => {
   const handleSubmit = async () => {
     const data = {}
     const serv = services.map(service => ({
-      id: service.id,
+      id: service.id?service.id:'',
       content: service.text,
       nursery_id:getNurseryId()
     }));
     const emails = contactInfo.emails.map(em =>({
-      id:em.id,
+      id:em.id?em.id:'',
       link:em.text,
       type:'email',
       icon:'noIcon'
     }));
     const phones = contactInfo.phones.map(ph=>({
-      id:ph.id,
+      id:ph.id?ph.id:'',
       link:ph.text,
       type:'phone',
       icon:'noIcon'
     }));
     const allLinks = links.map(l=>({
-      id:l.id,
+      id:l.id?l.id:'',
       link:l.text,
       type:'social',
       icon:'noIcon'
@@ -205,8 +205,8 @@ const EditProfilePopup = ({ show, onClose }) => {
     data.email = email;
     data.phone = phoneNumber;
     data.generate_branch = notChangedData.generate_branch;
-    data.city_id = notChangedData.city_id;
-    data.country_id = notChangedData.country_id;
+    data.city = notChangedData.city;
+    data.country = notChangedData.country;
     data.name = name;
 
     console.log(data);

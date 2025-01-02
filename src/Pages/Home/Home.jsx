@@ -107,10 +107,10 @@ const Home = () => {
                 <div className="row Center">
                     <div className="col-lg-6">
                         <HomeCard 
-                            Title={"Roles"} 
-                            Text={"View admins roles and manage them easy"}
-                            Number={parentsCounts}
-                            link={'roles'}
+                            Title={"Kids"} 
+                            Text={"View kids roles and manage them easy"}
+                            Number={kidsCount}
+                            link={'/manageclasses'}
                         />
                     </div>
                     <div className="col-lg-6">
