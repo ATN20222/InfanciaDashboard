@@ -9,7 +9,7 @@ const DeleteSubjectModal = ({ id, isOpen, onClose, onDelete }) => {
     onDelete(id);
     onClose();
   };
-
+      
   if (!isOpen) return null;
 
   return (

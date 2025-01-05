@@ -18,7 +18,7 @@ function Sidebar({ isOpen, toggleSidebar, openConfirmLogoutModal }) {
     useEffect(() => {
         GetPermissions();
     }, []);
-
+    const [isOwner , setIsOwner] = useState(false);
     const [roleItems, setRoleItems] = useState([
         { id: 1, Selected: 0, Name: "Manage-Classes" },
         { id: 2, Selected: 0, Name: "Nursery-Profile" },
@@ -37,7 +37,7 @@ function Sidebar({ isOpen, toggleSidebar, openConfirmLogoutModal }) {
     async function GetPermissions() {
         try {
             const response = await AuthService.AuthRole();
-            const permissions = response.content; 
+            const permissions = response.content.permissions;
             let updatedRoleItems = [];
 
             if (response[0]?.role === "Nursery Owner") {
@@ -51,6 +51,10 @@ function Sidebar({ isOpen, toggleSidebar, openConfirmLogoutModal }) {
                     Selected: permissions.includes(item.Name) ? 1 : 0
                 }));
             }
+            updatedRoleItems.push(
+                { id: 13, Selected: response.content.role==='owner'?1:0, Name: "Branches" }
+            );
+
             console.log(updatedRoleItems);
             setRoleItems(updatedRoleItems);
         } catch (error) {

@@ -110,7 +110,7 @@ const Home = () => {
                             Title={"Kids"} 
                             Text={"View kids roles and manage them easy"}
                             Number={kidsCount}
-                            link={'/manageclasses'}
+                            link={'manageclasses'}
                         />
                     </div>
                     <div className="col-lg-6">

@@ -380,6 +380,15 @@ const SubjectServices = {
       //throw new Error('Failed to add');
     }
   },
+  Edit: async (id,title) => {
+    try {
+      const response = await axiosInstance.put(`/subjects/${id}?title=${title}&branch_id=${getBranchId()}&nursery_id=${getNurseryId()}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message); 
+      //throw new Error('Failed to add');
+    }
+  },
   Assign: async (subject_id, class_id) => {
     try {
       const formData = new FormData();
@@ -958,6 +967,14 @@ const BranchesServices = {
   List: async () => {
     try {
       const response = await axiosInstance.get(`/branches`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+    }
+  },
+  SetMainBranch: async (id) => {
+    try {
+      const response = await axiosInstance.post(`/branches/main/${id}`);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);

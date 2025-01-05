@@ -74,11 +74,10 @@ const AddNewsLetterModal = ({ isOpen, onClose, onAddNewsLetter }) => {
       valid = false;
     }
 
-    if (description === '') {
-      setDescriptionError("Description is required");
-      valid = false;
-
-    }
+    // if (description === '') {
+    //   setDescriptionError("Description is required");
+    //   valid = false;
+    // }
 
     if ( finalSelectedClass == 0 || finalSelectedClass === '') {
       setClassError('Class is required');

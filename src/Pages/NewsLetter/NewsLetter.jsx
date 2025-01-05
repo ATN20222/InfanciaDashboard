@@ -15,9 +15,9 @@ const NewsLetter = () => {
     useEffect(()=>{
         GetData();
     },[]);
-    const handleAddNewsLetter = async (description , image ,title , class_id) => {
+    const   handleAddNewsLetter = async (description , image ,title , class_id) => {
         try {
-          
+        
             const response = await NewsLetterServices.Add(description,title,class_id,image);
             toast.success('newsletter added successfully');
             GetData();  

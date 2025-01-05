@@ -46,7 +46,13 @@ const Chat = ({ SelectedUserId, Name, close, ClosedChat, ChatId }) => {
     useEffect(() => {
         const channel = echo.private(`chat.${ChatId}`);
         channel.listen('MessageSent', (data) => {
-            setMessages((prevMessages) => [...prevMessages, data.content]);
+            setMessages((prevMessages) => {
+                const isDuplicate = prevMessages.some(message => message.id === data.content.id);
+                if (!isDuplicate) {
+                    return [...prevMessages, data.content];
+                }
+                return prevMessages;
+            });
         });
         return () => {
             echo.leave(`chat.${ChatId}`);
@@ -65,7 +71,6 @@ const Chat = ({ SelectedUserId, Name, close, ClosedChat, ChatId }) => {
         try {
             await ParentRequestServices.SendMessages(ChatId, msg);
             setNewMessage('');
-
         } catch (error) {
             setNewMessage(msg);
             console.error('Send Message Error:', error);
@@ -99,12 +104,25 @@ const Chat = ({ SelectedUserId, Name, close, ClosedChat, ChatId }) => {
                     </div>
                     {!ClosedChat &&
                         <div className="col-lg-12 col-md-12 BottomChatBar">
-                            <input
+                            <textarea
                                 className="col-lg-12 form-control EmailInput MessageInput"
                                 dir="rtl"
-                                placeholder="Write your message"
+                                placeholder="Write your message..."
                                 type="text"
                                 value={newMessage}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        if (e.shiftKey) {
+                                            // Insert a new line instead of sending the message
+                                            e.preventDefault();
+                                            setNewMessage((prevMessage) => prevMessage + '\n');
+                                        } else {
+                                            // Send the message
+                                            e.preventDefault();
+                                            sendMessage();
+                                        }
+                                    }
+                                }}
                                 onChange={(e) => setNewMessage(e.target.value)}
                             />
                             <button className="Send" onClick={sendMessage}>

@@ -42,7 +42,7 @@ const AddMealSchedule = ({ isOpen, onClose, onAddMeal }) => {
     
   }
 
-  const daysOfWeek = ['Breakfast','Launch','Snacks'];
+  const daysOfWeek = ['Breakfast','Lunch','Snacks'];
 
   return (
     <div className="overlay">

@@ -1,36 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import CustomDropdown2 from '../DrobDown/CustomDropdown2';
-import SelectDayDropDown from '../DrobDown/SelectDayDropDown';
+import './AddClassModal.css';
 
-const EditMealSchedule = ({ isOpen, onClose, id, meal, type, onEditMeal }) => {
+const EditSubjectModal = ({ isOpen, subject, onClose, onEditSubject }) => {
     const [Subject, setSubject] = useState('');
     const [error, setError] = useState('');
-    const [dayError, setDayError] = useState('');
-    const [selectedDay, setSelectedDay] = useState('');
-    const handleChangeClass = (val) => {
-        setSelectedDay(val);
-    }
-    useEffect(() => {
-        setSubject(meal);
-        setSelectedDay(type);
-        handleChangeClass(type);
-    }, [id])
+    useEffect(()=>{
+        setSubject(subject?.title)
+    },[subject]);
 
     const handleSubmit = (e) => {
-        setError('');
-        setDayError('');
-
         e.preventDefault();
-        if (selectedDay.trim() === '') {
-            setDayError('Type is required');
-            return;
-        }
         if (Subject.trim() === '') {
-            setError('meal is required');
+            setError('Subject is required');
             return;
         }
-        
-        onEditMeal(id , Subject, selectedDay);
+        onEditSubject(subject?.id , Subject);
         setSubject('');
         setError('');
         onClose();
@@ -50,34 +34,24 @@ const EditMealSchedule = ({ isOpen, onClose, id, meal, type, onEditMeal }) => {
         setError('');
 
     }
-
-    const daysOfWeek = ['Breakfast', 'Lunch', 'Snacks'];
-
     return (
         <div className="overlay">
             <div className="mymodal">
                 <div className="modal-content">
-                    <h2>Add Meal</h2>
+                    <h2>Add Subject</h2>
                     <div className="FormHr"></div>
                     <form className="add-class-form addSubjectForm" onSubmit={handleSubmit}>
-                        <div className='mb-3'>
-                            <SelectDayDropDown onChange={handleChangeClass} DefaultValue={selectedDay} Options={daysOfWeek} />
-                            {dayError && <div className="text-danger PopUpError mt-0">{dayError}</div>}
-                        </div>
                         <label>
                             <input
                                 type="text"
-                                name="meal"
+                                name="Subject"
                                 className='ClassNameInput'
-                                placeholder='meal '
+                                placeholder='Subject '
                                 value={Subject}
                                 onChange={handleInputChange}
                             />
                             {error && <div className="text-danger PopUpError mt-0">{error}</div>}
                         </label>
-
-
-
                         <div className="form-buttons">
                             <button className="RegisterBtn">
                                 Save
@@ -93,4 +67,4 @@ const EditMealSchedule = ({ isOpen, onClose, id, meal, type, onEditMeal }) => {
     );
 };
 
-export default EditMealSchedule;
+export default EditSubjectModal;
