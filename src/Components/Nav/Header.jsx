@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Notifications from "./Notifications";
+import { getName } from "../../Service/AxiosApi";
 
 const Header = () => {
     const [openNotification, setOpenNotification] = useState(false);
@@ -39,7 +40,7 @@ const Header = () => {
                 <div className="row HeaderRow">
                     <div className="col-lg-6 col-md-6 col-sm-6 col-6 SearchCol">
                         <span className="text-start WelcomeText">
-                            Welcome, <span className="HeaderName">Kiddy Corner!</span>
+                            Welcome, <span className="HeaderName">{getName()}</span>
                         </span>
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-6 col-6 RightSideHeader">

@@ -165,7 +165,7 @@ const KidProfile = () => {
                     'no',
                     selectedClass,
                     selectedGender?'boy':'girl',
-                    kidImage
+                    ImageFile
                 );
             console.log(response);
             toast.success('Kid edited successfully');

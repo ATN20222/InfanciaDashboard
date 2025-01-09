@@ -53,6 +53,17 @@ export const setBranchId = (nursery_id) => {
 export const getBranchId = () => {
     return cookie.get('branch_id');
 };
+
+
+export const setName = (name) => {
+    cookie.set('Name', name, { path: '/' });
+};
+// Get NurseryName
+export const getName = () => {
+    return cookie.get('Name');
+};
+
+
 // Delete NurseryId
 export const deleteNurseryId = () => {
     cookie.remove('nursery_id', { path: '/' });

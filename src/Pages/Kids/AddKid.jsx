@@ -213,6 +213,7 @@ const AddKid = () => {
                     emergencyPhone,
                     formattedData);
                 
+                    // console.log(formattedData)
                 const response  = await KidsServices.Add(
                     fatherName, 
                     email,
@@ -221,7 +222,6 @@ const AddKid = () => {
                     emergencyPhone,
                     formattedData
                 )
-
                 toast.success('Kid added successfully');
                 setLoading(false);
                 setTimeout(() => {
@@ -430,7 +430,7 @@ const AddKid = () => {
                                 </div>
                             }
                             <div className="col-lg-12 Center KidImageColForm">
-                                {/* <div className="CircleInPopUp Center">
+                                <div className="CircleInPopUp Center">
                                     <label htmlFor={`Image-${index}`}>
                                         <FontAwesomeIcon icon={faImage} />
                                         <input
@@ -443,7 +443,7 @@ const AddKid = () => {
                                 </div>
                                 {kid.imageError && (
                                     <span className="text-danger FormError">{kid.imageError}</span>
-                                )}                             */}
+                                )}                            
                                 
                                 </div>
 

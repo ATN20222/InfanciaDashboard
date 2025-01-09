@@ -9,6 +9,7 @@ import axiosInstance, {
   deleteIsSuperAdmin,
   setBranchId,
   getBranchId,
+  setName,
 } from "./AxiosApi";
 
 const baseURL = "https://orchid-aardvark-632100.hostingersite.com/api";
@@ -88,6 +89,7 @@ const AuthService = {
       setNurseryId(response.data.nursery_id);
       setBranchId(response.data.branch_id);
       setIsSuperAdmin(response.data.role === "superAdmin");
+      setName(response.data.name);
       console.log(response);
       return response.data;
     } catch (error) {

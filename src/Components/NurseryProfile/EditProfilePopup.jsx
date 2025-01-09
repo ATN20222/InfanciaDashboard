@@ -62,6 +62,7 @@ const EditProfilePopup = ({ show, onClose }) => {
         phones: phones
       });
       setServices(serv);
+      setPreview(response.content.media.length>0?response.content.media[response.content.media.length-1].original_url:null);
       setAbout(response.content.about);
       setStartFees(response.content.branches_number);
       setLinks(social);
@@ -209,6 +210,8 @@ const EditProfilePopup = ({ show, onClose }) => {
     data.country = notChangedData.country;
     data.name = name;
 
+    
+    data.media = profilePic;
     console.log(data);
     // console.log(
     //   "links", links,

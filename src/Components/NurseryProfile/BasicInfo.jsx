@@ -69,10 +69,9 @@ const BasicInfo = () => {
                         </div>
                         <ul className="list-unstyled">
                             {info.services.length>0&&info.services.map((serv)=>(
-
                                 <li className="list-group-item">
                                     <span>
-                                        {serv.type} : {serv.content}
+                                        - {serv.content}
                                     </span>
                                 </li>
                             ))}
