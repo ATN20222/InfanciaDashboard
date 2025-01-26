@@ -12,7 +12,7 @@ import axiosInstance, {
   setName,
 } from "./AxiosApi";
 
-const baseURL = "https://orchid-aardvark-632100.hostingersite.com/api";
+const baseURL = "https://dashboard.infancia.app/api";
 
 const axiosReg = axios.create({
   baseURL: baseURL,
@@ -47,7 +47,7 @@ const AuthService = {
 
   SuperAdminHome: async () => {
     try {
-      const response = await axiosInstance.get(`/superAdmin-statistics`);
+      const response = await axiosInstance.get(`/dashboard/mind`);
 
       return response.data;
     } catch (error) {
@@ -87,10 +87,11 @@ const AuthService = {
       const response = await axiosInstance.post(`/auth/login`, formData);
       setToken(response.data.token);
       setNurseryId(response.data.nursery_id);
-      setBranchId(response.data.branch_id);
-      setIsSuperAdmin(response.data.role === "superAdmin");
+      setIsSuperAdmin(response.data.role === "superadmin");
       setName(response.data.name);
-      console.log(response);
+      setBranchId(response.data.branch_id);
+
+      // console.log(response);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -478,6 +479,44 @@ const NewsLetterServices = {
     }
   },
 };
+
+const BlogesServices = {
+  List: async () => {
+    try {
+      const response = await axiosInstance.get(`/blogs`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+      //throw new Error('Failed to list');
+    }
+  },
+  Add: async (title,description , image ,tags) => {
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("tags", tags);
+    if (image != null) 
+      formData.append("media", image);
+
+    try {
+      const response = await axiosInstance.post(`/blogs`, formData);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+      //throw new Error('Failed to add');
+    }
+  },
+  Delete: async (id) => {
+    try {
+      const response = await axiosInstance.delete(`/blogs/${id}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+      //throw new Error('Failed to delete');
+    }
+  },
+};
+
 const FAQServices = {
   Add: async (question, answer) => {
     try {
@@ -914,7 +953,7 @@ const NurseryServices = {
   List: async (type) => {
     // const id = getNurseryId();
     try {
-      const response = await axiosInstance.get(`/all-nurseries/${type}`);
+      const response = await axiosInstance.get(`/nurseries?status=${type}`);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -925,6 +964,18 @@ const NurseryServices = {
     // const id = getNurseryId();
     try {
       const response = await axiosInstance.get(`/nurseries/${id}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+      //throw new Error('Failed to get data');
+    }
+  },
+  ChangeStatus: async (id,status) => {
+    // const id = getNurseryId();
+    const formData = new FormData();
+    formData.append('status',status);
+    try {
+      const response = await axiosInstance.post(`/nurseries/status/${id}`,formData);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -1027,4 +1078,5 @@ export {
   PaymentRequestServices,
   NurseryServices,
   BranchesServices,
+  BlogesServices,
 };

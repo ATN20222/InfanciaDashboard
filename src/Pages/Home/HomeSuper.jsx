@@ -5,14 +5,16 @@ import { Bar, Pie, Line } from 'react-chartjs-2';
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, ArcElement, LineElement, PointElement, Tooltip, Legend } from 'chart.js';
 import './Home.css'
 import { AuthService } from "../../Service/Api";
+import HomeSuperCard from "../../Components/Home/HomeSuperCard";
 ChartJS.register(BarElement, CategoryScale, LinearScale, ArcElement, LineElement, PointElement, Tooltip, Legend);
 
 const HomeSuper = () => {
-    const [employeesCount, setEmployeesCount] = useState('');
-    const [kidsCount, setKidsCount] = useState([]); // This is already here
-    const [nurseryAccepted, setNurseryAccepted] = useState('');
-    const [nurseryPending, setNurseryPending] = useState('');
-    
+    const [nurseryAccepted, setNurseryAccepted] = useState(0);
+    const [nurseryPending, setNurseryPending] = useState(0);
+    const [nurseryRejected, setNurseryRejected] = useState(0);
+    const [nurseryKids, setNurseryKids] = useState([]);
+    const [nurseryGrowth, setNurseryGrowth] = useState([]);
+
     useEffect(() => {
         const hasWelcomed = localStorage.getItem("hasWelcomed");
         GetData();
@@ -22,15 +24,16 @@ const HomeSuper = () => {
             localStorage.setItem("hasWelcomed", "true");
         }
     }, []);
-    
+
     async function GetData() {
         try {
             const response = await AuthService.SuperAdminHome();
             console.log(response);
-            setEmployeesCount(response.content.employees_count);
-            setNurseryAccepted(response.content.nursery_accepted);
-            setNurseryPending(response.content.nursery_pending);
-            setKidsCount(response.content.nurseries_childs); // Kids count is set here
+            setNurseryAccepted(response.content.nurseries_approved);
+            setNurseryPending(response.content.nurseries_pending);
+            setNurseryRejected(response.content.nurseries_rejected);
+            setNurseryKids(response.content.nursery_kids);
+            setNurseryGrowth(response.content.nursery_growth);
         } catch (error) {
             toast.error(`${error}`);
         }
@@ -48,24 +51,12 @@ const HomeSuper = () => {
         ],
     };
 
-    const pieData = {
-        labels: ['Teachers', 'Admins', 'Branches'],
-        datasets: [
-            {
-                label: 'Distribution',
-                data: [100, 50, 10],
-                backgroundColor: ['#ED6D91', '#009FE3', '#AED065'],
-                hoverOffset: 4,
-            },
-        ],
-    };
-
     const branchGrowthData = {
-        labels: ['Aug 2024', 'Sep 2024'],
+        labels: nurseryGrowth.map(item => item.month),
         datasets: [
             {
                 label: 'Nurseries Growth',
-                data: [0, nurseryAccepted],
+                data: nurseryGrowth.map(item => item.total),
                 fill: false,
                 backgroundColor: '#ED6D91',
                 borderColor: '#ED6D91',
@@ -75,15 +66,16 @@ const HomeSuper = () => {
     };
 
     const kidsCountData = {
-        labels: kidsCount.map(nursery => nursery.name),
+        labels: nurseryKids.map(item => item.name),
         datasets: [
             {
                 label: 'Kids Count',
-                data: kidsCount.map(nursery => nursery.kids_count),
-                backgroundColor: '#AED065',
+                data: nurseryKids.map(item => item.kids_count), 
+                backgroundColor: ['#AED065', '#ED6D91', '#009FE3', '#FFCE56'],
             },
         ],
     };
+    
 
     const chartOptions = {
         maintainAspectRatio: false,
@@ -113,19 +105,27 @@ const HomeSuper = () => {
             </div>
             <div className="container">
                 <div className="row Center">
-                    <div className="col-lg-6">
-                        <HomeCard 
-                            Title={"Applications"} 
-                            Text={"View nurseries registered in our software"}
+                    <div className="col-lg-4 col-md-5 col-sm-12">
+                        <HomeSuperCard
+                            Title={"Pending"}
                             Number={nurseryPending}
-                            link={'Applications'}
+                            Text={'Pending nurseries'}
+                            link={'manageclasses'}
                         />
                     </div>
-                    <div className="col-lg-6">
-                        <HomeCard 
-                            Title={"Admins"} 
-                            Text={"View your admins and manage them easily"}
-                            Number={employeesCount}
+                    <div className="col-lg-4 col-md-5 col-sm-12">
+                        <HomeSuperCard
+                            Title={"Accepted"}
+                            Number={nurseryAccepted}
+                            Text={'Accepted nurseries'}
+                            link={'admins'}
+                        />
+                    </div>
+                    <div className="col-lg-4 col-md-5 col-sm-12">
+                        <HomeSuperCard
+                            Title={"Rejected"}
+                            Number={nurseryRejected}
+                            Text={'Rejected nurseries'}
                             link={'admins'}
                         />
                     </div>
@@ -151,15 +151,18 @@ const HomeSuper = () => {
                         <div className="col-lg-4">
                             <div className="ChartItem">
                                 <div style={{ width: '100%', height: '400px' }}>
-                                    <Bar data={kidsCountData} options={chartOptions} />
+                                        {/* <Pie data={kidsCountData} /> */}
+                                        <Bar data={kidsCountData} options={chartOptions} />
+
+                                    {/* <Pie data={kidsCountData} options={chartOptions} /> */}
                                 </div>
                                 <span>Kids Count Per Nursery</span>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="row ChartsRow">
-                        
+
                     </div>
                 </div>
             </div>

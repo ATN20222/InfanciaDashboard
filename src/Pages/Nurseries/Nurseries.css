@@ -1,0 +1,32 @@
+.FilterMenu {
+    position: absolute;
+    background: var(--color-blue);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 10px;
+    z-index: 1000;
+    top: 40px;
+    right: 40px;
+    border-radius: 15px;
+}
+.HeadRightCol{
+    position: relative;
+}
+.FilterMenu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.FilterMenu li {
+    padding: 8px 25px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+    
+}
+.FilterMenu li:hover {
+    padding: 8px 25px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: var(--color-pink);
+}

@@ -17,6 +17,8 @@
     width: 30px;
     height: 30px;
     overflow: hidden;
+    max-width: 40px;
+    max-height:40px;
 }
 .kid-avatar {
     width: 30px;

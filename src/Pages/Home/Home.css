@@ -24,3 +24,12 @@
 .UploadRegisterImage label img{
     height: 100%;
 }
+.Pending{
+    background-color:var(--color-blue);
+}
+.Rejected{
+    background-color: var(--color-pink);
+}
+.Accepted{
+    background-color: var(--color-green);
+}

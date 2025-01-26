@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import './NewsLetterItem.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
 // import { faHeart as heart } from "@fortawesome/free-regular-svg-icons";
 import DeleteSubjectModal from "../ManageClasses/DeleteSubjectModal";
 
-const NewletterItem = ({ id, PublisherImage, PublisherName,Title, PublishDate, Image, Text, Likes, OnDeleteNewsletter }) => {
+const BlogItem = ({ id,title,description ,tags , image ,created_at, onEditBlog , OnDeleteNewsletter }) => {
     const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
-
+    function formatDate(isoDateString) {
+        const date = new Date(isoDateString);
+        const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+        return formattedDate;
+    }
 
     return (
         <div className="NewletterItem">
@@ -20,13 +23,9 @@ const NewletterItem = ({ id, PublisherImage, PublisherName,Title, PublishDate, I
             <div className="row">
                 <div className="col-lg-12 PostHeader">
                     <div className="PostTopLeft">
-                        <div className="PublisherImageContainer" >
-                            <img src={PublisherImage} alt={PublisherName} />
-                        </div>
-                        <div className="PublisherNameAndDate">
-                            <h6 className="PublisherName">{PublisherName}</h6>
-                            <span className="PublishDate">{PublishDate}</span>
-                        </div>
+                        {tags!=null&&tags.map(element => (
+                            <span className="Tag">{element}</span>
+                        ))}
                     </div>
                     <div className="PostTopRight">
                         <span className="DeletePost Center" onClick={() => setIsDeleteOverlayOpen(true)}>
@@ -35,21 +34,23 @@ const NewletterItem = ({ id, PublisherImage, PublisherName,Title, PublishDate, I
                     </div>
 
                 </div>
-                
-                <div className="col-lg-12 NewletterItemCol">
-                    <h6>{Title}</h6>
-                    <span>{Text}</span>
-                </div>
                 <div className="col-lg-12 NewletterItemCol NewsletterImage">
-                    <img src={Image} width="100%" alt="" />
+                    <img src={image} width="100%" alt="" />
                 </div>
-                <div className={`col-lg-12 NewletterItemCol NewsletterLikes ${Likes == 0 ? 'HeartBlackOutlined' : ''}`}>
-                    <FontAwesomeIcon icon={Likes == 0 ? faHeart : faHeart} /> {Likes}
+                <div className="col-lg-12 NewletterItemCol">
+                    <h6>{title}</h6>
+                    <span>
+                        {formatDate(created_at)}
+                    </span>
+                    
+                    <p>{description}</p>
                 </div>
+
+
             </div>
         </div>
 
     );
 }
 
-export default NewletterItem;
+export default BlogItem;

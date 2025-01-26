@@ -7,7 +7,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { BranchesServices } from "../../Service/Api";
 import toast, { Toaster } from "react-hot-toast";
 import DeleteSubjectModal from "../../Components/ManageClasses/DeleteSubjectModal";
-import { setBranchId } from "../../Service/AxiosApi";
+import { getBranchId, setBranchId } from "../../Service/AxiosApi";
 
 const Branches = () => {
     const [Branches, setBranches] = useState([]);
@@ -31,6 +31,9 @@ const Branches = () => {
         try {
             const response = await BranchesServices.List();
             setBranches(response.content);
+            if(getBranchId() === null){
+                toast.error("Please set the main branch");
+            }   
         } catch (error) {
             toast.error("You don't have the permission to reach this page");
             setTimeout(() => {

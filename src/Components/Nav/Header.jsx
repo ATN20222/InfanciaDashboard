@@ -66,7 +66,7 @@ const Header = () => {
                     className="NotificationsDropdown"
                     ref={dropdownRef} 
                 >
-                    <Notifications />
+                    {/* <Notifications /> */}
                 </div>
             )}
         </header>

@@ -119,19 +119,25 @@ function Sidebar({ isOpen, toggleSidebar, openConfirmLogoutModal }) {
                                 </Link>
                             </li>
                             <li>
+                                <Link to="/blogs" className='nav-link' onClick={toggleSidebar}>
+                                    <FontAwesomeIcon icon={faNewspaper} />
+                                    Blogs
+                                </Link>
+                            </li>
+                            {/* <li>
                                 <Link to="/fakeregister" className='nav-link' onClick={toggleSidebar}>
                                     <FontAwesomeIcon icon={faUserPlus} />
                                     Fake Register
                                 </Link>
-                            </li>
+                            </li> */}
                         </>
                     )}
-                    <li>
+                    {/* <li>
                         <Link to="/paymenthistory" className='nav-link' onClick={toggleSidebar}>
                             <FontAwesomeIcon icon={faCreditCard} />
                             Payment history
                         </Link>
-                    </li>
+                    </li> */}
                     <li>
                         <div onClick={openConfirmLogoutModal} className='Center Logout'>
                             <FontAwesomeIcon icon={faRightFromBracket} />

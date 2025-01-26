@@ -54,8 +54,13 @@ const Login = () => {
       // localStorage.setItem('BranchId' , userData.branch_id)
       login();
       // navigate('/home'); 
+      
+      if(userData.role!== "superadmin" && userData.branch_id  ===null){
+        window.location.href='/branches';
+      }else{
+        window.location.href='/home';
+      }
 
-      window.location.href='/home';
     } catch (error) {
         setLoading(false);
 

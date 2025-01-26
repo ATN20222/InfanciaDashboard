@@ -41,7 +41,7 @@
     /* background-color: white; */
 }
 .NurseryProfileImage img{
-    width: 70px !important;
+    /* width: 70px !important; */
     object-fit: cover;
 }
 

@@ -42,6 +42,7 @@ import Pay from "./Pages/Pay/Pay";
 import Subjects from "./Pages/Subjects/Subjects";
 import ClassesSchedule from "./Pages/Schedule/ClassesSchedule";
 import PaymentBillDetails from "./Pages/PaymentHistory/PaymentBillDetails";
+import Blogs from "./Pages/Blogs/Blogs";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -116,6 +117,19 @@ function App() {
                   toggleSidebar={toggleSidebar}
                 >
                   <FakeForm />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/blogs"
+            element={
+              <PrivateRoute>
+                <MainLayout
+                  sidebarOpen={sidebarOpen}
+                  toggleSidebar={toggleSidebar}
+                >
+                  <Blogs />
                 </MainLayout>
               </PrivateRoute>
             }

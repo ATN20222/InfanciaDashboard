@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 
 // ---------- Const Variables ---------- //
-const baseURL = 'https://orchid-aardvark-632100.hostingersite.com/api';
+const baseURL = 'https://dashboard.infancia.app/api';
 const cookie = new Cookies();
 
 // ---------- Functions ---------- //
