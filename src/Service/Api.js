@@ -10,6 +10,8 @@ import axiosInstance, {
   setBranchId,
   getBranchId,
   setName,
+  getUserId,
+  setUserId,
 } from "./AxiosApi";
 
 const baseURL = "https://dashboard.infancia.app/api";
@@ -30,6 +32,7 @@ const AuthService = {
       //throw new Error('Failed to change');
     }
   },
+
 
   AddImageGallery: async (album_id, media) => {
     try {
@@ -90,8 +93,37 @@ const AuthService = {
       setIsSuperAdmin(response.data.role === "superadmin");
       setName(response.data.name);
       setBranchId(response.data.branch_id);
-
+      setUserId(response.data.user_id);
+      // return;
       // console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw new Error(error.response.data.message);
+      //throw new Error(error.response.data.message);
+    }
+  },
+  VerifyOTP: async (otp) => {
+    try {
+      const formData = new FormData();
+      formData.append("otp", otp);
+
+      const response = await axiosInstance.post(`/auth/otp`, formData);
+      
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw new Error(error.response.data.message);
+      //throw new Error(error.response.data.message);
+    }
+  },
+  ResendOTP: async (email) => {
+    try {
+      const formData = new FormData();
+      formData.append("email", email);
+      
+      const response = await axiosInstance.post(`/auth/resendotp`, formData);
+      
       return response.data;
     } catch (error) {
       console.log(error);
@@ -267,6 +299,18 @@ const ClassService = {
     }
   },
 };
+
+const NotificationService = {
+  List: async () => {
+    try {
+      const response = await axiosInstance.get(`/notifications?user_id=${getUserId()}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+    }
+  },
+};
+
 
 const KidsServices = {
   List: async () => {
@@ -1063,6 +1107,7 @@ const BranchesServices = {
 };
 
 export {
+  NotificationService,
   AuthService,
   ClassService,
   KidsServices,

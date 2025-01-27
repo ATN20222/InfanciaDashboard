@@ -55,7 +55,7 @@ const Login = () => {
       login();
       // navigate('/home'); 
       
-      if(userData.role!== "superadmin" && userData.branch_id  ===null){
+      if(userData.role!== "superadmin" && userData.branch_id ===null){
         window.location.href='/branches';
       }else{
         window.location.href='/home';

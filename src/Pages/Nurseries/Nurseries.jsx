@@ -79,7 +79,7 @@ const Nurseries = () => {
                     </div>
                 </div>
             </div>
-            <div className="SubjectsContainer">
+            <div className="SubjectsContainer NurseriesTableContainer">
                 <div className="table-responsive">
                     <table className="table table-bordered table-hover">
                         <thead className="thead-dark">

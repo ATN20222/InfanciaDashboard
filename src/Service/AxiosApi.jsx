@@ -44,6 +44,14 @@ export const setNurseryId = (nursery_id) => {
 export const getNurseryId = () => {
     return cookie.get('nursery_id');
 };
+export const setUserId = (nursery_id) => {
+    cookie.set('user_id', nursery_id, { path: '/' });
+};
+// Get NurseryId
+export const    getUserId = () => {
+    return cookie.get('user_id');
+};
+
 
 
 export const setBranchId = (nursery_id) => {

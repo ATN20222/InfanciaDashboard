@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import InfanciaLogo from '../../Assets/images/INFANCIA_LOGO.png'
-import { Link } from "react-router-dom";
+import InfanciaLogo from '../../Assets/images/INFANCIA_LOGO.png';
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import './ForgetPassword.css'
+import './ForgetPassword.css';
+import { AuthService } from "../../Service/Api";
+import toast, { Toaster } from "react-hot-toast";
 
 const PasswordReset = () => {
     const [otp, setOtp] = useState(new Array(4).fill(""));
-
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const email = searchParams.get('email');
     const handleChange = (element, index) => {
         if (isNaN(element.value)) return false;
 
@@ -27,16 +31,39 @@ const PasswordReset = () => {
         }
     }, [seconds]);
 
-    const ResendOTP = () => {
-        if (seconds === 0) {
-            console.log("Time", seconds);
-            setSeconds(120); // Reset the timer to 5 seconds
+    const ResendOTP = async () => {
+        if (seconds !== 0) {
+            return;
+        }
+        setSeconds(120);
+        try {
+            const response = await AuthService.ResendOTP(email);
+        } catch (error) {
+            console.error(error);
+            toast.error(`${error}`);
+        }
+    };
+
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const otpCode = otp.join('');
+        try {
+            const response = await AuthService.VerifyOTP(otpCode);
+            navigate(`/PasswordReset?email=${response.content.email}&token=${response.content.token}`);
+        } catch (error) {
+            console.error(error);
+            toast.error(`${error}`);
         }
     };
 
     return (
         <div className="LoginMain">
             <div className="row">
+                <div className="Toaster">
+                    <Toaster position="top-right" reverseOrder={false} />
+                </div>
                 <div className="col-lg-6 col-md-6 col-sm-12 col-12 LoginImageContainer Center">
                     <img src={InfanciaLogo} width="50%" alt="" />
                     <span className="InfGroup">Infancia GROUP</span>
@@ -53,7 +80,7 @@ const PasswordReset = () => {
                             </div>
 
                             <div className="col-lg-12 FormCol">
-                                <form action="" className="container">
+                                <form action="" className="container" onSubmit={handleSubmit}>
                                     <div className="row Center">
                                         <div className="col-lg-12 Center FormInputCol otp-input-container">
                                             {otp.map((data, index) => {
@@ -84,17 +111,14 @@ const PasswordReset = () => {
                                         </div>
 
                                         <div className="col-lg-12 FormInputCol Center LoginBtnContainer">
-                                            <button className=" LoginBtn">Continue</button>
+                                            <button className=" LoginBtn">Submit</button>
                                             <span className="BackToLogin">
                                                 <Link className="RegisterLink" to="/Login"><FontAwesomeIcon icon={faChevronLeft} /> Back to login</Link>
                                             </span>
-
                                         </div>
-
                                     </div>
                                 </form>
                             </div>
-
                         </div>
                     </div>
                 </div>

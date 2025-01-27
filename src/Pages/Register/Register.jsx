@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './Register.css';
 import TopImage from '../../Assets/images/HeaderLogo.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +8,7 @@ import { AuthService } from "../../Service/Api";
 import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import SelectCityAndCountry from "../../Components/DrobDown/SelectCityAndCountry";
+import axios from "axios";
 
 const Register = () => {
     const [loading, setLoading] = useState(false);
@@ -30,6 +31,7 @@ const Register = () => {
         accept: false
     });
     const [imageError, setImageError] = useState('');
+    const [cities,setCities] = useState([]);
     const [image, setImage] = useState(null);
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -54,9 +56,24 @@ const Register = () => {
         setSelectedImage(URL.createObjectURL(file));
         setImageError("");
     };
-
     const [errors, setErrors] = useState({});
 
+    useEffect(()=>{
+        GetData();
+    },[]);
+
+
+    async function GetData() {
+        try {
+            const response = await axios.post(
+                'https://countriesnow.space/api/v0.1/countries/cities', 
+                { country: 'Egypt'}
+            );
+            setCities(response.data.data); 
+        } catch (error) {
+            console.error('Error fetching cities:', error);
+        }
+    }
 
 
     const validate = () => {
@@ -205,40 +222,10 @@ const Register = () => {
         setLoading(false);
     };
 
-    const egyptianCities = [
-        "Cairo",
-        "Alexandria",
-        "Giza",
-        "Port Said",
-        "Suez",
-        "Luxor",
-        "Asyut",
-        "Ismailia",
-        "Aswan",
-        "Mansoura",
-        "Tanta",
-        "Faiyum",
-        "Zagazig",
-        "Damietta",
-        "Minya",
-        "Beni Suef",
-        "Qena",
-        "Sohag",
-        "Hurghada",
-        "Shibin El Kom",
-        "Banha",
-        "Arish",
-        "Mallawi",
-        "10th of Ramadan City",
-        "Sadat City",
-        "Obour City",
-        "6th of October City",
-        "New Cairo",
-        "Other"
-    ];
 
     const handleCountryChange = (selectedCountry) => {
         setFormData({ ...formData, country: selectedCountry });
+        GetData();
     };
 
     const handleCityChange = (selectedCity) => {
@@ -316,7 +303,7 @@ const Register = () => {
                                 </div>
                                 <div className="col-lg-1"></div>
                                 <div className="col-lg-5 FormInputCol FormInputColReg">
-                                    <SelectCityAndCountry Options={[{id:1 , name:'Egypt'}]} DefaultValue={"Country  "} onChange={handleCountryChange} />
+                                    <SelectCityAndCountry Options={['Egypt']} DefaultValue={"Country  "} onChange={handleCountryChange} />
                                     {errors.country && <span className="text-danger FormError">{errors.country}</span>}
                                 </div>
 
@@ -325,7 +312,8 @@ const Register = () => {
                                     {/* <input type="text" className="EmpInput KidEmailInput" value={formData.city} onChange={(e) => handleCityChange(e.target.value)} />
                                     <label className="EmpLabel EmpNameLabel KidCitys" htmlFor="FathertName">City : </label>
                                     {errors.city && <span className="text-danger FormError">{errors.city}</span>} */}
-                                    <SelectCityAndCountry Options={[{id:1 , name:'Cairo'}]} DefaultValue={"City  "} onChange={handleCityChange} />
+                                    
+                                    <SelectCityAndCountry Options={cities?cities:[]} DefaultValue={"City  "} onChange={handleCityChange} />
                                     {errors.city && <span className="text-danger FormError">{errors.city}</span>}
                                 </div>
                     

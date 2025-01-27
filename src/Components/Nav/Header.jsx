@@ -5,12 +5,26 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Notifications from "./Notifications";
 import { getName } from "../../Service/AxiosApi";
+import { onMessageListener, requestNotificationPermission } from "../../Service/Firebase";
+import { NotificationService } from "../../Service/Api";
 
 const Header = () => {
     const [openNotification, setOpenNotification] = useState(false);
+    const [notifications,setNotifications] = useState([]);
     const dropdownRef = useRef(null); 
     const bellRef = useRef(null);
+    useEffect(() => {
+        // Request permission for notifications
+        requestNotificationPermission();
 
+        // Listen for foreground messages
+        onMessageListener().then((payload) => {
+            console.log("Message received in foreground:", payload);
+            // alert(payload.notification.title + ": " + payload.notification.body);
+            GetData();
+        }).catch((err) => console.error("Error receiving message:", err));
+    }, []);
+    
     useEffect(() => {
         const handleOutsideClick = (event) => {
             if (
@@ -33,6 +47,22 @@ const Header = () => {
     const toggleNotification = () => {
         setOpenNotification((prev) => !prev);
     };
+
+    useEffect(() => {
+        GetData();
+    }, []);
+
+
+
+    async function GetData() {
+        try {
+            const response = await NotificationService.List();
+            setNotifications(response.content);
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <header>
@@ -66,7 +96,9 @@ const Header = () => {
                     className="NotificationsDropdown"
                     ref={dropdownRef} 
                 >
-                    {/* <Notifications /> */}
+                    <Notifications 
+                    notificationsData={notifications}
+                    />
                 </div>
             )}
         </header>

@@ -25,9 +25,9 @@
             try {
                 setLoading(true);
                 const response = await AuthService.RequestPasswordReset(email);
-                toast.success('Email sent successfully');
+                toast.success('OTP sent successfully');
                 setTimeout(() => {
-                    navigate('/login');
+                    navigate(`/otp?email=${email}`);
                 }, 3000);
             } catch (error) {
                 setEmailError(error.message);

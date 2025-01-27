@@ -30,3 +30,6 @@
     border-radius: 10px;
     background-color: var(--color-pink);
 }
+.NurseriesTableContainer{
+    max-height: 500px;
+}

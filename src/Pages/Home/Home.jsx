@@ -25,10 +25,10 @@ const Home = () => {
     async function GetData() {
         try {
             const response = await NurseryProfileService.HomeInfo();
-            setClassesCount(response.content.classRooms_counts)
-            setEmployeesCount(response.content.users_counts);
-            setKidsCount(response.content.kids_counts)
-            setParentsCounts(response.content.parent_counts)
+            setClassesCount(response.content?.classrooms_counts)
+            setEmployeesCount(response.content?.users_counts);
+            setKidsCount(response.content?.kids_counts)
+            setParentsCounts(response.content?.parent_counts)
         } catch (error) {
             toast.error(`${error}`);
         }
