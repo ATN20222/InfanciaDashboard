@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { setFCM } from "./AxiosApi";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -28,6 +29,7 @@ export const requestNotificationPermission = async () => {
         const token = await getToken(messaging, { vapidKey: "BCvPC_Z51qrtDEZs0sUf_3zXX0giALDB8sc02GCcZGGB6SMr7rlbFpZY_tsZ7D3wDxNxDdslrZxJ578WfBcPGQU" });
         if (token) {
             console.log("FCM Token:", token);
+            setFCM(token);
             // Send this token to your backend to send push notifications
         } else {
             console.log("No registration token available. Request permission to generate one.");
@@ -45,3 +47,5 @@ export const onMessageListener = () =>
             resolve(payload);
         });
     });
+
+    

@@ -151,11 +151,27 @@ const AddAdminModal = ({ isOpen, onClose, onAddAdmin }) => {
   };
 
   const handleRoleChanged = (name) => {
+    console.log(name)
     setSelectedOption(name);
-    if (name === 'teacher')
+    if (name === 'teacher'){
       setIsTeacher(true);
-    else
+      setRoleItems((prevItems) =>
+        prevItems.map((item) => ({ ...item, Selected: 0 }))
+      );
+      setRoleItems((prevItems) =>
+        prevItems.map((item) =>
+          ['Manage-Classes', 'Subjects', 'Schedule','Meals','Newsletter'].includes(item.Name)
+            ? { ...item, Selected: 1 }
+            : item
+        )
+      );
+    }else{
       setIsTeacher(false);
+      setRoleItems((prevItems) =>
+        prevItems.map((item) => ({ ...item, Selected: 1 }))
+      );
+    }
+      
   }
 
 
@@ -203,7 +219,7 @@ const AddAdminModal = ({ isOpen, onClose, onAddAdmin }) => {
                 Options={roles}
                 DefaultValue={selectedOption?selectedOption:'Role : '}
                 selectedValue={selectedOption}
-                onSelect={(value) => setRole(value)}
+                onSelect={(value) => {setRole(value)}}  
               />
               {roleError && (
                 <span className="text-danger PopUpValidation">{roleError}</span>
@@ -243,7 +259,7 @@ const AddAdminModal = ({ isOpen, onClose, onAddAdmin }) => {
             </label>
 
             
-                <div className={`ChooseRoleItems ${roleItemsError ? '' : 'mb-1'} `}>
+                {/* <div className={`ChooseRoleItems ${roleItemsError ? '' : 'mb-1'} `}>
                   {roleItems.map((item) => (
                     <div className="RoleItem" key={item.id}>
                       <input
@@ -258,7 +274,7 @@ const AddAdminModal = ({ isOpen, onClose, onAddAdmin }) => {
                   ))}
                 </div>
                 {roleItemsError && <span className="text-danger PopUpError mt-0 mb-4">{roleItemsError}</span>}
-              
+               */}
 
             <div className="form-buttons mt-4">
               <button type="submit" className="RegisterBtn">

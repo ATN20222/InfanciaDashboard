@@ -10,7 +10,7 @@ const NewPassword = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [ErrorSummary, setErrorSummary] = useState('');
-    const [loading , setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({
         password: '',
         confirmPassword: ''
@@ -39,18 +39,16 @@ const NewPassword = () => {
 
         if (isValid) {
             try {
-            console.log(token , email , password , confirmPassword);
-            
-              const userData = await AuthService.ResetPassword(token , email , password , confirmPassword);
-              toast.success('Password reseted successfully');
-                setTimeout(() => {
+                const userData = await AuthService.ResetPassword(token, email, password, confirmPassword);
+                toast.success('Password reseted successfully');
+                setTimeout(() => {      
                     navigate('/login');
                 }, 3000);
             } catch (error) {
                 setLoading(false);
-        
+
                 setErrorSummary(error.message);
-        
+
             }
 
 
@@ -62,7 +60,7 @@ const NewPassword = () => {
 
     return (
         <div className="LoginMain">
-             <div className="Toaster">
+            <div className="Toaster">
                 <Toaster
                     position="top-right"
                     reverseOrder={false}
@@ -86,7 +84,7 @@ const NewPassword = () => {
                             </div>
 
                             <div className="Container Center">
-                                {ErrorSummary&&
+                                {ErrorSummary &&
                                     <div className="mt-4 text-danger">
                                         {ErrorSummary}
                                     </div>
@@ -105,7 +103,7 @@ const NewPassword = () => {
                                                 onChange={(e) => setPassword(e.target.value)}
                                             />
                                             <label className="FormLabel" htmlFor="Password">Password:</label>
-                                            {errors.password&&<div className="ErrorMessage">{errors.password}</div>}
+                                            {errors.password && <div className="ErrorMessage">{errors.password}</div>}
                                         </div>
                                         <div className="col-lg-12 FormInputCol LoginCol">
                                             <input
@@ -116,23 +114,23 @@ const NewPassword = () => {
                                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                             />
                                             <label className="FormLabel" htmlFor="ConfirmPassword">Confirm Password:</label>
-                                            {errors.confirmPassword&&<div className="ErrorMessage">{errors.confirmPassword}</div>}
+                                            {errors.confirmPassword && <div className="ErrorMessage">{errors.confirmPassword}</div>}
                                         </div>
-                                        {!loading?
-                                        <div className="col-lg-12 FormInputCol Center LoginBtnContainer">
-                                            <button className="LoginBtn" type="submit">Submit</button>
-                                            <span className="BackToLogin">
-                                                <Link className="RegisterLink" to="/Login">
-                                                    <FontAwesomeIcon icon={faChevronLeft} /> Back to login
-                                                </Link>
-                                            </span>
-                                        </div>
-                                        :
-                                        
-                                        <div className="col-lg-12 FormInputCol Center LoginBtnContainer"><div class="loader"></div></div>
-                                        
+                                        {!loading ?
+                                            <div className="col-lg-12 FormInputCol Center LoginBtnContainer">
+                                                <button className="LoginBtn" type="submit">Submit</button>
+                                                <span className="BackToLogin">
+                                                    <Link className="RegisterLink" to="/Login">
+                                                        <FontAwesomeIcon icon={faChevronLeft} /> Back to login
+                                                    </Link>
+                                                </span>
+                                            </div>
+                                            :
+
+                                            <div className="col-lg-12 FormInputCol Center LoginBtnContainer"><div class="loader"></div></div>
+
                                         }
-                                        
+
                                     </div>
                                 </form>
                             </div>

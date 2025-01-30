@@ -15,7 +15,7 @@ const echo = new Echo({
     key: '81c558fbfd3ec3d7f363',
     cluster: 'eu',
     forceTLS: true,
-    authEndpoint: 'https://orchid-aardvark-632100.hostingersite.com/broadcasting/auth',
+    authEndpoint: 'https://dashboard.infancia.app/broadcasting/auth',
     auth: {
         headers: {
             Authorization: `Bearer ${getToken()}`
@@ -45,7 +45,9 @@ const Chat = ({ SelectedUserId, Name, close, ClosedChat, ChatId }) => {
 
     useEffect(() => {
         const channel = echo.private(`chat.${ChatId}`);
+        // console.log(channel);
         channel.listen('MessageSent', (data) => {
+            // alert('Message Received');
             setMessages((prevMessages) => {
                 const isDuplicate = prevMessages.some(message => message.id === data.content.id);
                 if (!isDuplicate) {

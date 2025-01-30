@@ -7,3 +7,6 @@
 .AdminsTableContainer{
     max-height: 700px;
 }
+.pointer{
+    cursor: pointer;
+}

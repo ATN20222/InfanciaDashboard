@@ -32,6 +32,25 @@ const AuthService = {
       //throw new Error('Failed to change');
     }
   },
+  AssignClasses: async (data) => {
+    try {
+      const response = await axiosInstance.post(`/classrooms/manages`, data);
+
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+      //throw new Error('Failed to change');
+    }
+  },
+  GetAssignedClasses: async (user_id) => {
+    try {
+      const response = await axiosInstance.get(`/classroom/manages/${user_id}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+      //throw new Error(`Failed to get data`);
+    }
+  },
 
 
   AddImageGallery: async (album_id, media) => {
@@ -103,12 +122,12 @@ const AuthService = {
       //throw new Error(error.response.data.message);
     }
   },
-  VerifyOTP: async (otp) => {
+  VerifyOTP: async (otp, email) => {
     try {
       const formData = new FormData();
       formData.append("otp", otp);
-
-      const response = await axiosInstance.post(`/auth/otp`, formData);
+      formData.append("email", email);
+      const response = await axiosInstance.post(`/auth/otp/check`, formData);
       
       return response.data;
     } catch (error) {
@@ -137,7 +156,7 @@ const AuthService = {
       deleteToken();
       deleteNurseryId();
       deleteIsSuperAdmin();
-      localStorage.clear();
+      localStorage.clear(); 
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -150,7 +169,7 @@ const AuthService = {
       const formData = new FormData();
       formData.append("email", email);
       const response = await axiosInstance.post(
-        `/auth/forgot-password`,
+        `/auth/password/forget`,
         formData
       );
       deleteToken();
@@ -162,14 +181,12 @@ const AuthService = {
   },
   ResetPassword: async (token, email, password, password_confirmation) => {
     try {
-      const response = await axiosInstance.post(`/auth/reset-password`, null, {
-        params: {
-          token: token,
-          email: email,
-          password: password,
-          password_confirmation: password_confirmation,
-        },
-      });
+      const formData = new FormData();
+formData.append("token", token);
+formData.append("email", email);
+formData.append("password", password);
+formData.append("password_confirmation", password_confirmation);
+      const response = await axiosInstance.post(`/auth/password/new`,formData);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -697,7 +714,7 @@ const NurseryProfileService = {
   },
   HomeInfo: async () => {
     try {
-      const response = await axiosInstance.get(`/dashboards/nursery?branch_id=${getBranchId()}`);
+      const response = await axiosInstance.get(`/dashboard/nursery?branch_id=${getBranchId()}`);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -952,7 +969,7 @@ const PaymentRequestServices = {
   List: async () => {
     try {
       const response = await axiosInstance.get(
-        `/payemntbills?branch_id=${getBranchId()}`
+        `/paymentbills?branch_id=${getBranchId()}`
       );
       return response.data;
     } catch (error) {
@@ -961,7 +978,7 @@ const PaymentRequestServices = {
   },
   GetById: async (id) => {
     try {
-      const response = await axiosInstance.get(`/payemntbills/${id}`);
+      const response = await axiosInstance.get(`/paymentbills/${id}`);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -969,7 +986,7 @@ const PaymentRequestServices = {
   },
   Add: async (data) => {
     try {
-      const response = await axiosInstance.post(`/payemntbills`, data);
+      const response = await axiosInstance.post(`/paymentbills`, data);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -985,7 +1002,7 @@ const PaymentRequestServices = {
   },
   Delete: async (id) => {
     try {
-      const response = await axiosInstance.delete(`payemntbills/${id}`);
+      const response = await axiosInstance.delete(`paymentbills/${id}`);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -1041,7 +1058,7 @@ const NurseryServices = {
   ListAdmins: async () => {
     try {
       const response = await axiosInstance.get(
-        `/users?nursery_id=${getNurseryId()}`
+        `/users?branch_id=${getBranchId()}`
       );
       return response.data;
     } catch (error) {
@@ -1049,6 +1066,7 @@ const NurseryServices = {
       //throw new Error(`Failed to get data`);
     }
   },
+
   DeleteAdmin: async (id) => {
     try {
       const response = await axiosInstance.delete(`/accounts/users/${id}`);

@@ -1,4 +1,4 @@
-import { faBell, faCommentDollar, faPlus, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faChalkboard, faCommentDollar, faPlus, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import './Admins.css'
@@ -7,6 +7,7 @@ import DeleteSubjectModal from "../../Components/ManageClasses/DeleteSubjectModa
 import { AuthService, NurseryServices } from "../../Service/Api";
 import toast, { Toaster } from "react-hot-toast";
 import { getBranchId, getNurseryId } from "../../Service/AxiosApi";
+import AssignTeacherClass from "./AssignTeacherClass";
 
 const Admins = () => {
     const tableData = [
@@ -14,10 +15,13 @@ const Admins = () => {
         { id: 2, name: "Ahmed hamed", Role: "Top Admin" }
     ];
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+    const [isAssignOverlayOpen, setIsAssignOverlayOpen] = useState(false);
     const [adminToDelete, setAdminToDelete] = useState(false);
+    const [adminToAssign, setAdminToAssign] = useState(false);
 
     const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
     const [admins, setAdmins] = useState([]);
+    
 
     useEffect(() => {
         GetData();
@@ -28,7 +32,6 @@ const Admins = () => {
             const response = await NurseryServices.ListAdmins();
             console.log('admins', response);
             setAdmins(response.content);
-
         } catch (error) {
             console.log(error)
 
@@ -73,6 +76,17 @@ const Admins = () => {
 
         }
     };
+    const handleAssignRequest = async (obj) => {
+        try {
+            const response = await AuthService.AssignClasses(obj);
+            toast.success('Classes Assigned successfully');
+            GetData();
+        } catch (error) {
+            toast.error(`${error}`);
+        }
+        setAdminToAssign('');
+    };
+    
 
     return (
         <section className="SecondSliderSection ManageClassesCompnent">
@@ -81,6 +95,15 @@ const Admins = () => {
                 onClose={() => setIsOverlayOpen(false)}
                 onAddAdmin={handleAddRequest}
             />
+            {isAssignOverlayOpen &&
+            
+            <AssignTeacherClass
+                id={adminToAssign}
+                isOpen={isAssignOverlayOpen}
+                onClose={() => setIsAssignOverlayOpen(false)}
+                onAssignClasses={handleAssignRequest}
+            />
+            }
             <DeleteSubjectModal
                 id={adminToDelete}
                 isOpen={isDeleteOverlayOpen}
@@ -122,7 +145,7 @@ const Admins = () => {
                                 <th scope="col">Name</th>
                                 <th scope="col">Phone</th>
                                 <th scope="col">email</th>
-                                {/* <th scope="col">Role</th> */}
+                                <th scope="col">Assign Classes</th>
                                 <th scope="col">Delete</th>
                             </tr>
                         </thead>
@@ -137,11 +160,19 @@ const Admins = () => {
                                     </td>
                                     <td>{admin.phone}</td>
                                     <td>{admin.email}</td>
-                                    {/* <td>{admin.role}</td> */}
+                                    <td>{admin.role==='teacher'?
+                                        <FontAwesomeIcon 
+                                            className="pointer" 
+                                            icon={faChalkboard}
+                                            onClick={() => { setIsAssignOverlayOpen(true); setAdminToAssign(admin.id);}}    
+                                        />
+                                        :
+                                        "Admin"
+                                        }</td>
                                     <td>
                                         <span>
                                             <FontAwesomeIcon icon={faTrash}
-                                                onClick={() => { setIsDeleteOverlayOpen(true); setAdminToDelete(admin.id) }} />
+                                                onClick={() => { setIsDeleteOverlayOpen(true); setAdminToDelete(admin.id)}}/>
                                         </span>
                                     </td>
 

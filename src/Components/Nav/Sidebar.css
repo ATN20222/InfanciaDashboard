@@ -211,7 +211,26 @@
   padding: 10px;
 
 }
+.Notify{
+  position: relative;
+}
 
+.NotificationCount{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height:20px;
+  background-color: var(--color-pink);
+  color: white;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
   @media (min-width: 769px) {

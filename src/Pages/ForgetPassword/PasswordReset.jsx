@@ -37,7 +37,7 @@ const PasswordReset = () => {
         }
         setSeconds(120);
         try {
-            const response = await AuthService.ResendOTP(email);
+            const response = await AuthService.RequestPasswordReset(email);
         } catch (error) {
             console.error(error);
             toast.error(`${error}`);
@@ -50,8 +50,8 @@ const PasswordReset = () => {
         e.preventDefault();
         const otpCode = otp.join('');
         try {
-            const response = await AuthService.VerifyOTP(otpCode);
-            navigate(`/PasswordReset?email=${response.content.email}&token=${response.content.token}`);
+            const response = await AuthService.VerifyOTP(otpCode,email);
+            navigate(`/PasswordReset?email=${email}&token=${response.content.token}`);
         } catch (error) {
             console.error(error);
             toast.error(`${error}`);

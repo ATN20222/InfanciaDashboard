@@ -12,8 +12,8 @@ const Classes = ({ IsMeals, Classes, HandleSelectClass, OnEdit }) => {
     }, [Classes]);
 
     return (
-        <div className="container Container">
-            <div className="container SubjectsContainer">
+        <div className=" Container">
+            <div className="SubjectsContainer m-0">
                 <div className=" row ClassCardContainerRow">
                     {Classes.length>0 ? Classes.map((item) => (
                         <div className={`ClassCard m-1 ${SelectedClass?.id == item.id ? "ActiveClass" : ""}`} onClick={() => { HandleSelectClass(item); SetSelectedClass(item) }}>{item.name}</div>

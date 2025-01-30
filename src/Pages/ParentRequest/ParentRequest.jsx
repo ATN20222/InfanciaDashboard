@@ -1,7 +1,7 @@
 import { faBell, faCommentDollar, faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import UserImage from '../../Assets/images/User.jpg'
+import UserImage from '../../Assets/images/INFANCIA_LOGO.png'
 import ParentRequestItem from "../../Components/ParentRequest/ParentRequestItem";
 import './ParentRequest.css'
 import ReplyRequest from "../../Components/ParentRequest/ReplyRequest";
@@ -131,7 +131,7 @@ const ParentRequest = () => {
                 <div className="RequestItemContainer" key={row.id} onClick={() => { setSelectedRequestToReply(row); setIsOverlayOpen(true); }}>
                     <ParentRequestItem
                         PublishDate={row.messages[0]?formatDate(row.messages[0]?.created_at):''}
-                        PublisherImage={row.PublisherImage}
+                        PublisherImage={row.user?.media?.length>0?row.user?.media[0]?.original_url : UserImage}
                         PublisherName={row.user?.name}
                         Text={row.messages[0]?.message}
                         IsPopUp={false}

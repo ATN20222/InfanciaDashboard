@@ -52,6 +52,14 @@ export const    getUserId = () => {
     return cookie.get('user_id');
 };
 
+export const setFCM = (fcm) => {
+    cookie.set('fcm', fcm, { path: '/' });
+};
+// Get NurseryId
+export const  getFCM = () => {
+    return cookie.get('fcm');
+};
+
 
 
 export const setBranchId = (nursery_id) => {
@@ -88,7 +96,9 @@ export const deleteBranchId = () => {
 // Instance From Axios
 const axiosInstance = axios.create({
     baseURL: baseURL,
-    Accept:'application/json'
+    Accept:'application/json',
+    'Device-Token': getFCM(),
+
 });
 
 // Axios Interceptors Request
@@ -99,7 +109,9 @@ axiosInstance.interceptors.request.use(
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
             config.headers.Accept = 'application/json';
-            config.headers["Content-Type"] = 'multipart/form-data'
+            config.headers["Content-Type"] = 'multipart/form-data';
+            config.headers["Device-Token"] = getFCM();
+
         }
         return config;
     },

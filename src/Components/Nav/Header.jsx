@@ -9,6 +9,7 @@ import { onMessageListener, requestNotificationPermission } from "../../Service/
 import { NotificationService } from "../../Service/Api";
 
 const Header = () => {
+    const [count , setCount] = useState(0);
     const [openNotification, setOpenNotification] = useState(false);
     const [notifications,setNotifications] = useState([]);
     const dropdownRef = useRef(null); 
@@ -21,6 +22,7 @@ const Header = () => {
         onMessageListener().then((payload) => {
             console.log("Message received in foreground:", payload);
             // alert(payload.notification.title + ": " + payload.notification.body);
+            setCount(count + 1);
             GetData();
         }).catch((err) => console.error("Error receiving message:", err));
     }, []);
@@ -46,6 +48,7 @@ const Header = () => {
 
     const toggleNotification = () => {
         setOpenNotification((prev) => !prev);
+        setCount(0);
     };
 
     useEffect(() => {
@@ -58,6 +61,7 @@ const Header = () => {
         try {
             const response = await NotificationService.List();
             setNotifications(response.content);
+            // setCount(response.content.length);
             console.log(response);
         } catch (error) {
             console.log(error);
@@ -79,6 +83,7 @@ const Header = () => {
                             onClick={toggleNotification}
                             ref={bellRef}
                         >
+                            {count > 0 && <span className="NotificationCount">{count}</span>}
                             {!openNotification?<FontAwesomeIcon icon={faBell} />:<FontAwesomeIcon icon={Bell}/>}
                         </div>
 
