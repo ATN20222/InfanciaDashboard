@@ -24,11 +24,20 @@ const NewsLetter = () => {
         } catch (error) {
             console.log(error)
             toast.error('Failed to add newsletter');
-    
-    
         }
     }; 
-
+    const handleEditNewsLetter = async(id, description, image, title, selectedClass)=>{
+        try {
+            console.log(id, description, image, title, selectedClass);
+        
+            const response = await NewsLetterServices.Edit(id, description, title, selectedClass,image);
+            toast.success('newsletter Edited successfully');
+            GetData();  
+        } catch (error) {
+            console.log(error)
+            toast.error('Failed to Edit newsletter');
+        }
+    }
 
     async function GetData() {
         try {
@@ -89,6 +98,7 @@ const NewsLetter = () => {
     
         }
     }
+
     return (
         <section className="SecondSliderSection ManageClassesCompnent">
              <AddNewsLetterModal
@@ -123,12 +133,14 @@ const NewsLetter = () => {
                     key={row.id}
                     id={row.id}
                     Image={row.media[0]?.original_url}
-                    Likes={row.likes_counts?row.likes_counts:0}
+                    Likes={row.likes_count?row.likes_count:0}
                     Title={row.title}
                     PublishDate={formatDate(row.created_at) }
-                    PublisherImage={`https://ui-avatars.com/api/?rounded=true&name=${row.class_room?row.class_room?.name:'All Classes'}&background=random`}
-                    PublisherName={(row.is_private&&row.class_room )?row.class_room?.name:'All Classes'}
+                    PublisherImage={row.nursery.media.length>0?row.nursery.media[0].original_url:InfanciaLogo}
+                    PublisherName={row.nursery.name}
                     Text={row.content}
+                    classs={row.class_room}
+                    OnUpdateNewsLetter ={handleEditNewsLetter}
                     OnDeleteNewsletter={HandleDeleteNewsletter}
                 />
             ))}

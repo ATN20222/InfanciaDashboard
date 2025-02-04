@@ -105,9 +105,9 @@ const PaymentBillDetails = () => {
                                         {kid.first_name + " " + kid.last_name}
                                     </td>
                                     <td
-                                        className={`PaymentStatus ${kid.kid_payment_bill.status}`}
-                                        onClick={() => HandlePaid(kid.kid_payment_bill)}
-                                    >{kid.kid_payment_bill.status}</td>
+                                        className={`PaymentStatus ${kid.kid_payment_bills[0].pivot.status}`}
+                                        onClick={() => HandlePaid(kid.kid_payment_bills[0])}
+                                    >{kid.kid_payment_bills[0].pivot.status}</td>
                                 </tr>
                             )) :
                                 <tr>

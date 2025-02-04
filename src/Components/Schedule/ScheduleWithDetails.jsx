@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import './ScheduleItem.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faMinus, faCaretRight, faCaretDown, faTrashAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faMinus, faCaretRight, faCaretDown, faTrashAlt, faTrash, faPen } from '@fortawesome/free-solid-svg-icons';
 import DeleteSubjectModal from '../ManageClasses/DeleteSubjectModal';
+import EditContentModal from '../ManageClasses/EditContentModal';
 
-const ScheduleWithDetails = ({id,SubjectName , Content , OnConfirmDeleteContent}) => {
+const ScheduleWithDetails = ({ id, SubjectName, SubjectId, Content, OnConfirmDeleteContent, OnConfirmEditContent }) => {
     const [isDetailsVisible, setDetailsVisible] = useState(false);
-    
+    const [contentToEdit,setContentToEdit] = useState({});
     const toggleDetails = () => {
         setDetailsVisible(!isDetailsVisible);
     };
     const handleDeleteContent = (id) => {
         setContentToDelete(id);
         setIsDeleteOverlayOpen(true);
-    }    
+    }
     const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
+    const [isEditOverlayOpen, setIsEditOverlayOpen] = useState(false);
     const [ContentToDelete, setContentToDelete] = useState(null);
 
     return (
@@ -23,8 +25,16 @@ const ScheduleWithDetails = ({id,SubjectName , Content , OnConfirmDeleteContent}
                 id={Content}
                 isOpen={isDeleteOverlayOpen}
                 onClose={() => setIsDeleteOverlayOpen(false)}
-                onDelete={()=>OnConfirmDeleteContent(id)}
+                onDelete={() => OnConfirmDeleteContent(id)}
             />
+            {isEditOverlayOpen&&
+                <EditContentModal
+                    data={contentToEdit}
+                    isOpen={isEditOverlayOpen}
+                    onClose={() => setIsEditOverlayOpen(false)}
+                    onEditContent={(id,content)=>OnConfirmEditContent(id,content , SubjectId)}
+                />
+            }
             <div className="ScheduleItem">
                 <div className="LeftSidePartSched">
                     <h5>{SubjectName}</h5>
@@ -43,7 +53,12 @@ const ScheduleWithDetails = ({id,SubjectName , Content , OnConfirmDeleteContent}
                         <span>{Content}</span>
                         <span className='m-2'>
                             <FontAwesomeIcon icon={faTrash}
-                                onClick={()=>handleDeleteContent(id)}
+                                onClick={() => handleDeleteContent(id)}
+                            />
+                        </span>
+                        <span className='m-2'>
+                            <FontAwesomeIcon icon={faPen}
+                                onClick={() => {setContentToEdit({id  , Content }); setIsEditOverlayOpen(true)}}
                             />
                         </span>
                     </div>

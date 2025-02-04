@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import './NewsLetterItem.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 // import { faHeart as heart } from "@fortawesome/free-regular-svg-icons";
 import DeleteSubjectModal from "../ManageClasses/DeleteSubjectModal";
+import EditNewsLetterModal from "./EditNewsLetterModal";
 
-const NewletterItem = ({ id, PublisherImage, PublisherName,Title, PublishDate, Image, Text, Likes, OnDeleteNewsletter }) => {
+const NewletterItem = ({ id, PublisherImage, PublisherName,Title , classs, PublishDate, Image, Text, Likes, OnDeleteNewsletter , OnUpdateNewsLetter }) => {
     const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
+    const [isEditOverlayOpen, setIsEditeOverlayOpen] = useState(false);
 
 
     return (
@@ -16,6 +18,14 @@ const NewletterItem = ({ id, PublisherImage, PublisherName,Title, PublishDate, I
                 onClose={() => setIsDeleteOverlayOpen(false)}
                 onDelete={() => OnDeleteNewsletter(id)}
             />
+            {isEditOverlayOpen&&
+            <EditNewsLetterModal
+                newsletter={{description:Text,title:Title,class:classs , id:id , image:Image }}
+                isOpen={isEditOverlayOpen}
+                onUpdateNewsLetter={OnUpdateNewsLetter}
+                onClose={()=>setIsEditeOverlayOpen(false)}
+            />
+            }
 
             <div className="row">
                 <div className="col-lg-12 PostHeader">
@@ -29,9 +39,13 @@ const NewletterItem = ({ id, PublisherImage, PublisherName,Title, PublishDate, I
                         </div>
                     </div>
                     <div className="PostTopRight">
+                        <span className="DeletePost Center" onClick={() => setIsEditeOverlayOpen(true)}>
+                            <FontAwesomeIcon icon={faPen} />
+                        </span>
                         <span className="DeletePost Center" onClick={() => setIsDeleteOverlayOpen(true)}>
                             <FontAwesomeIcon icon={faTrash} />
                         </span>
+                        
                     </div>
 
                 </div>

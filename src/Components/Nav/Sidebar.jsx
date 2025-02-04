@@ -124,12 +124,12 @@ function Sidebar({ isOpen, toggleSidebar, openConfirmLogoutModal }) {
                                     Blogs
                                 </Link>
                             </li>
-                            {/* <li>
+                            <li>
                                 <Link to="/fakeregister" className='nav-link' onClick={toggleSidebar}>
                                     <FontAwesomeIcon icon={faUserPlus} />
                                     Fake Register
                                 </Link>
-                            </li> */}
+                            </li>
                         </>
                     )}
                     {/* <li>

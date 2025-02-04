@@ -52,13 +52,42 @@ const AuthService = {
     }
   },
 
-
   AddImageGallery: async (album_id, media) => {
     try {
       const formData = new FormData();
       formData.append("gallery_id", album_id);
       formData.append("media", media);
       const response = await axiosInstance.post(`/gallery/medias`, formData);
+
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+      //throw new Error('Failed to add');
+    }
+  },
+  GenerateNursery: async (
+    name,
+    email,
+    phone,
+    country,
+    city,
+    address,
+    about,
+    branches_number,
+    media
+  ) => {
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("phone", phone);
+      formData.append("country", country);
+      formData.append("city", city);
+      formData.append("address", address);
+      formData.append("about", about);
+      formData.append("branches_number", branches_number);
+      formData.append("media", media);
+      const response = await axiosInstance.post(`/nurseries`, formData);
 
       return response.data;
     } catch (error) {
@@ -128,7 +157,7 @@ const AuthService = {
       formData.append("otp", otp);
       formData.append("email", email);
       const response = await axiosInstance.post(`/auth/otp/check`, formData);
-      
+
       return response.data;
     } catch (error) {
       console.log(error);
@@ -140,9 +169,9 @@ const AuthService = {
     try {
       const formData = new FormData();
       formData.append("email", email);
-      
+
       const response = await axiosInstance.post(`/auth/resendotp`, formData);
-      
+
       return response.data;
     } catch (error) {
       console.log(error);
@@ -156,7 +185,7 @@ const AuthService = {
       deleteToken();
       deleteNurseryId();
       deleteIsSuperAdmin();
-      localStorage.clear(); 
+      localStorage.clear();
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -182,11 +211,14 @@ const AuthService = {
   ResetPassword: async (token, email, password, password_confirmation) => {
     try {
       const formData = new FormData();
-formData.append("token", token);
-formData.append("email", email);
-formData.append("password", password);
-formData.append("password_confirmation", password_confirmation);
-      const response = await axiosInstance.post(`/auth/password/new`,formData);
+      formData.append("token", token);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("password_confirmation", password_confirmation);
+      const response = await axiosInstance.post(
+        `/auth/password/reset`,
+        formData
+      );
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -320,14 +352,15 @@ const ClassService = {
 const NotificationService = {
   List: async () => {
     try {
-      const response = await axiosInstance.get(`/notifications?user_id=${getUserId()}`);
+      const response = await axiosInstance.get(
+        `/notifications?user_id=${getUserId()}`
+      );
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
     }
   },
 };
-
 
 const KidsServices = {
   List: async () => {
@@ -374,7 +407,17 @@ const KidsServices = {
       //throw new Error('Failed to add');
     }
   },
-  Edit: async (id,first_name,last_name, birth_date,has_medical_case,description_medical_case,classroom_id,gender,media) => {
+  Edit: async (
+    id,
+    first_name,
+    last_name,
+    birth_date,
+    has_medical_case,
+    description_medical_case,
+    classroom_id,
+    gender,
+    media
+  ) => {
     try {
       const formData = new FormData();
       formData.append("first_name", first_name);
@@ -388,8 +431,7 @@ const KidsServices = {
       formData.append("nursery_id", getNurseryId());
       formData.append("media", media);
 
-      
-      const response = await axiosInstance.post(`/kids/${id}`,formData);
+      const response = await axiosInstance.post(`/kids/${id}`, formData);
 
       return response.data;
     } catch (error) {
@@ -444,12 +486,14 @@ const SubjectServices = {
       //throw new Error('Failed to add');
     }
   },
-  Edit: async (id,title) => {
+  Edit: async (id, title) => {
     try {
-      const response = await axiosInstance.put(`/subjects/${id}?title=${title}&branch_id=${getBranchId()}&nursery_id=${getNurseryId()}`);
+      const response = await axiosInstance.put(
+        `/subjects/${id}?title=${title}&branch_id=${getBranchId()}&nursery_id=${getNurseryId()}`
+      );
       return response.data;
     } catch (error) {
-      throw new Error(error.response.data.message); 
+      throw new Error(error.response.data.message);
       //throw new Error('Failed to add');
     }
   },
@@ -530,6 +574,28 @@ const NewsLetterServices = {
       //throw new Error('Failed to add');
     }
   },
+  Edit: async (id, content, title, class_room_id, image) => {
+    const formData = new FormData();
+    if (image != null) formData.append("media", image);
+
+    formData.append("content", content);
+    formData.append("title", title);
+    formData.append("nursery_id", getNurseryId());
+    formData.append("branch_id", getBranchId());
+    formData.append("is_private", class_room_id !== -1 ? 1 : 0);
+
+    if (class_room_id !== -1) {
+      formData.append("class_room_id", class_room_id);
+    }
+    console.log(formData);
+    try {
+      const response = await axiosInstance.post(`/newsletters/${id}`, formData);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+      //throw new Error('Failed to add');
+    }
+  },
   Delete: async (id) => {
     try {
       const response = await axiosInstance.delete(`/newsletters/${id}`);
@@ -551,13 +617,12 @@ const BlogesServices = {
       //throw new Error('Failed to list');
     }
   },
-  Add: async (title,description , image ,tags) => {
+  Add: async (title, description, image, tags) => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
     formData.append("tags", tags);
-    if (image != null) 
-      formData.append("media", image);
+    if (image != null) formData.append("media", image);
 
     try {
       const response = await axiosInstance.post(`/blogs`, formData);
@@ -680,6 +745,17 @@ const ScheduleServices = {
       //throw new Error('Failed to Add');
     }
   },
+  EditScheduleContent: async (id, subject_id, content, day) => {
+    try {
+      const response = await axiosInstance.put(
+        `/schedules/${id}?subject_id=${subject_id}&content=${content}&date=${day}`
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+      //throw new Error('Failed to Add');
+    }
+  },
   DeleteContent: async (id) => {
     try {
       const response = await axiosInstance.delete(`/schedules/${id}`);
@@ -714,7 +790,9 @@ const NurseryProfileService = {
   },
   HomeInfo: async () => {
     try {
-      const response = await axiosInstance.get(`/dashboard/nursery?branch_id=${getBranchId()}`);
+      const response = await axiosInstance.get(
+        `/dashboard/nursery?branch_id=${getBranchId()}`
+      );
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -883,7 +961,9 @@ const MealsServices = {
 const ParentRequestServices = {
   ListRequests: async () => {
     try {
-      const response = await axiosInstance.get(`/chats?branch_id=${getBranchId()}`);
+      const response = await axiosInstance.get(
+        `/chats?branch_id=${getBranchId()}`
+      );
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -892,7 +972,9 @@ const ParentRequestServices = {
   },
   ListParents: async () => {
     try {
-      const response = await axiosInstance.get(`/parents?branch_id=${getBranchId()}`);
+      const response = await axiosInstance.get(
+        `/parents?branch_id=${getBranchId()}`
+      );
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -912,10 +994,13 @@ const ParentRequestServices = {
   SendMessages: async (chat_id, message) => {
     try {
       const formData = new FormData();
-      formData.append('chat_id', chat_id);
-      formData.append('sender_id',getBranchId());
-      formData.append('message',message);
-      const response = await axiosInstance.post(`/chats/send/message`,formData);
+      formData.append("chat_id", chat_id);
+      formData.append("sender_id", getBranchId());
+      formData.append("message", message);
+      const response = await axiosInstance.post(
+        `/chats/send/message`,
+        formData
+      );
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -925,9 +1010,9 @@ const ParentRequestServices = {
   AddChat: async (id) => {
     try {
       const formData = new FormData();
-      formData.append('branch_id',getBranchId());
-      formData.append('user_id',id);
-      const response = await axiosInstance.post(`/chats`,formData);
+      formData.append("branch_id", getBranchId());
+      formData.append("user_id", id);
+      const response = await axiosInstance.post(`/chats`, formData);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -994,7 +1079,9 @@ const PaymentRequestServices = {
   },
   MarkPaid: async (id) => {
     try {
-      const response = await axiosInstance.post(`kidpaymentbills/${id}?status=accepted`);
+      const response = await axiosInstance.post(
+        `kidpaymentbills/${id}?status=accepted`
+      );
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
@@ -1031,12 +1118,15 @@ const NurseryServices = {
       //throw new Error('Failed to get data');
     }
   },
-  ChangeStatus: async (id,status) => {
+  ChangeStatus: async (id, status) => {
     // const id = getNurseryId();
     const formData = new FormData();
-    formData.append('status',status);
+    formData.append("status", status);
     try {
-      const response = await axiosInstance.post(`/nurseries/status/${id}`,formData);
+      const response = await axiosInstance.post(
+        `/nurseries/status/${id}`,
+        formData
+      );
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);

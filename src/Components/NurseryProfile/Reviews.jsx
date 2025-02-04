@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReviewItem from "./ReviewItem";
 import { NurseryProfileService } from "../../Service/Api";
+import InfanciaLogo from '../../Assets/images/INFANCIA_LOGO.png'
 
 const Reviews = () => {
   const [reviews , setReviews] = useState([]);
@@ -30,7 +31,8 @@ const Reviews = () => {
               {reviews.length>0?reviews.map((review)=>(
                 <ReviewItem
                   key={review.id}
-                  name={review.user_name}
+                  name={review.user.name}
+                  userImage={review.user.media>0?review.user.media[0].original_url:InfanciaLogo}
                   text={review.review}
                   rate={review.rate}
                 />

@@ -56,6 +56,28 @@ const Schedule = ({ SelectedClassId }) => {
             setLoading(false);
         }
     };
+    
+    
+    const handleEditScheduleContent = async (id, content,subject_id) => {
+        console.log(id , content)
+        setLoading(true);
+        try {
+            const response = await ScheduleServices.EditScheduleContent(
+                id,
+                subject_id,
+                content,
+                selectedDate
+            );
+            toast.success("Content added successfully");
+            handleDateChange(selectedDate);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+
     const handleDeleteContent  = async (id)=>{
         setLoading(true);
         try {
@@ -110,9 +132,11 @@ const Schedule = ({ SelectedClassId }) => {
                                 <ScheduleWithDetails
                                     id = {item.schedules[0]?.id}
                                     SubjectName={item.title}
+                                    SubjectId={item.schedules[0]?.subject_id}
                                     Content={item.schedules[0]?.content}
                                     key={item.schedules[0]?.id}
                                     OnConfirmDeleteContent={handleDeleteContent}
+                                    OnConfirmEditContent={handleEditScheduleContent}
                                 />
                                 // <></>
                             )
