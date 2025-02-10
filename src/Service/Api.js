@@ -32,6 +32,16 @@ const AuthService = {
       //throw new Error('Failed to change');
     }
   },
+  GetCities: async () => {
+    try {
+      const response = await axiosInstance.get(`/cities`);
+
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+      //throw new Error('Failed to change');
+    }
+  },
   AssignClasses: async (data) => {
     try {
       const response = await axiosInstance.post(`/classrooms/manages`, data);
@@ -1102,6 +1112,15 @@ const NurseryServices = {
     // const id = getNurseryId();
     try {
       const response = await axiosInstance.get(`/nurseries?status=${type}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+      //throw new Error('Failed to get data');
+    }
+  },
+  Delete: async (id) => {
+    try {
+      const response = await axiosInstance.delete(`/nurseries/${id}`);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);

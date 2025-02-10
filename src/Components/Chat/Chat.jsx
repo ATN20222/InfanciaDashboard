@@ -8,20 +8,21 @@ import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import { ParentRequestServices } from "../../Service/Api";
 import { getBranchId, getToken } from "../../Service/AxiosApi";
+import { echo } from "../../Service/RealTime";
 
-window.Pusher = Pusher;
-const echo = new Echo({
-    broadcaster: 'pusher',
-    key: '81c558fbfd3ec3d7f363',
-    cluster: 'eu',
-    forceTLS: true,
-    authEndpoint: 'https://dashboard.infancia.app/broadcasting/auth',
-    auth: {
-        headers: {
-            Authorization: `Bearer ${getToken()}`
-        },
-    },
-});
+// window.Pusher = Pusher;
+// const echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: '81c558fbfd3ec3d7f363',
+//     cluster: 'eu',
+//     forceTLS: true,
+//     authEndpoint: 'https://dashboard.infancia.app/broadcasting/auth',
+//     auth: {
+//         headers: {
+//             Authorization: `Bearer ${getToken()}`
+//         },
+//     },
+// });
 
 const Chat = ({ SelectedUserId, Name, close, ClosedChat, ChatId }) => {
     const [messages, setMessages] = useState([]);
@@ -44,7 +45,7 @@ const Chat = ({ SelectedUserId, Name, close, ClosedChat, ChatId }) => {
     }, [ChatId]);
 
     useEffect(() => {
-        const channel = echo.private(`chat.${ChatId}`);
+        const channel = echo.private(`message.${ChatId}`);
         // console.log(channel);
         channel.listen('MessageSent', (data) => {
             // alert('Message Received');
@@ -57,7 +58,7 @@ const Chat = ({ SelectedUserId, Name, close, ClosedChat, ChatId }) => {
             });
         });
         return () => {
-            echo.leave(`chat.${ChatId}`);
+            echo.leave(`message.${ChatId}`);
         };
     }, [ChatId]);
 

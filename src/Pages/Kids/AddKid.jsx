@@ -422,6 +422,7 @@ const AddKid = () => {
                     </div> */}
                     {kidsData.map((kid, index) => (
                         <div key={index} className="KidData row justify-content-between mt-2">
+                            <h5 className="text-start p-2">Kid Data</h5>
                             {kidsData.length > 1 &&
                                 <div className="col-lg-12 EmpFormCol d-flex justify-content-end">
                                     <button className="btn btn-danger" onClick={() => removeKid(index)}>

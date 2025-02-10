@@ -11,7 +11,12 @@ import { ParentRequestServices } from "../../Service/Api";
 import AddChatModal from "./AddChatModal";
 import toast, { Toaster } from "react-hot-toast";
 
+import { getBranchId, getToken, getUserId } from "../../Service/AxiosApi";
+import { echo } from "../../Service/RealTime";
 const ParentRequest = () => {
+
+    
+
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [isAddOverlayOpen, setIsAddOverlayOpen] = useState(false);
     const [chats, setchats] = useState([]);
@@ -21,10 +26,11 @@ const ParentRequest = () => {
         GetData();
     }, []);
 
+
     async function GetData() {
         try {
             const response = await ParentRequestServices.ListRequests();
-            console.log(response.content);
+            // console.log(response.content);
 
             setchats(response.content);
             // setClosedRequests(m);
@@ -41,32 +47,17 @@ const ParentRequest = () => {
         setIsOverlayOpen(false);
     };
 
-    function formatDate(isoDateString) {
-        const date = new Date(isoDateString);
-        const now = new Date();
-
-        const diffInMilliseconds = now - date;
-        const diffInSeconds = Math.floor(diffInMilliseconds / 1000);
-        const diffInMinutes = Math.floor(diffInSeconds / 60);
-        const diffInHours = Math.floor(diffInMinutes / 60);
-        const diffInDays = Math.floor(diffInHours / 24);
-        const diffInMonths = Math.floor(diffInDays / 30);
-        const diffInYears = Math.floor(diffInMonths / 12);
-
-        if (diffInSeconds < 60) {
-            return diffInSeconds === 1 ? "1 second ago" : `${diffInSeconds} seconds ago`;
-        } else if (diffInMinutes < 60) {
-            return diffInMinutes === 1 ? "1 minute ago" : `${diffInMinutes} minutes ago`;
-        } else if (diffInHours < 24) {
-            return diffInHours === 1 ? "1 hour ago" : `${diffInHours} hours ago`;
-        } else if (diffInDays < 30) {
-            return diffInDays === 1 ? "1 day ago" : `${diffInDays} days ago`;
-        } else if (diffInMonths < 12) {
-            return diffInMonths === 1 ? "1 month ago" : `${diffInMonths} months ago`;
-        } else {
-            return diffInYears === 1 ? "1 year ago" : `${diffInYears} years ago`;
-        }
-    }
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+    
+        const hours = date.getUTCHours().toString().padStart(2, '0');
+        const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+        const day = date.getUTCDate().toString().padStart(2, '0');
+        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+        const year = date.getUTCFullYear().toString();
+    
+        return `${hours}:${minutes} ${day}-${month}-${year}`;
+      }
     const handleAddChat = async (id) => {
         try {
             const response = await ParentRequestServices.AddChat(id);
@@ -77,6 +68,32 @@ const ParentRequest = () => {
             toast.error(`${error}`);
         }
     }
+
+    useEffect(() => {
+        const channel = echo.private(`chat.${getUserId()}`);
+    
+        channel.listen('ChatEvent', (data) => {
+            GetData();
+            // setchats((prevChats) => {
+            //     const updatedChats = prevChats.map(chat => 
+            //         chat.id === data.chat_id 
+            //             ? { ...chat, messages: [{ ...chat.messages[0], message: data.content.message }] }
+            //             : chat
+            //     );
+    
+            //     // Move the updated chat to the top
+            //     const reorderedChats = updatedChats.sort((a, b) => (a.id === data.chat_id ? -1 : b.id === data.chat_id ? 1 : 0));
+    
+            //     return reorderedChats;
+            // });
+        });
+    
+        return () => {
+            echo.leave(`chat.${getUserId()}`);
+        };
+    }, []);
+    
+    
 
     return (
         <section className="SecondSliderSection ManageClassesCompnent ParentRequestSection">
@@ -130,8 +147,8 @@ const ParentRequest = () => {
             {chats.map((row) => (
                 <div className="RequestItemContainer" key={row.id} onClick={() => { setSelectedRequestToReply(row); setIsOverlayOpen(true); }}>
                     <ParentRequestItem
-                        PublishDate={row.messages[0]?formatDate(row.messages[0]?.created_at):''}
-                        PublisherImage={row.user?.media?.length>0?row.user?.media[0]?.original_url : UserImage}
+                        PublishDate={row.messages[0] ? formatDate(row.messages[0]?.created_at) : ''}
+                        PublisherImage={row.user?.media?.length > 0 ? row.user?.media[0]?.original_url : UserImage}
                         PublisherName={row.user?.name}
                         Text={row.messages[0]?.message}
                         IsPopUp={false}

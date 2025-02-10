@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faFilter, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faFilter, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { NurseryServices } from "../../Service/Api";
 import InfanciaImage from "../../Assets/images/INFANCIA_LOGO.png";
 import './Nurseries.css'
 import ChangeNurseryStatusModal from "./ChangeNurseryStatusModal";
 import toast, { Toaster } from "react-hot-toast";
+import DeleteSubjectModal from "../../Components/ManageClasses/DeleteSubjectModal";
 const Nurseries = () => {
     const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
     const [nurseries, setNurseries] = useState([]);
     const [status, setStatus] = useState('all');
     const [NurseryIdToChangeStatus, setNurseryIdToChangeStatus] = useState(null);
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+    const [isDeleteOverlayOpen, setIsDeleteOverlayOpen] = useState(false);
+    const [nurseryToDelete, setNurseryToDelete] = useState(false);
 
     useEffect(() => {
         GetData();
-    }, [status]); 
+    }, [status]);
 
     async function GetData() {
         try {
@@ -34,8 +37,19 @@ const Nurseries = () => {
             GetData();
         } catch (error) {
             console.error(error);
-        }finally{
+        } finally {
             setNurseryIdToChangeStatus(null);
+        }
+    };
+    const handleConfirmDelete = async (id) => {
+        try {
+            await NurseryServices.Delete(id);
+            toast.success('Nursery deleted successfully');
+            GetData();
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setNurseryToDelete(null);
         }
     };
 
@@ -49,12 +63,18 @@ const Nurseries = () => {
             <div className="Toaster">
                 <Toaster position="top-right" reverseOrder={false} />
             </div>
-            <ChangeNurseryStatusModal 
+            <DeleteSubjectModal
+                id={nurseryToDelete}
+                onDelete={handleConfirmDelete}
+                isOpen={isDeleteOverlayOpen}
+                onClose={() => setIsDeleteOverlayOpen(false)}
+            />
+            <ChangeNurseryStatusModal
                 id={NurseryIdToChangeStatus}
-                isOpen={isOverlayOpen} 
-                onClose={() => setIsOverlayOpen(false)} 
-                onStatusChange={handleNurseryStatusChange} 
-                />
+                isOpen={isOverlayOpen}
+                onClose={() => setIsOverlayOpen(false)}
+                onStatusChange={handleNurseryStatusChange}
+            />
             <div className="Container HeadContainer">
                 <div className="row">
                     <div className="col-lg-6 col-md-6 col-sm-6 col-6">
@@ -89,6 +109,7 @@ const Nurseries = () => {
                                 <th scope="col">Name</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -107,18 +128,26 @@ const Nurseries = () => {
                                         <td>{n.name}</td>
                                         <td>{n.status}</td>
                                         <td>
-                                            <span onClick={()=>{
+                                            <span onClick={() => {
                                                 setNurseryIdToChangeStatus(n.id);
                                                 setIsOverlayOpen(true);
                                             }} className="nav-link">
                                                 <FontAwesomeIcon icon={faPen} />
                                             </span>
                                         </td>
+                                        <td>
+                                            <span onClick={() => {
+                                                setIsDeleteOverlayOpen(true);
+                                                setNurseryToDelete(n.id);
+                                            }} className="nav-link">
+                                                <FontAwesomeIcon icon={faTrash} />
+                                            </span>
+                                        </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="5">No Data</td>
+                                    <td colSpan="6">No Data</td>
                                 </tr>
                             )}
                         </tbody>

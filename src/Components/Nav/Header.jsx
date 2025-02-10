@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Notifications from "./Notifications";
-import { getName } from "../../Service/AxiosApi";
+import { getIsSuperAdmin, getName } from "../../Service/AxiosApi";
 import { onMessageListener, requestNotificationPermission } from "../../Service/Firebase";
 import { NotificationService } from "../../Service/Api";
 
@@ -17,7 +17,6 @@ const Header = () => {
     useEffect(() => {
         // Request permission for notifications
         requestNotificationPermission();
-
         // Listen for foreground messages
         onMessageListener().then((payload) => {
             console.log("Message received in foreground:", payload);
@@ -78,6 +77,8 @@ const Header = () => {
                         </span>
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-6 col-6 RightSideHeader">
+                        
+                        
                         <div
                             className="Notify"
                             onClick={toggleNotification}
@@ -86,12 +87,15 @@ const Header = () => {
                             {count > 0 && <span className="NotificationCount">{count}</span>}
                             {!openNotification?<FontAwesomeIcon icon={faBell} />:<FontAwesomeIcon icon={Bell}/>}
                         </div>
-
+                        
+                        {!getIsSuperAdmin()&&
+                        
                         <div className="Person">
                             <Link className="nav-link" to="/nurseryprofile">
                                 <FontAwesomeIcon icon={faCircleUser} />
                             </Link>
                         </div>
+                        }
                     </div>
                 </div>
             </div>

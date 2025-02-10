@@ -65,11 +65,8 @@ const Register = () => {
 
     async function GetData() {
         try {
-            const response = await axios.post(
-                'https://countriesnow.space/api/v0.1/countries/cities', 
-                { country: 'Egypt'}
-            );
-            setCities(response.data.data); 
+            const response = await AuthService.GetCities();
+            setCities(response.content); 
         } catch (error) {
             console.error('Error fetching cities:', error);
         }
